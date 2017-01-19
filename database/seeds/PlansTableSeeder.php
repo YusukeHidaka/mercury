@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Plan;
 use Illuminate\Support\Facades\DB;
 
 class PlansTableSeeder extends Seeder
