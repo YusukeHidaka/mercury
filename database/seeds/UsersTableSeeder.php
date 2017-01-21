@@ -16,10 +16,10 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->delete();
 
         User::create([
-          'name' => 'Test User',
-          'email' => 'test@gmail.com',
-          'password' => Hash::make('test1234'),
-          'image_url' => 'http://free-designer.net/design_img/1229010007.jpg'
+            'name' => 'Test User',
+            'email' => 'test@gmail.com',
+            'password' => Hash::make('test1234'),
+            'image_url' => 'http://free-designer.net/design_img/1229010007.jpg'
         ]);
     }
 }
