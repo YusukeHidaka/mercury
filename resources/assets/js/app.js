@@ -1,7 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import {Router, Route, browserHistory, IndexRoute} from 'react-router';
+import {AppLayout, Home, About, NoMatch}from './components';
 
-ReactDOM.render(
-    <h1>Hello, world!</h1>,
-    document.getElementById('example')
+render((
+        <Router history={browserHistory}>
+            <Route path="/" component={AppLayout}>
+                <IndexRoute component={Home}/>
+                <Route path="about" component={About}/>
+                <Route path='*' component={NoMatch} />
+            </Route>
+        </Router>
+), document.getElementById('app')
 );
