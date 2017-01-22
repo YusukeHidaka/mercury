@@ -1,6 +1,8 @@
 const elixir = require('laravel-elixir');
 
+require('laravel-elixir-livereload');
 
+elixir.config.sourcemaps = false;
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -14,5 +16,5 @@ const elixir = require('laravel-elixir');
 
 elixir(mix => {
     mix.sass('app.scss')
-       .webpack('app.js');
+      .browserify('app.js')
 });
