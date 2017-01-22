@@ -1,11 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
-import {AppLayout, Home, About, NoMatch, Login}from './components';
+import {HomeTabs} from './containers';
+import {Home, About, NoMatch, Login}from './components';
 
 render((
         <Router history={browserHistory}>
-            <Route path="/" component={AppLayout}>
+            <Route path="/" component={HomeTabs}>
                 <IndexRoute component={Home}/>
                 <Route path="about" component={About}/>
                 <Route path="login" component={Login}/>

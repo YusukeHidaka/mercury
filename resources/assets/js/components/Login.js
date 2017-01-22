@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import FacebookLogin from 'react-facebook-login';
 
-const responseFacebook = (response) => {
-  console.log(response);
-};
-
 class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {userInfo: 'sample'};
+    this.responseFacebook = this.responseFacebook.bind(this);
+  }
+
+  responseFacebook(response) {
+    console.log(response);
+    this.inputUserInfo(response);
+  };
+
+  inputUserInfo(response) {
+    this.setState({userInfo: response});
+  }
+
   render() {
     return (
       <div>
@@ -13,8 +24,10 @@ class Login extends Component {
          appId="1400175353350443"
          autoLoad={true}
          fields="name,email,picture"
-         callback={responseFacebook}
+         callback={this.responseFacebook}
         />
+        <h1>{this.state.userInfo.name}</h1>
+        <h1>{this.state.userInfo.email}</h1>
       </div>
     );
   }
