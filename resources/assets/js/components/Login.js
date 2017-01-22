@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FacebookLogin from '../src/facebook';
+import FacebookLogin from 'react-facebook-login';
 
 const responseFacebook = (response) => {
   console.log(response);
@@ -10,11 +10,10 @@ class Login extends Component {
     return (
       <div>
         <FacebookLogin
-          appId="1400175353350443"
-          autoLoad
-          buttonStyle={ { fontSize: 40 } }
-          callback={responseFacebook}
-          icon="fa-facebook"
+         appId="1400175353350443"
+         autoLoad={true}
+         fields="name,email,picture"
+         callback={responseFacebook}
         />
       </div>
     );
