@@ -80,7 +80,14 @@ class PlanController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Plan::where('id', $id)->get();
+
+        return response()->json(
+            $data,
+            200,
+            ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
     }
 
     /**
@@ -114,6 +121,19 @@ class PlanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            if (Plan::find($id)->delete()) {
+
+                return json_encode([
+                    'status' => 'true',
+                    'data' => ['message' => 'Successful']
+                ]);
+            }
+
+        } catch (Exception $e) {
+            \Log::info($e->getMessage());
+        }
+
+        return 'destroy param id = ' . $id;
     }
 }
