@@ -3,7 +3,7 @@
 /.idea
 Homestead.json
 Homestead.yaml
-.env¥
+.env
 /storage/oauth-private.key
 /storage/oauth-public.key
 /public/js/bundle.js
