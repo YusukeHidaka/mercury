@@ -8,6 +8,7 @@ export default class AppLayout extends React.Component{
                 <nav>
                     <Link to="/">Home</Link>
                     <Link to="/about">About</Link>
+                    <Link to="/login">Login</Link>
                 </nav>
                 {this.props.children}
             </div>
