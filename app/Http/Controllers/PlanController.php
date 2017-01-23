@@ -104,7 +104,7 @@ class PlanController extends Controller
 
     public function showForParticipant($user_id)
     {
-        $data = Plan::where('user_id', $user_id)->get();
+        $data = Plan::where('participant_id', $participant_id)->get();
 
         return response()->json(
             $data,
@@ -154,6 +154,24 @@ class PlanController extends Controller
     {
         try {
             if (Plan::where('user_id', $user_id)->update($request->toArray())) {
+
+                return json_encode([
+                    'status' => 'true',
+                    'data' => ['message' => 'Successful']
+                ]);
+            }
+
+        } catch (Exception $e) {
+            \Log::info($e->getMessage());
+        }
+
+        return 'Failed';
+    }
+
+    public function updateForParticipant(Request $request, $participant_id)
+    {
+        try {
+            if (Plan::where('$participant_id', $participant_id)->update($request->toArray())) {
 
                 return json_encode([
                     'status' => 'true',

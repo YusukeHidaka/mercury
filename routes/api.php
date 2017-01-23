@@ -20,3 +20,7 @@ Route::get('/user', function (Request $request) {
 Route::resource('/plans', 'PlanController');
 
 Route::post('/auth/register','Auth\RegisterController@createForApi');
+
+Route::get('/plans/user_id={user_id}','PlanController@showForUser');
+
+Route::get('/plans/participant_id={participant_id}','PlanController@showForParticipant');
