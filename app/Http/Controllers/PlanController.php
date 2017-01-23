@@ -146,6 +146,26 @@ class PlanController extends Controller
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
+
+        return 'Failed';
+    }
+
+    public function updateForUser(Request $request, $user_id)
+    {
+        try {
+            if (Plan::where('user_id', $user_id)->update($request->toArray())) {
+
+                return json_encode([
+                    'status' => 'true',
+                    'data' => ['message' => 'Successful']
+                ]);
+            }
+
+        } catch (Exception $e) {
+            \Log::info($e->getMessage());
+        }
+
+        return 'Failed';
     }
 
     /**
