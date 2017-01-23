@@ -1,13 +1,22 @@
 // --------------- TimeLine ---------------
 .post-button {
-  position: absolute;
-  right: 5%;
-  bottom: 5%;
-  width: 200px;
-  height: 200px;
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 160px;
+  height: 160px;
   background-color: #EA352D;
   border-radius: 50%;
-
+  box-shadow:2px 3px 4px #000;
+  font-size: 22px;
+  color: white !important;
+  .post-sentence {
+    margin-top: 20px;
+  }
+  .post-icon {
+    color: white;
+    font-size: 54px;
+  }
 }
 
 // --------------- Header ---------------
@@ -23,10 +32,34 @@
 // --------------- Footer ---------------
 .footer {
   background-color: orange;
-  li {
+  $spacer: 8px;
+  .menu,
+  .sms {
+    display: inline-block;
     list-style: none;
-    float: left;
-    padding: 10px;
-    border-right: 1px solid black;
+    padding: 0;
+    li {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+  .menu {
+    margin-top: 5px;
+    color: $light-gray;
+    li {
+      margin-right: $spacer;
+      padding-right: $spacer;
+      border-right: solid 1px $border-color;
+
+      &:last-child {
+        margin: 0;
+        border: 0;
+      }
+    }
+  }
+  .sms {
+    float: right;
+    li { margin-left: $spacer }
+    img { width: 28px }
   }
 }

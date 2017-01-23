@@ -8073,13 +8073,21 @@ button.close {
   clip: auto; }
 
 .post-button {
-  position: absolute;
-  right: 5%;
-  bottom: 5%;
-  width: 200px;
-  height: 200px;
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  width: 160px;
+  height: 160px;
   background-color: #EA352D;
-  border-radius: 50%; }
+  border-radius: 50%;
+  box-shadow: 2px 3px 4px #000;
+  font-size: 22px;
+  color: white !important; }
+  .post-button .post-sentence {
+    margin-top: 20px; }
+  .post-button .post-icon {
+    color: white;
+    font-size: 54px; }
 
 .header {
   background-color: orange;
@@ -8090,8 +8098,28 @@ button.close {
 
 .footer {
   background-color: orange; }
-  .footer li {
+  .footer .menu,
+  .footer .sms {
+    display: inline-block;
     list-style: none;
-    float: left;
-    padding: 10px;
-    border-right: 1px solid black; }
+    padding: 0; }
+    .footer .menu li,
+    .footer .sms li {
+      display: inline-block;
+      vertical-align: middle; }
+  .footer .menu {
+    margin-top: 5px;
+    color: #d1dade; }
+    .footer .menu li {
+      margin-right: 8px;
+      padding-right: 8px;
+      border-right: solid 1px #e7eaec; }
+      .footer .menu li:last-child {
+        margin: 0;
+        border: 0; }
+  .footer .sms {
+    float: right; }
+    .footer .sms li {
+      margin-left: 8px; }
+    .footer .sms img {
+      width: 28px; }
