@@ -14,13 +14,16 @@ class PlansTableSeeder extends Seeder
     public function run()
     {
         DB::table('plans')->delete();
+        $faker = Faker\Factory::create();
 
-        Plan::create([
-          'user_id' => 1,
-          'give' => 'プログラミング教えます',
-          'take' => 'クッキーの作り方教えてください',
-          'place' => '新宿',
-          'image_url' => 'http://free-designer.net/design_img/1229010007.jpg'
-        ]);
+        for ($i=0; $i < 5; $i++) {
+            Plan::create([
+              'user_id' => $i,
+              'give' => $faker->numerify('やってあげます！ ###'),
+              'take' => $faker->numerify('やってください！ ###'),
+              'place' => $faker->address,
+              'image_url' => 'http://free-designer.net/design_img/1229010007.jpg'
+            ]);
+        }
     }
 }

@@ -72,6 +72,8 @@ class RegisterController extends Controller
 
     public function createForApi(Request $request)
     {
+        // $this->validate($request->toArray());
+
         try {
             if ($this->create($request->toArray())) {
 
