@@ -14,7 +14,10 @@ export default class TimeLine extends React.Component{
         </nav>
         {this.props.children}
 
-        <div className='post-button btn'></div>
+        <div className='post-button btn'>
+          <div className='post-sentence'>投稿</div>
+          <i className="fa fa-pencil-square-o post-icon" aria-hidden="true"></i>
+        </div>
       </div>
     );
   }

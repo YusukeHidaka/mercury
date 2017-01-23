@@ -42372,7 +42372,16 @@ var TimeLine = (function (_React$Component) {
           )
         ),
         this.props.children,
-        _react2['default'].createElement('div', { className: 'post-button btn' })
+        _react2['default'].createElement(
+          'div',
+          { className: 'post-button btn' },
+          _react2['default'].createElement(
+            'div',
+            { className: 'post-sentence' },
+            '投稿'
+          ),
+          _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o post-icon', 'aria-hidden': 'true' })
+        )
       );
     }
   }]);
