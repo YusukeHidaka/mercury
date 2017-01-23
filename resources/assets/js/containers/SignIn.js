@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+'use strict';
+
+import React, {Component} from 'react';
 import FacebookLogin from 'react-facebook-login';
 
-class Login extends Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {userInfo: 'sample'};
@@ -10,10 +12,10 @@ class Login extends Component {
 
   responseFacebook(response) {
     console.log(response);
-    this.inputUserInfo(response);
+    this.renderUserInfo(response);
   };
 
-  inputUserInfo(response) {
+  renderUserInfo(response) {
     this.setState({userInfo: response});
   }
 
@@ -32,4 +34,4 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+export default SignIn;

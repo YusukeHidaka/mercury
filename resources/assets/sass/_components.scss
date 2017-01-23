@@ -1,0 +1,20 @@
+// --------------- Header ---------------
+.header{
+  background-color: orange;
+  height: 100%;
+  li{
+    list-style: none;
+    float: left;
+  }
+}
+
+// --------------- Footer ---------------
+.footer{
+  background-color: orange;
+  li{
+    list-style: none;
+    float: left;
+    padding: 10px;
+    border-right: 1px solid black;
+  }
+}
