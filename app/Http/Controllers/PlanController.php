@@ -90,6 +90,30 @@ class PlanController extends Controller
         );
     }
 
+    public function showOnUser($user_id)
+    {
+        $data = Plan::where('user_id', $user_id)->get();
+
+        return response()->json(
+            $data,
+            200,
+            ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+
+    public function showOnParticipant($user_id)
+    {
+        $data = Plan::where('user_id', $user_id)->get();
+
+        return response()->json(
+            $data,
+            200,
+            ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
