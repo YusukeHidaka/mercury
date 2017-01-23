@@ -171,7 +171,7 @@ class PlanController extends Controller
     public function updateForParticipant(Request $request, $participant_id)
     {
         try {
-            if (Plan::where('$participant_id', $participant_id)->update($request->toArray())) {
+            if (Plan::where('participant_id', $participant_id)->update($request->toArray())) {
 
                 return json_encode([
                     'status' => 'true',
