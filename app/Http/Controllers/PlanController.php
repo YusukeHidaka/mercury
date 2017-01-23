@@ -90,7 +90,7 @@ class PlanController extends Controller
         );
     }
 
-    public function showOnUser($user_id)
+    public function showForUser($user_id)
     {
         $data = Plan::where('user_id', $user_id)->get();
 
@@ -102,7 +102,7 @@ class PlanController extends Controller
         );
     }
 
-    public function showOnParticipant($user_id)
+    public function showForParticipant($user_id)
     {
         $data = Plan::where('user_id', $user_id)->get();
 
