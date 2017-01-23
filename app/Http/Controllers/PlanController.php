@@ -134,7 +134,18 @@ class PlanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            if (Plan::find($id)->update($request->toArray())) {
+
+                return json_encode([
+                    'status' => 'true',
+                    'data' => ['message' => 'Successful']
+                ]);
+            }
+
+        } catch (Exception $e) {
+            \Log::info($e->getMessage());
+        }
     }
 
     /**
