@@ -16,5 +16,9 @@ elixir.config.sourcemaps = false;
 
 elixir(mix => {
     mix.sass('app.scss')
-      .browserify('app.js')
+      .browserify('root.js')
+      .copy(
+        'node_modules/font-awesome/fonts',
+        'public/fonts'
+        )
 });

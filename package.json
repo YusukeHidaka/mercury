@@ -6,8 +6,9 @@
   },
   "devDependencies": {
     "bootstrap-sass": "^3.3.7",
-    "gulp": "^3.9.1",
     "classnames": "^2.2.3",
+    "font-awesome": "^4.7.0",
+    "gulp": "^3.9.1",
     "laravel-elixir": "^2.2.1",
     "laravel-elixir-livereload": "0.0.3",
     "lodash": "^4.14.0",
