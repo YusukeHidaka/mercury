@@ -7,7 +7,7 @@ import {App, TimeLine, Profile, Chat, Plan, SignUp, SignIn, News, Contact,
   PrivacyPolicy, TermsOfUse, QandA, NoMatch} from './containers';
 import {UserAction} from './actions';
 
-// const store = createStore(rootReducer);
+const store = createStore(rootReducer);
 
 // UserAction.setCurrentUser(store, this.props.current_user);
 

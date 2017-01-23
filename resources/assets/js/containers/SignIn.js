@@ -10,6 +10,7 @@ class SignIn extends Component {
     this.state = {currentUser: null}
       // UserAction.getUser((user) => {
       //   this.setState({currentUser: user});
+      //   console.log(user);
       // });
     this.responseFacebook = this.responseFacebook.bind(this);
   }
@@ -17,6 +18,7 @@ class SignIn extends Component {
   responseFacebook(response) {
     console.log(response);
     this.rendercurrentUser(response);
+    UserAction.registerUser(response);
   };
 
   rendercurrentUser(response) {
@@ -32,8 +34,6 @@ class SignIn extends Component {
          fields="name,email,picture"
          callback={this.responseFacebook}
         />
-        <h1>{this.state.currentUser.name}</h1>
-        <h1>{this.state.currentUser.email}</h1>
       </div>
     );
   }
