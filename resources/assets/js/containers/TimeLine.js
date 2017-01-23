@@ -6,14 +6,14 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 export default class TimeLine extends React.Component{
   render(){
     return (
-      <div>
+      <div className='time-line'>
         <nav>
           <Link to="#">条件から検索</Link>
           <Link to="/plans/:planId">プラン詳細</Link>
           <Link to="/news">更新情報</Link>
         </nav>
         {this.props.children}
-        
+
         <div className='post-button btn'></div>
       </div>
     );

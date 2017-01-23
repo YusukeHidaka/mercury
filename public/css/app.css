@@ -8077,7 +8077,9 @@ button.close {
   right: 5%;
   bottom: 5%;
   width: 200px;
-  height: 200px; }
+  height: 200px;
+  background-color: #EA352D;
+  border-radius: 50%; }
 
 .header {
   background-color: orange;
