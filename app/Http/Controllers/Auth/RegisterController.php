@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -67,5 +68,21 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function createForApi(Request $request)
+    {
+        try {
+            if ($this->create($request->toArray())) {
+
+                return response()->json([
+                    'status' => 'ok',
+                ], 201);
+            }
+        } catch (Exception $e) {
+            \Log::info($e->getMessage());
+        }
+
+        return 'Failed';
     }
 }

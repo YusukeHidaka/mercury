@@ -15,3 +15,16 @@ Route::get('{slug}', function() {
     return view('index');
 })
 ->where('slug', '(?!api)([A-z\d-\/_.]+)?');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::group(['middleware' => 'web'], function () {
+
+    //FBログイン（ボタンのリンク先）
+    Route::get('facebook','FacebookController@facebookLogin');
+    //認証後の戻りURL
+    Route::get('facebook/callback','FacebookController@facebookCallback');
+
+});

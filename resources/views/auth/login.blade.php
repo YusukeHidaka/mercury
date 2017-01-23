@@ -53,6 +53,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     Login
                                 </button>
+                                <a class="btn btn-block btn-social btn-facebook" href="facebook">
+                                    <span class="fa fa-facebook"></span>Facebook ログイン
+                                </a>
 
                                 <a class="btn btn-link" href="{{ url('/password/reset') }}">
                                     Forgot Your Password?
