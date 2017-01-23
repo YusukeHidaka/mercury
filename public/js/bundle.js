@@ -21,7 +21,7 @@ var _containers = require('./containers');
 
 var _actions = require('./actions');
 
-// const store = createStore(rootReducer);
+var store = (0, _redux.createStore)(_reducersIndex2['default']);
 
 // UserAction.setCurrentUser(store, this.props.current_user);
 
@@ -71321,6 +71321,18 @@ var _axios = require('axios');
 var _axios2 = _interopRequireDefault(_axios);
 
 var UserAction = {
+  registerUser: function registerUser(response) {
+    (0, _axios2['default'])({
+      method: 'POST',
+      url: _constants.CommonConstants.API_REGISTER_USER_PATH,
+      data: { name: response.name, email: response.email, password: response.id }
+    }).then(function (response) {
+      return response.data;
+    }).then(function (user) {
+      return callback(user);
+    });
+  },
+
   setCurrentUser: function setCurrentUser(store, currentUser) {
     store.dispatch({ type: _constants.UserConstants.SET_CURRENT_USER, currentUser: currentUser });
   },
@@ -72011,7 +72023,7 @@ Object.defineProperty(exports, '__esModule', {
 var CommonConstants = {
   API_REGISTER_USER_PATH: '/api/auth/register',
   API_LOGIN_PATH: '/oauth/token',
-  // API_USER_PATH: '',
+  API_USER_PATH: '/api/user',
   API_GET_PLANS_PATH: '/api/plans',
   API_GET_PLAN_PATH: '/api/plans/{id}',
   API_REGISTER_PLAN_PATH: '/api/plans',
@@ -72490,6 +72502,7 @@ var SignIn = (function (_Component) {
     this.state = { currentUser: null };
     // UserAction.getUser((user) => {
     //   this.setState({currentUser: user});
+    //   console.log(user);
     // });
     this.responseFacebook = this.responseFacebook.bind(this);
   }
@@ -72499,6 +72512,7 @@ var SignIn = (function (_Component) {
     value: function responseFacebook(response) {
       console.log(response);
       this.rendercurrentUser(response);
+      _actions.UserAction.registerUser(response);
     }
   }, {
     key: 'rendercurrentUser',
@@ -72516,17 +72530,7 @@ var SignIn = (function (_Component) {
           autoLoad: true,
           fields: 'name,email,picture',
           callback: this.responseFacebook
-        }),
-        _react2['default'].createElement(
-          'h1',
-          null,
-          this.state.currentUser.name
-        ),
-        _react2['default'].createElement(
-          'h1',
-          null,
-          this.state.currentUser.email
-        )
+        })
       );
     }
   }]);

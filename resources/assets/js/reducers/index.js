@@ -1,4 +1,12 @@
 import {combineReducers} from 'redux';
-/* Import other reducers, and then combine them in combineReducers */
+import {routerReducer} from 'react-router-redux';
+import {reducer as formReducer} from 'redux-form';
+import {CurrentUserReducer} from './current_user_reducer';
 
-export default combineReducers({});
+const rootReducer = combineReducers({
+  currentUser: CurrentUserReducer.currentUser,
+  form: formReducer,
+  routing: routerReducer
+});
+
+export default rootReducer;

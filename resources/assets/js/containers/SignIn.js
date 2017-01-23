@@ -2,21 +2,27 @@
 
 import React, {Component} from 'react';
 import FacebookLogin from 'react-facebook-login';
+import {UserAction} from '../actions';
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
-    this.state = {userInfo: 'sample'};
+    this.state = {currentUser: null}
+      // UserAction.getUser((user) => {
+      //   this.setState({currentUser: user});
+      //   console.log(user);
+      // });
     this.responseFacebook = this.responseFacebook.bind(this);
   }
 
   responseFacebook(response) {
     console.log(response);
-    this.renderUserInfo(response);
+    this.rendercurrentUser(response);
+    UserAction.registerUser(response);
   };
 
-  renderUserInfo(response) {
-    this.setState({userInfo: response});
+  rendercurrentUser(response) {
+    this.setState({currentUser: response});
   }
 
   render() {
@@ -28,10 +34,13 @@ class SignIn extends Component {
          fields="name,email,picture"
          callback={this.responseFacebook}
         />
-        <h1>{this.state.userInfo.name}</h1>
-        <h1>{this.state.userInfo.email}</h1>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  currentUser: state.currentUser
+});
+
 export default SignIn;
