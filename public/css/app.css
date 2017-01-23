@@ -8072,6 +8072,13 @@ button.close {
   overflow: visible;
   clip: auto; }
 
+.post-button {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  width: 200px;
+  height: 200px; }
+
 .header {
   background-color: orange;
   height: 100%; }

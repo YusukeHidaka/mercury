@@ -1,7 +1,15 @@
 import React,  { PropTypes,  Component } from 'react';
 import {Link} from 'react-router';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    injectTapEventPlugin();
+  }
+
   render() {
     return (
       <div className='header'>
@@ -19,9 +27,17 @@ class Header extends Component {
               </Link>
             </li>
             <li>
-              <Link to='#' className='btn'>
-                <i className='fa fa-bell-o' aria-hidden='true'></i>
-              </Link>
+              <IconMenu
+                iconButtonElement={<i className='fa fa-bell-o' aria-hidden='true'></i>}
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              >
+                <MenuItem primaryText="通知１" />
+                <MenuItem primaryText="通知２" />
+                <MenuItem primaryText="通知３" />
+                <MenuItem primaryText="通知４" />
+                <MenuItem primaryText="通知５" />
+              </IconMenu>
             </li>
           </ul>
         </div>

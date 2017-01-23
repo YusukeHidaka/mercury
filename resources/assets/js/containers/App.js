@@ -2,8 +2,18 @@
 
 import React, {Component} from 'react';
 import {Header, Footer} from '../components';
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  getChildContext() {
+      return { muiTheme: getMuiTheme(baseTheme) };
+  }
+
   render() {
     return (
       <div id='wrapper'>
@@ -20,3 +30,7 @@ export default class App extends Component {
     );
   }
 }
+
+App.childContextTypes = {
+    muiTheme: React.PropTypes.object.isRequired,
+};

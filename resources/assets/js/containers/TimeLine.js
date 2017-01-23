@@ -1,5 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export default class TimeLine extends React.Component{
   render(){
@@ -11,7 +13,11 @@ export default class TimeLine extends React.Component{
           <Link to="/news">更新情報</Link>
         </nav>
         {this.props.children}
+        
+        <div className='post-button btn'></div>
       </div>
     );
   }
 }
+
+export default TimeLine;

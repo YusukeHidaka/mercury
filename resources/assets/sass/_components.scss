@@ -1,17 +1,26 @@
+// --------------- TimeLine ---------------
+.post-button {
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  width: 200px;
+  height: 200px;
+}
+
 // --------------- Header ---------------
-.header{
+.header {
   background-color: orange;
   height: 100%;
-  li{
+  li {
     list-style: none;
     float: left;
   }
 }
 
 // --------------- Footer ---------------
-.footer{
+.footer {
   background-color: orange;
-  li{
+  li {
     list-style: none;
     float: left;
     padding: 10px;
