@@ -15,7 +15,7 @@ class PlanController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -57,8 +57,11 @@ class PlanController extends Controller
             // 'name' => 'required|max:255',
         ]);
 
+        $data = $request->toArray();
+        $data['user_id'] = $request->user()->id;
+
         try {
-            if (Plan::create($request->toArray())) {
+            if (Plan::create($data)) {
 
                 return json_encode([
                     'status' => 'true',
