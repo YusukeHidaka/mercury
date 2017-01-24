@@ -1,11 +1,17 @@
 import React from 'react';
 import { render } from 'react-dom';
+import {createStore} from 'redux';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
+import rootReducer from './reducers/index';
 import {App, TimeLine, Profile, Chat, Plan, SignUp, SignIn, News, Contact,
   PrivacyPolicy, TermsOfUse, QandA, NoMatch} from './containers';
+import {UserAction} from './actions';
 
-render((
-  <Router history={browserHistory}>
+const store = createStore(rootReducer);
+
+// UserAction.setCurrentUser(store, this.props.current_user);
+
+render((<Router history={browserHistory}>
     <Route path='/' component={App}>
       <IndexRoute component={TimeLine}/>
       <Route path='profile/:uid' component={Profile}/>
