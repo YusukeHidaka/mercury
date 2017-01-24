@@ -4,7 +4,7 @@ import {createStore} from 'redux';
 import {Router, Route, browserHistory, IndexRoute} from 'react-router';
 import rootReducer from './reducers/root_reducer';
 import {App, TimeLine, Profile, Chat, Plan, SignUp, News, Contact,
-  PrivacyPolicy, TermsOfUse, QandA, NoMatch} from './containers';
+  PrivacyPolicy, TermsOfUse, QandA, NoMatch, FacebookApi} from './containers';
 import {UserAction} from './actions';
 
 const store = createStore(rootReducer);
@@ -21,6 +21,7 @@ render((<Router history={browserHistory}>
       <Route path='privacy_policy' component={PrivacyPolicy}/>
       <Route path='terms_of_use' component={TermsOfUse}/>
       <Route path='q_and_a' component={QandA}/>
+      <Route path='facebook_api' component={FacebookApi}/>
       <Route path='*' component={NoMatch} />
     </Route>
   </Router>

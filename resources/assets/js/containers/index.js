@@ -9,8 +9,9 @@ import QandA from './QandA';
 import Contact from './Contact';
 import SignUp from './SignUp';
 import NoMatch from './NoMatch';
+import FacebookApi from './FacebookApi';
 
 export {
   App, TimeLine, Chat, Plan, News, PrivacyPolicy, TermsOfUse, QandA,
-  Contact, SignUp, NoMatch
+  Contact, SignUp, NoMatch, FacebookApi
 };

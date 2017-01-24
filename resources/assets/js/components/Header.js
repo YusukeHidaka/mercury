@@ -61,9 +61,9 @@ class Header extends Component {
   }
 
   renderGuestHeader() {
-    return (
-      <div><SignIn isLoggedIn={this.changeLoggedIn.bind(this)}/></div>
-    );
+    // return (
+    //   <div><SignIn isLoggedIn={this.changeLoggedIn.bind(this)}/></div>
+    // );
   }
 
   render() {
