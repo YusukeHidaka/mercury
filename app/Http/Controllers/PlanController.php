@@ -59,7 +59,7 @@ class PlanController extends Controller
         ]);
 
         $data = $request->toArray();
-        $data['user_id'] = $request->user()->id;
+        $data['creator_id'] = $request->user()->id;
 
         try {
             if (Plan::create($data)) {
