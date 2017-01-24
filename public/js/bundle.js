@@ -71907,7 +71907,7 @@ var _constantsConstants = require('../constants/Constants');
 
 var _constantsConstants2 = _interopRequireDefault(_constantsConstants);
 
-var APP_ID = '374457819597108';
+var APP_ID = '1400175353350443';
 
 var FacebookActionCreators = {
   initFacebook: function initFacebook() {
