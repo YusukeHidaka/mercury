@@ -13,17 +13,15 @@ var _redux = require('redux');
 
 var _reactRouter = require('react-router');
 
-var _reducersIndex = require('./reducers/index');
+var _reducersRoot_reducer = require('./reducers/root_reducer');
 
-var _reducersIndex2 = _interopRequireDefault(_reducersIndex);
+var _reducersRoot_reducer2 = _interopRequireDefault(_reducersRoot_reducer);
 
 var _containers = require('./containers');
 
 var _actions = require('./actions');
 
-var store = (0, _redux.createStore)(_reducersIndex2['default']);
-
-// UserAction.setCurrentUser(store, this.props.current_user);
+var store = (0, _redux.createStore)(_reducersRoot_reducer2['default']);
 
 (0, _reactDom.render)(_react2['default'].createElement(
   _reactRouter.Router,
@@ -36,7 +34,6 @@ var store = (0, _redux.createStore)(_reducersIndex2['default']);
     _react2['default'].createElement(_reactRouter.Route, { path: 'chat/:uid', component: _containers.Chat }),
     _react2['default'].createElement(_reactRouter.Route, { path: 'plans/:planId', component: _containers.Plan }),
     _react2['default'].createElement(_reactRouter.Route, { path: 'sign_up', component: _containers.SignUp }),
-    _react2['default'].createElement(_reactRouter.Route, { path: 'sign_in', component: _containers.SignIn }),
     _react2['default'].createElement(_reactRouter.Route, { path: 'news', component: _containers.News }),
     _react2['default'].createElement(_reactRouter.Route, { path: 'contact', component: _containers.Contact }),
     _react2['default'].createElement(_reactRouter.Route, { path: 'privacy_policy', component: _containers.PrivacyPolicy }),
@@ -46,7 +43,7 @@ var store = (0, _redux.createStore)(_reducersIndex2['default']);
   )
 ), document.getElementById('app'));
 
-},{"./actions":896,"./containers":919,"./reducers/index":921,"react":813,"react-dom":569,"react-router":770,"redux":884}],2:[function(require,module,exports){
+},{"./actions":896,"./containers":919,"./reducers/root_reducer":921,"react":813,"react-dom":569,"react-router":770,"redux":884}],2:[function(require,module,exports){
 /**
  * Array.prototype.findIndex
  *
@@ -71321,15 +71318,21 @@ var _axios = require('axios');
 var _axios2 = _interopRequireDefault(_axios);
 
 var UserAction = {
-  registerUser: function registerUser(response) {
+  registerUser: function registerUser(fbResponse, successCallback, failedCallback) {
     (0, _axios2['default'])({
       method: 'POST',
       url: _constants.CommonConstants.API_REGISTER_USER_PATH,
-      data: { name: response.name, email: response.email, password: response.id }
+      data: { name: fbResponse.name, email: fbResponse.email, password: fbResponse.id }
     }).then(function (response) {
       return response.data;
-    }).then(function (user) {
-      return callback(user);
+    }).then(function (json) {
+      if (typeof successCallback === 'function') {
+        successCallback(json);
+      }
+    })['catch'](function (error) {
+      if (typeof failedCallback === 'function') {
+        failedCallback(error.response.data);
+      }
     });
   },
 
@@ -71351,7 +71354,7 @@ var UserAction = {
 };
 exports.UserAction = UserAction;
 
-},{"../constants":905,"axios":3}],898:[function(require,module,exports){
+},{"../constants":906,"axios":3}],898:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -71536,6 +71539,14 @@ var _materialUiMenuItem = require('material-ui/MenuItem');
 
 var _materialUiMenuItem2 = _interopRequireDefault(_materialUiMenuItem);
 
+var _ = require('.');
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  };
+};
+
 var Header = (function (_Component) {
   _inherits(Header, _Component);
 
@@ -71543,12 +71554,82 @@ var Header = (function (_Component) {
     _classCallCheck(this, Header);
 
     _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).call(this, props);
+    this.state = {
+      isLoggedIn: false
+    };
     (0, _reactTapEventPlugin2['default'])();
   }
 
   _createClass(Header, [{
+    key: 'renderRightHeader',
+    value: function renderRightHeader() {
+      if (this.state.isLoggedIn) {
+        return this.renderUserHeader();
+      } else {
+        return this.renderGuestHeader();
+      }
+    }
+  }, {
+    key: 'renderUserHeader',
+    value: function renderUserHeader() {
+      return _react2['default'].createElement(
+        'ul',
+        null,
+        _react2['default'].createElement(
+          'li',
+          null,
+          _react2['default'].createElement(
+            _reactRouter.Link,
+            { to: '/user/profile', className: 'btn' },
+            _react2['default'].createElement('i', { className: 'fa fa-user-o', 'aria-hidden': 'true' })
+          )
+        ),
+        _react2['default'].createElement(
+          'li',
+          null,
+          _react2['default'].createElement(
+            _reactRouter.Link,
+            { to: '/user/messages', className: 'btn' },
+            _react2['default'].createElement('i', { className: 'fa fa-commenting-o', 'aria-hidden': 'true' })
+          )
+        ),
+        _react2['default'].createElement(
+          'li',
+          null,
+          _react2['default'].createElement(
+            _materialUiIconMenu2['default'],
+            {
+              iconButtonElement: _react2['default'].createElement('i', { className: 'fa fa-bell-o', 'aria-hidden': 'true' }),
+              anchorOrigin: { horizontal: 'right', vertical: 'top' },
+              targetOrigin: { horizontal: 'right', vertical: 'top' }
+            },
+            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知１' }),
+            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知２' }),
+            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知３' }),
+            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知４' }),
+            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知５' })
+          )
+        )
+      );
+    }
+  }, {
+    key: 'changeLoggedIn',
+    value: function changeLoggedIn() {
+      this.setState({ isLoggedIn: true });
+    }
+  }, {
+    key: 'renderGuestHeader',
+    value: function renderGuestHeader() {
+      return _react2['default'].createElement(
+        'div',
+        null,
+        _react2['default'].createElement(_.SignIn, { isLoggedIn: this.changeLoggedIn.bind(this) })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
+      console.log(this.state);
       return _react2['default'].createElement(
         'div',
         { className: 'header' },
@@ -71560,45 +71641,7 @@ var Header = (function (_Component) {
         _react2['default'].createElement(
           'div',
           { className: 'col-md-10' },
-          _react2['default'].createElement(
-            'ul',
-            null,
-            _react2['default'].createElement(
-              'li',
-              null,
-              _react2['default'].createElement(
-                _reactRouter.Link,
-                { to: '/user/profile', className: 'btn' },
-                _react2['default'].createElement('i', { className: 'fa fa-user-o', 'aria-hidden': 'true' })
-              )
-            ),
-            _react2['default'].createElement(
-              'li',
-              null,
-              _react2['default'].createElement(
-                _reactRouter.Link,
-                { to: '/user/messages', className: 'btn' },
-                _react2['default'].createElement('i', { className: 'fa fa-commenting-o', 'aria-hidden': 'true' })
-              )
-            ),
-            _react2['default'].createElement(
-              'li',
-              null,
-              _react2['default'].createElement(
-                _materialUiIconMenu2['default'],
-                {
-                  iconButtonElement: _react2['default'].createElement('i', { className: 'fa fa-bell-o', 'aria-hidden': 'true' }),
-                  anchorOrigin: { horizontal: 'right', vertical: 'top' },
-                  targetOrigin: { horizontal: 'right', vertical: 'top' }
-                },
-                _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知１' }),
-                _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知２' }),
-                _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知３' }),
-                _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知４' }),
-                _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知５' })
-              )
-            )
-          )
+          this.renderRightHeader()
         )
       );
     }
@@ -71612,7 +71655,7 @@ Header.propTypes = {};
 exports['default'] = Header;
 module.exports = exports['default'];
 
-},{"material-ui/IconMenu":423,"material-ui/MenuItem":430,"react":813,"react-router":770,"react-tap-event-plugin":782}],900:[function(require,module,exports){
+},{".":904,"material-ui/IconMenu":423,"material-ui/MenuItem":430,"react":813,"react-router":770,"react-tap-event-plugin":782}],900:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -71698,7 +71741,7 @@ PlanList.propTypes = {
 exports['default'] = PlanList;
 module.exports = exports['default'];
 
-},{".":903,"react":813,"react-dom":569}],901:[function(require,module,exports){
+},{".":904,"react":813,"react-dom":569}],901:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -71986,6 +72029,105 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactFacebookLogin = require('react-facebook-login');
+
+var _reactFacebookLogin2 = _interopRequireDefault(_reactFacebookLogin);
+
+var _actions = require('../actions');
+
+var SignIn = (function (_Component) {
+  _inherits(SignIn, _Component);
+
+  function SignIn(props) {
+    _classCallCheck(this, SignIn);
+
+    _get(Object.getPrototypeOf(SignIn.prototype), 'constructor', this).call(this, props);
+    //this.state = {currentUser}
+    // UserAction.getUser((user) => {
+    //   this.setState({currentUser: user});
+    //   console.log(user);
+    // });
+    this.responseFacebook = this.responseFacebook.bind(this);
+  }
+
+  //
+  // const mapStateToProps = state => ({
+  //   currentUser: state.currentUser
+  // });
+
+  _createClass(SignIn, [{
+    key: 'responseFacebook',
+    value: function responseFacebook(response) {
+      var _this = this;
+
+      var successCallback = function successCallback() {
+        // TODO
+        console.log('会員登録に成功しました');
+        // this.setState({
+        //   currentUser.name: response.name,
+        //   currentUser.email: response.email,
+        //   currentUser.id: response.id
+        // });
+        _this.props.isLoggedIn();
+      };
+      var failedCallback = function failedCallback() {
+        // TODO
+        console.log('すでに登録済みです');
+        // this.setState({
+        //   currentUser.name: response.name,
+        //   currentUser.email: response.email,
+        //   currentUser.id: response.id
+        // });
+        _this.props.isLoggedIn();
+      };
+
+      console.log(response);
+      _actions.UserAction.registerUser(response, successCallback, failedCallback);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        null,
+        _react2['default'].createElement(_reactFacebookLogin2['default'], {
+          appId: '1400175353350443',
+          autoLoad: false,
+          onClick: this.responseFacebook,
+          fields: 'name,email,picture',
+          callback: this.responseFacebook
+        })
+      );
+    }
+  }]);
+
+  return SignIn;
+})(_react.Component);
+
+exports['default'] = SignIn;
+module.exports = exports['default'];
+
+},{"../actions":896,"react":813,"react-facebook-login":701}],904:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _Header = require('./Header');
@@ -71995,6 +72137,10 @@ var _Header2 = _interopRequireDefault(_Header);
 var _Footer = require('./Footer');
 
 var _Footer2 = _interopRequireDefault(_Footer);
+
+var _SignIn = require('./SignIn');
+
+var _SignIn2 = _interopRequireDefault(_SignIn);
 
 var _PostModal = require('./PostModal');
 
@@ -72008,13 +72154,14 @@ var _PlanListItem = require('./PlanListItem');
 
 var _PlanListItem2 = _interopRequireDefault(_PlanListItem);
 
-exports.Footer = _Footer2['default'];
 exports.Header = _Header2['default'];
+exports.Footer = _Footer2['default'];
+exports.SignIn = _SignIn2['default'];
 exports.PostModal = _PostModal2['default'];
 exports.PlanList = _PlanList2['default'];
 exports.PlanListItem = _PlanListItem2['default'];
 
-},{"./Footer":898,"./Header":899,"./PlanList":900,"./PlanListItem":901,"./PostModal":902}],904:[function(require,module,exports){
+},{"./Footer":898,"./Header":899,"./PlanList":900,"./PlanListItem":901,"./PostModal":902,"./SignIn":903}],905:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72031,7 +72178,7 @@ var CommonConstants = {
 };
 exports.CommonConstants = CommonConstants;
 
-},{}],905:[function(require,module,exports){
+},{}],906:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72045,7 +72192,7 @@ var _user_constants = require('./user_constants');
 exports.CommonConstants = _common_constants.CommonConstants;
 exports.UserConstants = _user_constants.UserConstants;
 
-},{"./common_constants":904,"./user_constants":906}],906:[function(require,module,exports){
+},{"./common_constants":905,"./user_constants":907}],907:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72056,7 +72203,7 @@ var UserConstants = {
 };
 exports.UserConstants = UserConstants;
 
-},{}],907:[function(require,module,exports){
+},{}],908:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72136,7 +72283,7 @@ App.childContextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../components":903,"material-ui/styles/baseThemes/lightBaseTheme":448,"material-ui/styles/getMuiTheme":450,"react":813}],908:[function(require,module,exports){
+},{"../components":904,"material-ui/styles/baseThemes/lightBaseTheme":448,"material-ui/styles/getMuiTheme":450,"react":813}],909:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72183,7 +72330,7 @@ var Chat = (function (_React$Component) {
 exports['default'] = Chat;
 module.exports = exports['default'];
 
-},{"react":813}],909:[function(require,module,exports){
+},{"react":813}],910:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72230,7 +72377,7 @@ var Contact = (function (_React$Component) {
 exports['default'] = Contact;
 module.exports = exports['default'];
 
-},{"react":813}],910:[function(require,module,exports){
+},{"react":813}],911:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72277,7 +72424,7 @@ var News = (function (_React$Component) {
 exports['default'] = News;
 module.exports = exports['default'];
 
-},{"react":813}],911:[function(require,module,exports){
+},{"react":813}],912:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72324,7 +72471,7 @@ var NoMatch = (function (_React$Component) {
 exports['default'] = NoMatch;
 module.exports = exports['default'];
 
-},{"react":813}],912:[function(require,module,exports){
+},{"react":813}],913:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72371,7 +72518,7 @@ var Plan = (function (_React$Component) {
 exports['default'] = Plan;
 module.exports = exports['default'];
 
-},{"react":813}],913:[function(require,module,exports){
+},{"react":813}],914:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72418,7 +72565,7 @@ var PrivacyPolicy = (function (_React$Component) {
 exports['default'] = PrivacyPolicy;
 module.exports = exports['default'];
 
-},{"react":813}],914:[function(require,module,exports){
+},{"react":813}],915:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72465,89 +72612,7 @@ var QandA = (function (_React$Component) {
 exports['default'] = QandA;
 module.exports = exports['default'];
 
-},{"react":813}],915:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactFacebookLogin = require('react-facebook-login');
-
-var _reactFacebookLogin2 = _interopRequireDefault(_reactFacebookLogin);
-
-var _actions = require('../actions');
-
-var SignIn = (function (_Component) {
-  _inherits(SignIn, _Component);
-
-  function SignIn(props) {
-    _classCallCheck(this, SignIn);
-
-    _get(Object.getPrototypeOf(SignIn.prototype), 'constructor', this).call(this, props);
-    this.state = { currentUser: null };
-    // UserAction.getUser((user) => {
-    //   this.setState({currentUser: user});
-    //   console.log(user);
-    // });
-    this.responseFacebook = this.responseFacebook.bind(this);
-  }
-
-  _createClass(SignIn, [{
-    key: 'responseFacebook',
-    value: function responseFacebook(response) {
-      console.log(response);
-      this.rendercurrentUser(response);
-      _actions.UserAction.registerUser(response);
-    }
-  }, {
-    key: 'rendercurrentUser',
-    value: function rendercurrentUser(response) {
-      this.setState({ currentUser: response });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'div',
-        null,
-        _react2['default'].createElement(_reactFacebookLogin2['default'], {
-          appId: '1400175353350443',
-          autoLoad: true,
-          fields: 'name,email,picture',
-          callback: this.responseFacebook
-        })
-      );
-    }
-  }]);
-
-  return SignIn;
-})(_react.Component);
-
-var mapStateToProps = function mapStateToProps(state) {
-  return {
-    currentUser: state.currentUser
-  };
-};
-
-exports['default'] = SignIn;
-module.exports = exports['default'];
-
-},{"../actions":896,"react":813,"react-facebook-login":701}],916:[function(require,module,exports){
+},{"react":813}],916:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72786,7 +72851,7 @@ var TimeLine = (function (_Component) {
 exports['default'] = TimeLine;
 module.exports = exports['default'];
 
-},{"../components":903,"../constants":905,"axios":3,"material-ui/FloatingActionButton":417,"material-ui/svg-icons/content/add":455,"react":813,"react-router":770}],919:[function(require,module,exports){
+},{"../components":904,"../constants":906,"axios":3,"material-ui/FloatingActionButton":417,"material-ui/svg-icons/content/add":455,"react":813,"react-router":770}],919:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72831,10 +72896,6 @@ var _Contact = require('./Contact');
 
 var _Contact2 = _interopRequireDefault(_Contact);
 
-var _SignIn = require('./SignIn');
-
-var _SignIn2 = _interopRequireDefault(_SignIn);
-
 var _SignUp = require('./SignUp');
 
 var _SignUp2 = _interopRequireDefault(_SignUp);
@@ -72852,11 +72913,10 @@ exports.PrivacyPolicy = _PrivacyPolicy2['default'];
 exports.TermsOfUse = _TermsOfUse2['default'];
 exports.QandA = _QandA2['default'];
 exports.Contact = _Contact2['default'];
-exports.SignIn = _SignIn2['default'];
 exports.SignUp = _SignUp2['default'];
 exports.NoMatch = _NoMatch2['default'];
 
-},{"./App":907,"./Chat":908,"./Contact":909,"./News":910,"./NoMatch":911,"./Plan":912,"./PrivacyPolicy":913,"./QandA":914,"./SignIn":915,"./SignUp":916,"./TermsOfUse":917,"./TimeLine":918}],920:[function(require,module,exports){
+},{"./App":908,"./Chat":909,"./Contact":910,"./News":911,"./NoMatch":912,"./Plan":913,"./PrivacyPolicy":914,"./QandA":915,"./SignUp":916,"./TermsOfUse":917,"./TimeLine":918}],920:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72879,7 +72939,7 @@ var CurrentUserReducer = {
 };
 exports.CurrentUserReducer = CurrentUserReducer;
 
-},{"../constants":905}],921:[function(require,module,exports){
+},{"../constants":906}],921:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {

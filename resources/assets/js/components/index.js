@@ -1,9 +1,10 @@
 import Header from './Header';
 import Footer from './Footer';
+import SignIn from './SignIn';
 import PostModal from './PostModal';
 import PlanList from './PlanList';
 import PlanListItem from './PlanListItem';
 
 export {
-  Footer, Header, PostModal, PlanList, PlanListItem
+  Header, Footer, SignIn, PostModal, PlanList, PlanListItem
 };

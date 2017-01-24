@@ -7,11 +7,10 @@ import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfUse from './TermsOfUse';
 import QandA from './QandA';
 import Contact from './Contact';
-import SignIn from './SignIn';
 import SignUp from './SignUp';
 import NoMatch from './NoMatch';
 
 export {
   App, TimeLine, Chat, Plan, News, PrivacyPolicy, TermsOfUse, QandA,
-  Contact, SignIn, SignUp, NoMatch
+  Contact, SignUp, NoMatch
 };
