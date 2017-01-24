@@ -16,9 +16,9 @@ class PlansTableSeeder extends Seeder
         DB::table('plans')->delete();
         $faker = Faker\Factory::create();
 
-        for ($i=0; $i < 5; $i++) {
+        for ($i=1; $i < 6; $i++) {
             Plan::create([
-              'user_id' => $i,
+              'creator_id' => $i,
               'give' => $faker->numerify('やってあげます！ ###'),
               'take' => $faker->numerify('やってください！ ###'),
               'place' => $faker->address,
