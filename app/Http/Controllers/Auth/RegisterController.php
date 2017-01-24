@@ -51,7 +51,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            // 'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -84,13 +84,19 @@ class RegisterController extends Controller
         // ])
 
         $data = $request->toArray();
-        $this->validator($data);
+        $message = $this->validator($data)->errors();
+        if ($message == []) {
+            return response()->json([
+                'status' => 'false',
+                'message' => $message
+            ], 404);
+        }
 
         try {
             if ($this->create($data)) {
 
                 return response()->json([
-                    'status' => 'ok',
+                    'status' => 'true',
                 ], 201);
             }
         } catch (Exception $e) {
@@ -98,5 +104,20 @@ class RegisterController extends Controller
         }
 
         return 'Failed';
+    }
+
+    public function isRegistered(Request $request){
+        $data = $request->toArray();
+        $messages = $this->validator($data, ['email' => 'unique:users'])->errors();
+
+        if ($messages->has('email')) {
+            return response()->json([
+                'status' => true
+            ], 201);
+        } else {
+            return response()->json([
+                'status' => false
+            ], 201);
+        }
     }
 }
