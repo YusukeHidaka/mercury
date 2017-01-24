@@ -73,9 +73,21 @@ class RegisterController extends Controller
     public function createForApi(Request $request)
     {
         // $this->validate($request->toArray());
+        // $test = Validator::make($request->toArray(), [
+        //     'name' => 'required|max:255',
+        //     'email' => 'required|email|max:255|unique:users',
+        //     'password' => 'required|min:6|confirmed',
+        // ]);
+        // return json_encode([
+        //     'status' => 'true',
+        //     'data' => ['message' => 'Successful']
+        // ])
+
+        $data = $request->toArray();
+        $this->validator($data);
 
         try {
-            if ($this->create($request->toArray())) {
+            if ($this->create($data)) {
 
                 return response()->json([
                     'status' => 'ok',
