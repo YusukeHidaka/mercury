@@ -7,15 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     protected $fillable = [
-      'user_id',
-      'participant_id',
-      'give',
-      'take',
-      'place',
-      'image_url'
+        'user_id',
+        'participant_id',
+        'give',
+        'take',
+        'place',
+        'image_url'
     ];
 
-    public function user(){
-      return $this->belongsTo(User::class);
+    // public function user(){
+    //     return $this->belongsTo(User::class);
+    // }
+
+    public function users(){
+        return $this->belongsToMany('App\Models\User')->withTimestamps();
     }
 }
