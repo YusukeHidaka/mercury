@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'image_url',
     ];
 
     /**
@@ -28,7 +28,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function plan(){
-      return $this->hasMany(Plan::class);
+    // public function plan(){
+    //     return $this->hasMany(Plan::class);
+    // }
+
+    public function plans()
+    {
+        return $this->belongsToMany('App\Models\Plan')->withTimestamps();
     }
 }
