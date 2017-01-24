@@ -20,8 +20,7 @@ export default class FacebookApi extends React.Component {
       loggedIn: FacebookStore.loggedIn,
       userId: FacebookStore.userId,
       facebookPictureStatus: FacebookStore.facebookPictureStatus,
-      facebookPictureUrl: FacebookStore.facebookPictureUrl,
-      currentUser: this.state
+      facebookPictureUrl: FacebookStore.facebookPictureUrl
     }
   }
 

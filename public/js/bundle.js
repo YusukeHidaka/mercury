@@ -71920,6 +71920,7 @@ var FacebookActionCreators = {
 
       // after initialization, get the login status
       FacebookActionCreators.getLoginStatus();
+      FacebookActionCreators.getFacebookData();
     }, (function (d, s, id) {
       var js,
           fjs = d.getElementsByTagName(s)[0];
@@ -71941,17 +71942,24 @@ var FacebookActionCreators = {
     });
   },
 
-  login: function login() {
-    window.FB.login(function (response) {
-      if (response.status !== 'connected') return;
+  getFacebookData: function getFacebookData() {
+    window.FB.api("/me?fields=id,email,name", function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constantsConstants2['default'].FACEBOOK_LOGGED_IN,
+        actionType: _constantsConstants2['default'].FACEBOOK_RECEIVED_DATA,
         data: response
       });
     });
-    window.FB.api('/me', function (response) {
-      console.log(response);
-    });
+  },
+
+  login: function login() {
+    window.FB.login(function (response) {
+      if (response.status === 'connected') {
+        _dispatcherFacebookDispatcher2['default'].dispatch({
+          actionType: _constantsConstants2['default'].FACEBOOK_LOGGED_IN,
+          data: response
+        });
+      }
+    }, { scope: 'public_profile, email' });
   },
 
   logout: function logout() {
@@ -73096,6 +73104,7 @@ var Constants = {
     FACEBOOK_INITIALIZED: null,
     FACEBOOK_LOGIN_CHANGE: null,
     FACEBOOK_GETTING_PICTURE: null,
+    FACEBOOK_RECEIVED_DATA: null,
     FACEBOOK_RECEIVED_PICTURE: null,
     FACEBOOK_LOGGED_IN: null,
     FACEBOOK_LOGGED_OUT: null,
@@ -73374,8 +73383,7 @@ var FacebookApi = (function (_React$Component) {
         loggedIn: _storesFacebookStore2['default'].loggedIn,
         userId: _storesFacebookStore2['default'].userId,
         facebookPictureStatus: _storesFacebookStore2['default'].facebookPictureStatus,
-        facebookPictureUrl: _storesFacebookStore2['default'].facebookPictureUrl,
-        currentUser: this.state
+        facebookPictureUrl: _storesFacebookStore2['default'].facebookPictureUrl
       };
     }
   }, {
@@ -74057,6 +74065,10 @@ var _dispatcherFacebookDispatcher2 = _interopRequireDefault(_dispatcherFacebookD
 
 var _events = require('events');
 
+var _actionsFacebookActionCreators = require('../actions/FacebookActionCreators');
+
+var _actionsFacebookActionCreators2 = _interopRequireDefault(_actionsFacebookActionCreators);
+
 var FACEBOOK_CHANGE_EVENT = 'FACEBOOK_CHANGE_EVENT';
 
 var FacebookStore = (function (_EventEmitter) {
@@ -74176,6 +74188,10 @@ facebookStore.dispatchToken = _dispatcherFacebookDispatcher2['default'].register
         facebookStore.setFacebookAuthData(action.data);
     }
 
+    if (action.actionType == _constantsConstants2['default'].FACEBOOK_RECEIVED_DATA) {
+        _actionsFacebookActionCreators2['default'].getFacebookData();
+    }
+
     if (action.actionType == _constantsConstants2['default'].FACEBOOK_LOGGED_OUT) {
         facebookStore.setFacebookAuthData(action.data);
     }
@@ -74191,4 +74207,4 @@ facebookStore.dispatchToken = _dispatcherFacebookDispatcher2['default'].register
 
 module.exports = facebookStore;
 
-},{"../constants/Constants":913,"../dispatcher/FacebookDispatcher":930,"events":142}]},{},[1]);
+},{"../actions/FacebookActionCreators":899,"../constants/Constants":913,"../dispatcher/FacebookDispatcher":930,"events":142}]},{},[1]);

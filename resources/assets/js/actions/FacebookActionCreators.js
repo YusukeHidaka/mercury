@@ -14,6 +14,7 @@ const FacebookActionCreators = {
 
         // after initialization, get the login status
         FacebookActionCreators.getLoginStatus();
+        FacebookActionCreators.getFacebookData();
       },
 
       (function(d, s, id){
@@ -34,17 +35,25 @@ const FacebookActionCreators = {
       });
     },
 
+    getFacebookData: function (){
+      window.FB.api("/me?fields=id,email,name", (response) => {
+        FacebookDispatcher.dispatch({
+          actionType: Constants.FACEBOOK_RECEIVED_DATA,
+          data: response
+        });
+      });
+    },
+
+
     login: () => {
       window.FB.login((response) => {
-        if ( response.status !== 'connected' ) return;
-        FacebookDispatcher.dispatch({
-          actionType: Constants.FACEBOOK_LOGGED_IN,
-          data: response
-        })
-      });
-      window.FB.api('/me', function(response) {
-        console.log(response);
-      });
+        if (response.status === 'connected') {
+          FacebookDispatcher.dispatch({
+            actionType: Constants.FACEBOOK_LOGGED_IN,
+            data: response
+          })
+        }
+      }, {scope: 'public_profile, email'});
     },
 
     logout: () => {

@@ -12,7 +12,7 @@ class FacebookLogin extends React.Component {
     }
 
     didClickFacebookLoginButton(e) {
-        FacebookActionCreators.login()
+        FacebookActionCreators.login();
     }
 }
 

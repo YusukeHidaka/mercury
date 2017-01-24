@@ -1,6 +1,7 @@
 import Constants from '../constants/Constants';
 import FacebookDispatcher from '../dispatcher/FacebookDispatcher';
 import {EventEmitter} from 'events';
+import FacebookActionCreators from '../actions/FacebookActionCreators'
 
 const FACEBOOK_CHANGE_EVENT = 'FACEBOOK_CHANGE_EVENT';
 
@@ -13,8 +14,8 @@ class FacebookStore extends EventEmitter {
 
     setFacebookAuthData(data) {
       // !!!
-      console.log('----- facebook_store ------');
-      console.log(data);
+       console.log('----- facebook_store ------');
+       console.log(data);
       // TODO
       if(data.status==='not_authorized'){alert('登録させなきゃ！！！')};
       this.facebookAuthData = data;
@@ -98,6 +99,10 @@ facebookStore.dispatchToken = FacebookDispatcher.register((action) => {
 
   if (action.actionType == Constants.FACEBOOK_LOGGED_IN) {
     facebookStore.setFacebookAuthData(action.data);
+  }
+
+  if (action.actionType == Constants.FACEBOOK_RECEIVED_DATA) {
+    FacebookActionCreators.getFacebookData();
   }
 
   if (action.actionType == Constants.FACEBOOK_LOGGED_OUT) {
