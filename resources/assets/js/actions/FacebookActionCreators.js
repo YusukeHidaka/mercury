@@ -1,7 +1,7 @@
 import FacebookDispatcher from '../dispatcher/FacebookDispatcher';
 import Constants from '../constants/Constants'
 
-const APP_ID = '1400175353350443'
+const APP_ID = '374457819597108'
 
 const FacebookActionCreators = {
     initFacebook: function() {
