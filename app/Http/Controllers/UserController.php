@@ -48,6 +48,18 @@ class UserController extends Controller
         //
     }
 
+    public function showForPlan($id)
+    {
+        $data = User::find($id)->plans()->get();
+
+        return response()->json(
+            $data,
+            200,
+            ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
