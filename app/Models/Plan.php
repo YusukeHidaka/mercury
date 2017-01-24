@@ -12,7 +12,8 @@ class Plan extends Model
         'give',
         'take',
         'place',
-        'image_url'
+        'image_url',
+        'has_next_page',
     ];
 
     // public function user(){
