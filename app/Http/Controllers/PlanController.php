@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plan;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -93,9 +94,10 @@ class PlanController extends Controller
         );
     }
 
-    public function showForUser($user_id)
+    public function showForUser($id)
     {
-        $data = Plan::where('user_id', $user_id)->get();
+        $user_id = $request->user()->id;
+        $data = Plan::find($id)->users()->get();
 
         return response()->json(
             $data,
@@ -153,8 +155,9 @@ class PlanController extends Controller
         return 'Failed';
     }
 
-    public function updateForUser(Request $request, $user_id)
+    public function updateForUser(Request $request)
     {
+        $user_id = $request->user()->id;
         try {
             if (Plan::where('user_id', $user_id)->update($request->toArray())) {
 
@@ -171,10 +174,49 @@ class PlanController extends Controller
         return 'Failed';
     }
 
-    public function updateForParticipant(Request $request, $participant_id)
+    public function updateForParticipant(Request $request)
     {
         try {
             if (Plan::where('participant_id', $participant_id)->update($request->toArray())) {
+
+                return json_encode([
+                    'status' => 'true',
+                    'data' => ['message' => 'Successful']
+                ]);
+            }
+
+        } catch (Exception $e) {
+            \Log::info($e->getMessage());
+        }
+
+        return 'Failed';
+    }
+
+    public function applyForPlan(Request $request, $id)
+    {
+        try {
+            $user_id = $request->user()->id;
+            $plan = Plan::find($id);
+            if ($plan->users()->attach($user_id)) {
+
+                return json_encode([
+                    'status' => 'true',
+                    'data' => ['message' => 'Successful']
+                ]);
+            }
+
+        } catch (Exception $e) {
+            \Log::info($e->getMessage());
+        }
+
+        return 'Failed';
+    }
+
+    public function acceptApplicationForPlan(Request $request, $id)
+    {
+        try {
+            $data = $request->toArray();
+            if (Plan::where('id', $id)->update(['participant_id' => $data['participant_id']])) {
 
                 return json_encode([
                     'status' => 'true',
