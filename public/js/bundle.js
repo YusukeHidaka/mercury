@@ -73444,6 +73444,7 @@ var FacebookApi = (function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            console.log(this.state);
             return _react2['default'].createElement(
                 'div',
                 null,
@@ -74116,6 +74117,9 @@ var FacebookStore = (function (_EventEmitter) {
     _createClass(FacebookStore, [{
         key: 'setFacebookAuthData',
         value: function setFacebookAuthData(data) {
+            // !!!
+            console.log('----- facebook_store ------');
+            console.log(data);
             this.facebookAuthData = data;
             this.emitChange();
         }

@@ -12,8 +12,11 @@ class FacebookStore extends EventEmitter {
     }
 
     setFacebookAuthData(data) {
-        this.facebookAuthData = data;
-        this.emitChange();
+      // !!!
+      console.log('----- facebook_store ------');
+      console.log(data);
+      this.facebookAuthData = data;
+      this.emitChange();
     }
 
     get loggedIn() {
@@ -52,7 +55,7 @@ class FacebookStore extends EventEmitter {
         this.facebookPictureStatus = type;
 
         if (data) {
-            this.facebookPictureData = data.data 
+            this.facebookPictureData = data.data
         } else {
             this.facebookPictureData = {};
         }

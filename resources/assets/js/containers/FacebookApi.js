@@ -36,6 +36,7 @@ export default class FacebookApi extends React.Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div>
                 {!this.state.loggedIn ? <FacebookLogin /> : null}
