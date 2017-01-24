@@ -8,7 +8,6 @@
 
 <body>
     <div id="app"></div>
-
     <script src="{{ asset('js/bundle.js') }}"></script>
 </body>
 </html>

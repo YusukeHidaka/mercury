@@ -2,13 +2,18 @@ import {UserConstants, CommonConstants} from '../constants';
 import request from 'axios';
 
 export const UserAction = {
-  registerUser(response) {
+  registerUser(fbResponse, successCallback, failedCallback) {
     request({
       method: 'POST',
       url: CommonConstants.API_REGISTER_USER_PATH,
-      data: {name: response.name, email: response.email, password: response.id,}
+      data: {name: fbResponse.name, email: fbResponse.email, password: fbResponse.id,}
     }).then(response => response.data)
-      .then(user => callback(user));
+      .then(json => {
+        if (typeof(successCallback) === 'function') {successCallback(json)}
+      })
+      .catch((error) => {
+        if (typeof(failedCallback) === 'function') {failedCallback(error.response.data)}
+      });
   },
 
   setCurrentUser(store, currentUser) {
