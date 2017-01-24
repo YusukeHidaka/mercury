@@ -23,6 +23,10 @@ Route::post('/auth/register','Auth\RegisterController@createForApi');
 
 Route::post('/auth/isRegistered','Auth\RegisterController@isRegistered');
 
-Route::get('/plans/user_id={user_id}','PlanController@showForUser');
+Route::get('/plans/user_id/{user_id}','PlanController@showForUser');
 
-Route::get('/plans/participant_id={participant_id}','PlanController@showForParticipant');
+Route::get('/plans/participant_id/{participant_id}','PlanController@showForParticipant');
+
+Route::put('/plans/apply/{id}','PlanController@applyForPlan');
+
+Route::put('/plans/accept/{id}','PlanController@acceptApplicationForPlan');
