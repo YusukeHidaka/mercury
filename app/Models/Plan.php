@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
     protected $fillable = [
-        'user_id',
+        'creator_id',
         'participant_id',
         'give',
         'take',
