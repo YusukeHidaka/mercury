@@ -14,7 +14,7 @@ const FacebookActionCreators = {
 
         // after initialization, get the login status
         FacebookActionCreators.getLoginStatus();
-        FacebookActionCreators.getFacebookData();
+        // FacebookActionCreators.getFacebookData();
       },
 
       (function(d, s, id){
@@ -36,10 +36,10 @@ const FacebookActionCreators = {
     },
 
     getFacebookData: function (){
-      window.FB.api("/me?fields=id,email,name", (response) => {
+      window.FB.api("/me?fields=id,email,name", (response2) => {
         FacebookDispatcher.dispatch({
           actionType: Constants.FACEBOOK_RECEIVED_DATA,
-          data: response
+          data: response2
         });
       });
     },

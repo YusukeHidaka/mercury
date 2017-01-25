@@ -8,8 +8,9 @@ import FacebookLogin from './Facebook/FacebookLogin';
 import FacebookLogout from './Facebook/FacebookLogout';
 import FacebookDownloadPicture from './Facebook/FacebookDownloadPicture';
 import FacebookPicture from './Facebook/FacebookPicture';
+import FacebookGetInfo from './Facebook/FacebookGetInfo';
 
 export {
   Header, Footer, SignIn, PostModal, PlanList, PlanListItem, FacebookLogin,
-  FacebookLogout, FacebookDownloadPicture, FacebookPicture
+  FacebookLogout, FacebookDownloadPicture, FacebookPicture, FacebookGetInfo
 };
