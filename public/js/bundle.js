@@ -72668,11 +72668,7 @@ Header.propTypes = {};
 exports['default'] = Header;
 module.exports = exports['default'];
 
-<<<<<<< HEAD
-},{".":912,"material-ui/IconMenu":426,"material-ui/MenuItem":433,"react":816,"react-router":773,"react-tap-event-plugin":785}],908:[function(require,module,exports){
-=======
-},{".":913,"material-ui/IconMenu":427,"material-ui/MenuItem":434,"react":816,"react-router":773,"react-tap-event-plugin":785}],909:[function(require,module,exports){
->>>>>>> 2846e2ab0b2e69adb20811e459a16ce45999d756
+},{".":913,"material-ui/IconMenu":426,"material-ui/MenuItem":433,"react":816,"react-router":773,"react-tap-event-plugin":785}],909:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73178,11 +73174,7 @@ var Constants = {
 
 module.exports = (0, _keymirror2['default'])(Constants);
 
-<<<<<<< HEAD
-},{"keymirror":258}],914:[function(require,module,exports){
-=======
-},{"keymirror":259}],915:[function(require,module,exports){
->>>>>>> 2846e2ab0b2e69adb20811e459a16ce45999d756
+},{"keymirror":258}],915:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73304,11 +73296,7 @@ App.childContextTypes = {
 };
 module.exports = exports['default'];
 
-<<<<<<< HEAD
-},{"../components":912,"material-ui/styles/baseThemes/lightBaseTheme":451,"material-ui/styles/getMuiTheme":453,"react":816}],918:[function(require,module,exports){
-=======
-},{"../components":913,"material-ui/styles/baseThemes/lightBaseTheme":452,"material-ui/styles/getMuiTheme":454,"react":816}],919:[function(require,module,exports){
->>>>>>> 2846e2ab0b2e69adb20811e459a16ce45999d756
+},{"../components":913,"material-ui/styles/baseThemes/lightBaseTheme":451,"material-ui/styles/getMuiTheme":453,"react":816}],919:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74011,11 +73999,7 @@ var TimeLine = (function (_Component) {
 exports['default'] = TimeLine;
 module.exports = exports['default'];
 
-<<<<<<< HEAD
-},{"../components":912,"../constants":915,"axios":3,"material-ui/FloatingActionButton":420,"material-ui/svg-icons/content/add":458,"react":816,"react-router":773}],929:[function(require,module,exports){
-=======
-},{"../components":913,"../constants":916,"axios":3,"material-ui/FloatingActionButton":421,"material-ui/svg-icons/content/add":459,"react":816,"react-router":773}],930:[function(require,module,exports){
->>>>>>> 2846e2ab0b2e69adb20811e459a16ce45999d756
+},{"../components":913,"../constants":916,"axios":3,"material-ui/FloatingActionButton":420,"material-ui/svg-icons/content/add":458,"react":816,"react-router":773}],930:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
