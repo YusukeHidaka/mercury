@@ -53,7 +53,7 @@ const FacebookActionCreators = {
             data: response
           })
         }
-      }, {scope: 'public_profile, email'});
+      });
     },
 
     logout: () => {
