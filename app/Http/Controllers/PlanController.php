@@ -64,16 +64,18 @@ class PlanController extends Controller
         try {
             if (Plan::create($data)) {
 
-                return json_encode([
+                return response()->json([
                     'status' => 'true',
                     'data' => ['message' => 'Successful']
-                ]);
+                ], 200);
             }
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
 
-        return 'Failed';
+        return response()->json([
+            'status' => 'false'
+        ], 404);
     }
 
     /**
@@ -154,17 +156,19 @@ class PlanController extends Controller
         try {
             if (Plan::find($id)->update($request->toArray())) {
 
-                return json_encode([
+                return response()->json([
                     'status' => 'true',
                     'data' => ['message' => 'Successful']
-                ]);
+                ], 200);
             }
 
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
 
-        return 'Failed';
+        return response()->json([
+            'status' => 'false'
+        ], 404);
     }
 
     public function updateForUser(Request $request)
@@ -173,17 +177,19 @@ class PlanController extends Controller
         try {
             if (Plan::where('user_id', $user_id)->update($request->toArray())) {
 
-                return json_encode([
+                return response()->json([
                     'status' => 'true',
                     'data' => ['message' => 'Successful']
-                ]);
+                ], 200);
             }
 
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
 
-        return 'Failed';
+        return response()->json([
+            'status' => 'false'
+        ], 404);
     }
 
     public function updateForParticipant(Request $request)
@@ -201,7 +207,9 @@ class PlanController extends Controller
             \Log::info($e->getMessage());
         }
 
-        return 'Failed';
+        return response()->json([
+            'status' => 'false'
+        ], 404);
     }
 
     public function applyForPlan(Request $request, $id)
@@ -211,10 +219,10 @@ class PlanController extends Controller
             $plan = Plan::find($id);
             $plan->users()->attach($user_id);
 
-            return json_encode([
+            return response()->json([
                 'status' => 'true',
                 'data' => ['message' => 'Successful']
-            ]);
+            ], 200);
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
@@ -230,17 +238,19 @@ class PlanController extends Controller
             $data = $request->toArray();
             if (Plan::where('id', $id)->update(['participant_id' => $data['participant_id']])) {
 
-                return json_encode([
+                return response()->json([
                     'status' => 'true',
                     'data' => ['message' => 'Successful']
-                ]);
+                ], 200);
             }
 
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
 
-        return 'Failed';
+        return response()->json([
+            'status' => 'false'
+        ], 404);
     }
 
     /**
@@ -254,16 +264,18 @@ class PlanController extends Controller
         try {
             if (Plan::find($id)->delete()) {
 
-                return json_encode([
+                return response()->json([
                     'status' => 'true',
-                    'data' => ['message' => 'Successful']
-                ]);
+                    'data' => ['message' => 'destroy param id = ' . $id;]
+                ], 200);
             }
 
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
 
-        return 'destroy param id = ' . $id;
+        return response()->json([
+            'status' => 'false'
+        ], 404);
     }
 }
