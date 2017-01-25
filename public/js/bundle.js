@@ -72711,8 +72711,7 @@ var Header = (function (_Component) {
         _react2['default'].createElement(
           'div',
           { className: 'col-md-10' },
-          this.renderRightHeader(),
-          this.state.loggedIn ? _react2['default'].createElement(_.FacebookLogout, null) : null
+          this.renderRightHeader()
         )
       );
     }
