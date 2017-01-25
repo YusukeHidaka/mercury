@@ -23,6 +23,8 @@ var _actions = require('./actions');
 
 var store = (0, _redux.createStore)(_reducersRoot_reducer2['default']);
 
+// UserAction.setCurrentUser(store, this.props.current_user);
+
 (0, _reactDom.render)(_react2['default'].createElement(
   _reactRouter.Router,
   { history: _reactRouter.browserHistory },
@@ -44,7 +46,7 @@ var store = (0, _redux.createStore)(_reducersRoot_reducer2['default']);
   )
 ), document.getElementById('app'));
 
-},{"./actions":902,"./containers":932,"./reducers/root_reducer":935,"react":816,"react-dom":573,"react-router":773,"redux":887}],2:[function(require,module,exports){
+},{"./actions":902,"./containers":933,"./reducers/root_reducer":936,"react":816,"react-dom":573,"react-router":773,"redux":887}],2:[function(require,module,exports){
 /**
  * Array.prototype.findIndex
  *
@@ -71991,7 +71993,7 @@ var FacebookActionCreators = {
 
 module.exports = FacebookActionCreators;
 
-},{"../constants/FacebookConstants":916,"../dispatcher/FacebookDispatcher":933}],900:[function(require,module,exports){
+},{"../constants/FacebookConstants":917,"../dispatcher/FacebookDispatcher":934}],900:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72026,11 +72028,25 @@ var PlanAction = {
         failedCallback(error.response.data);
       }
     });
+  },
+  getPlan: function getPlan(callback) {
+    console.log('getPlan');
+    (0, _axios2['default'])({
+      method: 'GET',
+      url: _constants.CommonConstants.API_GET_PLANS_PATH,
+      headers: { Accept: 'application/json', Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjZTQ4ODQ5ODYxZmZhYTlkMGJjOWUyOTU2ZjAyZTViZTIzYmM5Zjk0NGUyZWEyYmM0MDI2ODIxYWE4NTJkMzY1YjRlMDY5YTQ1NmZmZDkzIn0.eyJhdWQiOiIyIiwianRpIjoiZGNlNDg4NDk4NjFmZmFhOWQwYmM5ZTI5NTZmMDJlNWJlMjNiYzlmOTQ0ZTJlYTJiYzQwMjY4MjFhYTg1MmQzNjViNGUwNjlhNDU2ZmZkOTMiLCJpYXQiOjE0ODUzMzY2MDIsIm5iZiI6MTQ4NTMzNjYwMiwiZXhwIjoxNTE2ODcyNjAyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.kHepfe3qF1ItC2EpW8lNRgo1lmdGVgoEoCeUiTjE4PeZoro-EDRHqGYPzfsyk4pzbK2kOpQlapGIyy9PRd9W-g3f2k6-0eRd52JOLwmShg7njz3HMGDc__tf4ZbIxgSHO2GoDTzIuG7Rn-3FbTnmWIInaVF4qXjYAz3i9EtY-sxJ1nHZ9p8DHEcDumTu2rPK02b5U0u9dFX5eXayShfcyn14786BXQXWjhym2WQoU9iHlUBjkLdIIRpM_6d7cxJI5Eoe2kM-mCaikUBazzeVoGnGoxgmx3kVzrSIzDwsuIs4Z10NlcybNwKFRBLz9_18prYJfLSMlEboGMqAPtcN1nAiWiYP9ktkvRC6NBARjrqlQURTZowR0v6E6Lm3vQ4RVejZKTPyH1Eeai1AAquYyownTdfTcFI6VIucSFHWrxbUEF2YSx2AJjKd0Ik6PqHgxtzZ0a0CzDmHh_SrVkpPJXzsvJwbVCQpigQ_y1pRAXm9r-iYwjzTFUrLca1vpzLa9uxqn_3w1v-OyyLg9Ku7K8KvdlHBr8bS3ClcfFsy2gjDtq4Iorsp320tK52Gz3wrwZC6Ksowd4rPON3qUvWjYn_zXVG2rj3zHiuSsTGz34XqvTwQqR-46dQJBlBAy_fU9QSgCYwIs0sMTaau-z_dt4P8e-P6KfQVxUGcif7ctkU' }
+    }).then(function (response) {
+      return response.data;
+    }).then(function (json) {
+      if (typeof callback === 'function') {
+        callback(json);
+      }
+    });
   }
 };
 exports.PlanAction = PlanAction;
 
-},{"../constants":919,"axios":3}],901:[function(require,module,exports){
+},{"../constants":920,"axios":3}],901:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72101,7 +72117,7 @@ var UserAction = {
 };
 exports.UserAction = UserAction;
 
-},{"../constants":919,"axios":3}],902:[function(require,module,exports){
+},{"../constants":920,"axios":3}],902:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72434,7 +72450,7 @@ var FacebookPicture = (function (_React$Component) {
 exports['default'] = FacebookPicture;
 module.exports = exports['default'];
 
-},{"../../constants/FacebookConstants":916,"react":816}],908:[function(require,module,exports){
+},{"../../constants/FacebookConstants":917,"react":816}],908:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72708,12 +72724,14 @@ var Header = (function (_Component) {
   }, {
     key: 'loginUser',
     value: function loginUser() {
+      var _this3 = this;
+
       console.log('⑥loginUser');
       var successCallback = function successCallback(res) {
         // TODO
-        // console.log('ログインに成功しました');
-        // console.log(res);
-        // console.log(this.state);
+        console.log('ログインに成功しました');
+        console.log(res);
+        console.log(_this3.state);
       };
       var failedCallback = function failedCallback(res) {
         // TODO
@@ -72846,7 +72864,7 @@ Header.propTypes = {};
 exports['default'] = Header;
 module.exports = exports['default'];
 
-},{".":914,"../actions":902,"../actions/FacebookActionCreators":899,"../stores/FacebookStore":936,"material-ui/IconMenu":427,"material-ui/MenuItem":434,"react":816,"react-router":773,"react-tap-event-plugin":785}],910:[function(require,module,exports){
+},{".":915,"../actions":902,"../actions/FacebookActionCreators":899,"../stores/FacebookStore":937,"material-ui/IconMenu":427,"material-ui/MenuItem":434,"react":816,"react-router":773,"react-tap-event-plugin":785}],910:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72937,7 +72955,7 @@ PlanList.propTypes = {
 exports['default'] = PlanList;
 module.exports = exports['default'];
 
-},{".":914,"react":816,"react-dom":573}],911:[function(require,module,exports){
+},{".":915,"react":816,"react-dom":573}],911:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73018,6 +73036,66 @@ exports['default'] = PlanListItem;
 module.exports = exports['default'];
 
 },{"react":816,"react-dom":573}],912:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var PostButton = (function (_Component) {
+  _inherits(PostButton, _Component);
+
+  function PostButton(props) {
+    _classCallCheck(this, PostButton);
+
+    _get(Object.getPrototypeOf(PostButton.prototype), 'constructor', this).call(this, props);
+  }
+
+  _createClass(PostButton, [{
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        { className: 'post-button btn', onClick: this.openPostModal.bind(this) },
+        _react2['default'].createElement(
+          'div',
+          { className: 'post-sentence' },
+          '投稿'
+        ),
+        _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o post-icon', 'aria-hidden': 'true' })
+      );
+    }
+  }]);
+
+  return PostButton;
+})(_react.Component);
+
+PlanListItem.propTypes = {
+  plan: _react.PropTypes.object.isRequired
+};
+
+exports['default'] = PostButton;
+module.exports = exports['default'];
+
+},{"react":816,"react-dom":573}],913:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73225,7 +73303,7 @@ PostModal.propTypes = {
 exports['default'] = PostModal;
 module.exports = exports['default'];
 
-},{"react":816,"react-bootstrap":562}],913:[function(require,module,exports){
+},{"react":816,"react-bootstrap":562}],914:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73277,7 +73355,7 @@ var SignIn = (function (_Component) {
 exports['default'] = SignIn;
 module.exports = exports['default'];
 
-},{"react":816}],914:[function(require,module,exports){
+},{"react":816}],915:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73330,6 +73408,10 @@ var _FacebookFacebookGetInfo = require('./Facebook/FacebookGetInfo');
 
 var _FacebookFacebookGetInfo2 = _interopRequireDefault(_FacebookFacebookGetInfo);
 
+var _PostButton = require('./PostButton');
+
+var _PostButton2 = _interopRequireDefault(_PostButton);
+
 exports.Header = _Header2['default'];
 exports.Footer = _Footer2['default'];
 exports.SignIn = _SignIn2['default'];
@@ -73341,8 +73423,9 @@ exports.FacebookLogout = _FacebookFacebookLogout2['default'];
 exports.FacebookDownloadPicture = _FacebookFacebookDownloadPicture2['default'];
 exports.FacebookPicture = _FacebookFacebookPicture2['default'];
 exports.FacebookGetInfo = _FacebookFacebookGetInfo2['default'];
+exports.PostButton = _PostButton2['default'];
 
-},{"./Facebook/FacebookDownloadPicture":903,"./Facebook/FacebookGetInfo":904,"./Facebook/FacebookLogin":905,"./Facebook/FacebookLogout":906,"./Facebook/FacebookPicture":907,"./Footer":908,"./Header":909,"./PlanList":910,"./PlanListItem":911,"./PostModal":912,"./SignIn":913}],915:[function(require,module,exports){
+},{"./Facebook/FacebookDownloadPicture":903,"./Facebook/FacebookGetInfo":904,"./Facebook/FacebookLogin":905,"./Facebook/FacebookLogout":906,"./Facebook/FacebookPicture":907,"./Footer":908,"./Header":909,"./PlanList":910,"./PlanListItem":911,"./PostButton":912,"./PostModal":913,"./SignIn":914}],916:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73359,7 +73442,7 @@ var CommonConstants = {
 };
 exports.CommonConstants = CommonConstants;
 
-},{}],916:[function(require,module,exports){
+},{}],917:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -73381,7 +73464,7 @@ var FacebookConstants = {
 
 module.exports = (0, _keymirror2['default'])(FacebookConstants);
 
-},{"keymirror":259}],917:[function(require,module,exports){
+},{"keymirror":259}],918:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73392,7 +73475,7 @@ var PlanConstants = {
 };
 exports.PlanConstants = PlanConstants;
 
-},{}],918:[function(require,module,exports){
+},{}],919:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73403,7 +73486,7 @@ var UserConstants = {
 };
 exports.UserConstants = UserConstants;
 
-},{}],919:[function(require,module,exports){
+},{}],920:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73423,7 +73506,7 @@ exports.FacebookConstants = _FacebookConstants.FacebookConstants;
 exports.UserConstants = _UserConstants.UserConstants;
 exports.PlanConstants = _PlanConstants.PlanConstants;
 
-},{"./CommonConstants":915,"./FacebookConstants":916,"./PlanConstants":917,"./UserConstants":918}],920:[function(require,module,exports){
+},{"./CommonConstants":916,"./FacebookConstants":917,"./PlanConstants":918,"./UserConstants":919}],921:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73503,7 +73586,7 @@ App.childContextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../components":914,"material-ui/styles/baseThemes/lightBaseTheme":452,"material-ui/styles/getMuiTheme":454,"react":816}],921:[function(require,module,exports){
+},{"../components":915,"material-ui/styles/baseThemes/lightBaseTheme":452,"material-ui/styles/getMuiTheme":454,"react":816}],922:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73550,7 +73633,7 @@ var Chat = (function (_React$Component) {
 exports['default'] = Chat;
 module.exports = exports['default'];
 
-},{"react":816}],922:[function(require,module,exports){
+},{"react":816}],923:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73597,7 +73680,7 @@ var Contact = (function (_React$Component) {
 exports['default'] = Contact;
 module.exports = exports['default'];
 
-},{"react":816}],923:[function(require,module,exports){
+},{"react":816}],924:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73703,7 +73786,7 @@ module.exports = exports['default'];
 //     );
 //   }
 
-},{"../actions":902,"../actions/FacebookActionCreators":899,"../components":914,"../stores/FacebookStore":936,"react":816}],924:[function(require,module,exports){
+},{"../actions":902,"../actions/FacebookActionCreators":899,"../components":915,"../stores/FacebookStore":937,"react":816}],925:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73750,7 +73833,7 @@ var News = (function (_React$Component) {
 exports['default'] = News;
 module.exports = exports['default'];
 
-},{"react":816}],925:[function(require,module,exports){
+},{"react":816}],926:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73797,7 +73880,7 @@ var NoMatch = (function (_React$Component) {
 exports['default'] = NoMatch;
 module.exports = exports['default'];
 
-},{"react":816}],926:[function(require,module,exports){
+},{"react":816}],927:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73844,7 +73927,7 @@ var Plan = (function (_React$Component) {
 exports['default'] = Plan;
 module.exports = exports['default'];
 
-},{"react":816}],927:[function(require,module,exports){
+},{"react":816}],928:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73891,7 +73974,7 @@ var PrivacyPolicy = (function (_React$Component) {
 exports['default'] = PrivacyPolicy;
 module.exports = exports['default'];
 
-},{"react":816}],928:[function(require,module,exports){
+},{"react":816}],929:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73938,7 +74021,7 @@ var QandA = (function (_React$Component) {
 exports['default'] = QandA;
 module.exports = exports['default'];
 
-},{"react":816}],929:[function(require,module,exports){
+},{"react":816}],930:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73985,7 +74068,7 @@ var SignUp = (function (_Component) {
 exports['default'] = SignUp;
 module.exports = exports['default'];
 
-},{"react":816}],930:[function(require,module,exports){
+},{"react":816}],931:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74032,7 +74115,7 @@ var TermsOfUse = (function (_React$Component) {
 exports['default'] = TermsOfUse;
 module.exports = exports['default'];
 
-},{"react":816}],931:[function(require,module,exports){
+},{"react":816}],932:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74089,14 +74172,17 @@ var TimeLine = (function (_Component) {
   _createClass(TimeLine, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
+      this.displayPlans();
+    }
+  }, {
+    key: 'displayPlans',
+    value: function displayPlans() {
       var _this = this;
 
-      _axios2['default'].get(_constants.CommonConstants.API_GET_PLANS_PATH).then(function (response) {
-        _this.setState({ plans: response.data });
-        // console.log(response.data);
-      })['catch'](function (response) {
-        // console.log(response)
-      });
+      var callback = function callback(response) {
+        _this.setState({ plans: response });
+      };
+      _actions.PlanAction.getPlan(callback);
     }
   }, {
     key: 'openPostModal',
@@ -74123,6 +74209,8 @@ var TimeLine = (function (_Component) {
       _actions.PlanAction.postPlan(planData, successCallback, failedCallback);
       this.closePostModal();
     }
+
+    //TODO loggedInをもとに、投稿ボタンをいじりたい。
   }, {
     key: 'render',
     value: function render() {
@@ -74159,16 +74247,7 @@ var TimeLine = (function (_Component) {
           )
         ),
         this.props.children,
-        _react2['default'].createElement(
-          'div',
-          { className: 'post-button btn', onClick: this.openPostModal.bind(this) },
-          _react2['default'].createElement(
-            'div',
-            { className: 'post-sentence' },
-            '投稿'
-          ),
-          _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o post-icon', 'aria-hidden': 'true' })
-        ),
+        _react2['default'].createElement(_components.PostButton, null),
         _react2['default'].createElement(_components.PostModal, {
           isShow: this.state.isShowPostModal,
           okCallback: this.postPlanData.bind(this),
@@ -74184,7 +74263,7 @@ var TimeLine = (function (_Component) {
 exports['default'] = TimeLine;
 module.exports = exports['default'];
 
-},{"../actions":902,"../components":914,"../constants":919,"axios":3,"material-ui/FloatingActionButton":421,"material-ui/svg-icons/content/add":459,"react":816,"react-router":773}],932:[function(require,module,exports){
+},{"../actions":902,"../components":915,"../constants":920,"axios":3,"material-ui/FloatingActionButton":421,"material-ui/svg-icons/content/add":459,"react":816,"react-router":773}],933:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74254,7 +74333,7 @@ exports.SignUp = _SignUp2['default'];
 exports.NoMatch = _NoMatch2['default'];
 exports.FacebookApi = _FacebookApi2['default'];
 
-},{"./App":920,"./Chat":921,"./Contact":922,"./FacebookApi":923,"./News":924,"./NoMatch":925,"./Plan":926,"./PrivacyPolicy":927,"./QandA":928,"./SignUp":929,"./TermsOfUse":930,"./TimeLine":931}],933:[function(require,module,exports){
+},{"./App":921,"./Chat":922,"./Contact":923,"./FacebookApi":924,"./News":925,"./NoMatch":926,"./Plan":927,"./PrivacyPolicy":928,"./QandA":929,"./SignUp":930,"./TermsOfUse":931,"./TimeLine":932}],934:[function(require,module,exports){
 'use strict';
 
 var _flux = require('flux');
@@ -74263,7 +74342,7 @@ var FacebookDispatcher = new _flux.Dispatcher();
 
 module.exports = FacebookDispatcher;
 
-},{"flux":202}],934:[function(require,module,exports){
+},{"flux":202}],935:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74286,7 +74365,7 @@ var CurrentUserReducer = {
 };
 exports.CurrentUserReducer = CurrentUserReducer;
 
-},{"../constants":919}],935:[function(require,module,exports){
+},{"../constants":920}],936:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74310,7 +74389,7 @@ var rootReducer = (0, _redux.combineReducers)({
 exports['default'] = rootReducer;
 module.exports = exports['default'];
 
-},{"./current_user_reducer":934,"react-router-redux":740,"redux":887,"redux-form":855}],936:[function(require,module,exports){
+},{"./current_user_reducer":935,"react-router-redux":740,"redux":887,"redux-form":855}],937:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -74505,4 +74584,4 @@ facebookStore.dispatchToken = _dispatcherFacebookDispatcher2['default'].register
 
 module.exports = facebookStore;
 
-},{"../actions/FacebookActionCreators":899,"../constants/FacebookConstants":916,"../dispatcher/FacebookDispatcher":933,"events":142}]},{},[1]);
+},{"../actions/FacebookActionCreators":899,"../constants/FacebookConstants":917,"../dispatcher/FacebookDispatcher":934,"events":142}]},{},[1]);
