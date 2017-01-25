@@ -1,4 +1,4 @@
-import Constants from '../constants/Constants';
+import FacebookConstants from '../constants';
 import FacebookDispatcher from '../dispatcher/FacebookDispatcher';
 import {EventEmitter} from 'events';
 import FacebookActionCreators from '../actions/FacebookActionCreators'
@@ -120,27 +120,27 @@ facebookStore.dispatchToken = FacebookDispatcher.register((action) => {
   // console.log('--------- Auth data ---------');
   // console.log(action.data);
   console.log('---- facebook dispatcher を通過したよ。')
-  if (action.actionType == Constants.FACEBOOK_INITIALIZED) {
+  if (action.actionType == FacebookConstants.FACEBOOK_INITIALIZED) {
     facebookStore.setFacebookAuthData(action.data);
   }
 
-  if (action.actionType == Constants.FACEBOOK_LOGGED_IN) {
+  if (action.actionType == FacebookConstants.FACEBOOK_LOGGED_IN) {
     facebookStore.setFacebookAuthData(action.data);
   }
 
-  if (action.actionType == Constants.FACEBOOK_RECEIVED_DATA) {
+  if (action.actionType == FacebookConstants.FACEBOOK_RECEIVED_DATA) {
     facebookStore.setFacebookUserData(action.data);
   }
 
-  if (action.actionType == Constants.FACEBOOK_LOGGED_OUT) {
+  if (action.actionType == FacebookConstants.FACEBOOK_LOGGED_OUT) {
     facebookStore.setFacebookAuthData(action.data);
   }
 
-  if (action.actionType == Constants.FACEBOOK_GETTING_PICTURE) {
+  if (action.actionType == FacebookConstants.FACEBOOK_GETTING_PICTURE) {
     facebookStore.setFacebookPictureData(action.actionType, action.data)
   }
 
-  if (action.actionType == Constants.FACEBOOK_RECEIVED_PICTURE) {
+  if (action.actionType == FacebookConstants.FACEBOOK_RECEIVED_PICTURE) {
     facebookStore.setFacebookPictureData(action.actionType, action.data)
   }
 })

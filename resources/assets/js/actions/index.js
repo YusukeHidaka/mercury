@@ -1,7 +1,8 @@
-import {UserAction} from './user_action';
+import {UserAction} from './UserAction';
+import {PlanAction} from './PlanAction';
 import {FacebookActionCreators} from './FacebookActionCreators';
 
 
 export {
-  UserAction, FacebookActionCreators
+  UserAction, PlanAction, FacebookActionCreators
 };
