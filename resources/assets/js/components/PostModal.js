@@ -10,7 +10,9 @@ class PostModal extends Component {
 
   ok() {
     //this.props.okCallback(this.state.shippingAddress);
-    this.props.okCallback();
+    //TODO
+    let sample = {give:'あげる', take:'もらう', place:'地球上' , image_url:'hogehoge'}
+    this.props.okCallback(sample);
   }
 
   cancel() {

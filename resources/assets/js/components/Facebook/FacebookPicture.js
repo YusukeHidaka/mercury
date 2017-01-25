@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FacebookConstants from '../../constants';
+import FacebookConstants from '../../constants/FacebookConstants';
 
 export default class FacebookPicture extends React.Component {
     constructor(props) {

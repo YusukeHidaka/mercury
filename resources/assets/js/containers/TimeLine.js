@@ -35,18 +35,15 @@ class TimeLine extends Component{
 
   postPlanData(planData) {
     //TODO post data to google api
-    const successCallback = (res) => {
+    const successCallback = () => {
         // TODO
-        // console.log('会員登録に成功しました');
-        // console.log(res);
-        this.loginUser();
+        console.log('post成功しました');
       }
       const failedCallback = () => {
         // TODO
-        // console.log('すでに登録済みです');
       }
 
-    PlanAction.postPlan(this.state, successCallback, failedCallback);
+    PlanAction.postPlan(planData, successCallback, failedCallback);
     this.closePostModal();
   }
 
