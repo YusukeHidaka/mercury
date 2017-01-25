@@ -63,7 +63,7 @@ class TimeLine extends Component{
         </nav>
         {this.props.children}
 
-        <PostButton />
+        <PostButton openPostModal={this.openPostModal.bind(this)}/>
         <PostModal
           isShow={this.state.isShowPostModal}
           okCallback={this.postPlanData.bind(this)}
