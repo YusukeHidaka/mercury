@@ -25,6 +25,7 @@ class PlanList extends Component {
     )
   }
 }
+
 PlanList.propTypes = {
   plans: PropTypes.array.isRequired
 }

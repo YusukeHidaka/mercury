@@ -5,6 +5,7 @@ class PlanListItem extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return(
       <tr>
@@ -16,6 +17,7 @@ class PlanListItem extends Component {
      )
   }
 }
+
 PlanListItem.propTypes = {
   plan: PropTypes.object.isRequired
 }

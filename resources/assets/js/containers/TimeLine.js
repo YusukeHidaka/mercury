@@ -4,8 +4,8 @@ import {Link} from 'react-router';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {CommonConstants} from '../constants';
-import {PostModal, PlanList} from '../components';
-import {PlanAction} from '../actions'
+import {PostModal, PlanList, PlanSlider} from '../components';
+import {PlanAction} from '../actions';
 
 class TimeLine extends Component{
   constructor(props) {
@@ -50,6 +50,7 @@ class TimeLine extends Component{
   render(){
     return (
       <div className='time-line'>
+        <PlanSlider />
         <div>
           <h2>プラン一覧</h2>
           <PlanList plans={this.state.plans}/>

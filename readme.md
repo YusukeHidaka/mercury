@@ -30,3 +30,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## フロントを書く場所
 
 どこ！？
+
+## V8Js Install
+brew install php70-v8js
