@@ -27,7 +27,7 @@ Route::get('/plans/user_id/{user_id}','PlanController@showForUser');
 
 Route::get('/plans/participant_id/{participant_id}','PlanController@showForParticipant');
 
-Route::get('/plans/under/{id}','PlanController@showPlansUnderParam');
+Route::get('/plans/under_id/{id}/number/{num}','PlanController@showPlansUnderParam');
 
 Route::put('/plans/{id}/apply','PlanController@applyForPlan');
 
