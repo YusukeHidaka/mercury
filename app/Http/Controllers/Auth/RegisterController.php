@@ -76,10 +76,14 @@ class RegisterController extends Controller
             $data = $request->toArray();
             //すでにユーザーが存在している場合、パスワードをアップデートして終了
             if ($this->isRegistered($data)){
-                User::where('email', $data['email'])->update(['password' => bcrypt($data['password'])]);
+                $updateUserObject = User::where('email', $data['email']);
+                $updateUserObject->update(['password' => bcrypt($data['password'])]);
+                $updatedUserArray = $updateUserObject->get()->toArray();
 
                 return response()->json([
                     'status' => 'true',
+                    'did' => 'update',
+                    'data' => $updatedUserArray[0]
                 ], 201);
             }
             $messages = $this->validator($data)->errors()->messages();
@@ -92,10 +96,13 @@ class RegisterController extends Controller
                 ], 400);
             }
 
-            if ($this->create($data)) {
+            $createdUserArray = $this->create($data)->toArray();
+            if ($createdUserArray) {
 
                 return response()->json([
                     'status' => 'true',
+                    'did' => 'create',
+                    'data' => $createdUserArray
                 ], 201);
             }
 
