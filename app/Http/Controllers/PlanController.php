@@ -266,7 +266,7 @@ class PlanController extends Controller
 
                 return response()->json([
                     'status' => 'true',
-                    'data' => ['message' => 'destroy param id = ' . $id;]
+                    'data' => ['message' => 'destroy param id = ' . $id]
                 ], 200);
             }
 
