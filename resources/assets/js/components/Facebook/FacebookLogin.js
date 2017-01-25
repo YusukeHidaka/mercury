@@ -12,6 +12,7 @@ class FacebookLogin extends React.Component {
     }
 
     didClickFacebookLoginButton(e) {
+      console.log('---- login buttonを押したよ。');
       FacebookActionCreators.login();
     }
 }

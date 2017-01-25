@@ -18,9 +18,9 @@ class TimeLine extends Component{
   componentWillMount() {
     request.get(CommonConstants.API_GET_PLANS_PATH).then((response) => {
       this.setState({plans: response.data})
-      console.log(response.data);
+      // console.log(response.data);
     }).catch((response) => {
-      console.log(response)
+      // console.log(response)
     })
   }
 

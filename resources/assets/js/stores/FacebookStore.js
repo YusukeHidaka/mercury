@@ -15,8 +15,8 @@ class FacebookStore extends EventEmitter {
 
     setFacebookAuthData(data) {
       // !!!
-       console.log('----- facebook_store ------');
-       console.log(data);
+      //  console.log('----- facebook_store ------');
+      //  console.log(data);
       // TODO
       if(data.status==='not_authorized'){alert('登録させなきゃ！！！')};
       this.facebookAuthData = data;
@@ -48,8 +48,8 @@ class FacebookStore extends EventEmitter {
     }
 
     get status() {
-        console.log('statusのロジック部分');
-        console.log(this.facebookAuthData);
+        // console.log('statusのロジック部分');
+        // console.log(this.facebookAuthData);
         if (!this.facebookAuthData || !this.facebookAuthData.authResponse) {
             return;
         }
@@ -59,8 +59,8 @@ class FacebookStore extends EventEmitter {
 
     setFacebookUserData(data) {
       // !!!
-       console.log('----- ユーザーデータ ------');
-       console.log(data);
+      //  console.log('----- ユーザーデータ ------');
+      //  console.log(data);
       // TODO
       this.facebookUserData = data;
       this.emitChange();
@@ -117,8 +117,9 @@ class FacebookStore extends EventEmitter {
 const facebookStore = new FacebookStore();
 
 facebookStore.dispatchToken = FacebookDispatcher.register((action) => {
-  console.log('--------- Auth data ---------');
-  console.log(action.data);
+  // console.log('--------- Auth data ---------');
+  // console.log(action.data);
+  console.log('---- facebook dispatcher を通過したよ。')
   if (action.actionType == Constants.FACEBOOK_INITIALIZED) {
     facebookStore.setFacebookAuthData(action.data);
   }
