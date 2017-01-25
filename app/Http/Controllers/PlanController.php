@@ -36,6 +36,11 @@ class PlanController extends Controller
         );
     }
 
+    public function showPlansUnderParam($id)
+    {
+        // $data = Plan::where('id', '<', $id)
+    }
+
     /**
      * Show the form for creating a new resource.
      *

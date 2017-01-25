@@ -76,7 +76,7 @@ class RegisterController extends Controller
             $data = $request->toArray();
             //すでにユーザーが存在している場合、パスワードをアップデートして終了
             if ($this->isRegistered($data)){
-                User::where('email', $data['email'])->update(['password' => $data['password']]);
+                User::where('email', $data['email'])->update(['password' => bcrypt($data['password'])]);
 
                 return response()->json([
                     'status' => 'true',
