@@ -108,7 +108,6 @@ class Header extends Component {
         <Link to='#' className='col-md-2'>icon</Link>
         <div className='col-md-10'>
           {this.renderRightHeader()}
-          {this.state.loggedIn ? <FacebookLogout /> : null}
         </div>
       </div>
     );
