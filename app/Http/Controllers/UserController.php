@@ -45,12 +45,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    public function showForPlan($id)
-    {
-        $data = User::find($id)->plans()->get();
+        $data = User::find($id)->get();
 
         return response()->json(
             $data,
