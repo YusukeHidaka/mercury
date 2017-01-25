@@ -16,7 +16,7 @@ class PlanController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -36,10 +36,11 @@ class PlanController extends Controller
         );
     }
 
-    public function showPlansUnderParam($id)
-    {
-        // $data = Plan::where('id', '<', $id)
-    }
+    // public function showPlansUnderParam($id)
+    // {
+    //     $data = Plan::where('id', '<', $id)->take(16)->get();
+    //     dd($data);
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -64,6 +65,7 @@ class PlanController extends Controller
         ]);
 
         $data = $request->toArray();
+        dd($request->user());
         $data['creator_id'] = $request->user()->id;
 
         try {
