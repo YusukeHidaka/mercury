@@ -119,6 +119,18 @@ class PlanController extends Controller
         );
     }
 
+    public function showApplicantForPlan($id)
+    {
+        $applicants = Plan::find($id)->users()->get();
+
+        return response()->json(
+            $applicants,
+            200,
+            ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
