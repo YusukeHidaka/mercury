@@ -65,7 +65,6 @@ class PlanController extends Controller
         ]);
 
         $data = $request->toArray();
-        dd($request->user());
         $data['creator_id'] = $request->user()->id;
 
         try {
