@@ -82,14 +82,14 @@ class RegisterController extends Controller
                     'status' => 'true',
                 ], 201);
             }
-            $message = $this->validator($data)->errors();
+            $messages = $this->validator($data)->errors()->messages();
 
-            if ($message == []) {
+            if (!empty($messages)) {
 
                 return response()->json([
-                    'status' => 'false',
-                    'message' => $message
-                ], 404);
+                    'status' => 'error',
+                    'messages' => $messages
+                ], 400);
             }
 
             if ($this->create($data)) {
@@ -98,6 +98,7 @@ class RegisterController extends Controller
                     'status' => 'true',
                 ], 201);
             }
+
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
