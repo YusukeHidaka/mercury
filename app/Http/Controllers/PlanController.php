@@ -41,7 +41,7 @@ class PlanController extends Controller
         $data = Plan::latest('id')->take($num)->get();
 
         return response()->json(
-            $data,
+            ['data' => $data, 'has_next_page' => 'false'],
             200,
             ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -53,7 +53,7 @@ class PlanController extends Controller
         $data = Plan::where('id', '<', $id)->latest('id')->take($num)->get();
 
         return response()->json(
-            $data,
+            ['data' => $data, 'has_next_page' => 'false'],
             200,
             ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
