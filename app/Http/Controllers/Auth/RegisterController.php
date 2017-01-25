@@ -90,7 +90,7 @@ class RegisterController extends Controller
                     'status' => 'error',
                     'messages' => $messages
                 ], 400);
-            }
+            }
 
             if ($this->create($data)) {
 
