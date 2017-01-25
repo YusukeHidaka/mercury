@@ -15,6 +15,7 @@ class PlanList extends Component {
             <th>take</th>
             <th>give</th>
             <th>place</th>
+            <th>image</th>
           </tr>
         </thead>
         <tbody>

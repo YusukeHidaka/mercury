@@ -11,6 +11,7 @@ class PlanListItem extends Component {
         <td> {this.props.plan.take} </td>
         <td> {this.props.plan.give} </td>
         <td> {this.props.plan.place} </td>
+        <td><img src={this.props.plan.image_url} alt={this.props.plan.id} /></td>
       </tr>
      )
   }
