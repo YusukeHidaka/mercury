@@ -29,4 +29,6 @@ Route::get('/plans/participant_id/{participant_id}','PlanController@showForParti
 
 Route::put('/plans/apply/{id}','PlanController@applyForPlan');
 
+Route::get('/plans/apply/{id}','PlanController@showApplicantsForPlan');
+
 Route::put('/plans/accept/{id}','PlanController@acceptApplicationForPlan');
