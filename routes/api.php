@@ -23,6 +23,8 @@ Route::post('/auth/register','Auth\RegisterController@createForApi');
 
 Route::post('/auth/isRegistered','Auth\RegisterController@isRegistered');
 
+Route::get('/user/{id}','UserControlle@show');
+
 Route::get('/plans/creator_id/{creator_id}','PlanController@showForCreator');
 
 Route::get('/plans/participant_id/{participant_id}','PlanController@showForParticipant');
