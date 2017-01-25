@@ -57,7 +57,7 @@ class UserController extends Controller
      */
     public function showOnUserId($id)
     {
-        $data = User::find($id)->get();
+        $data = User::where('id', $id)->get();
 
         return response()->json(
             $data,
