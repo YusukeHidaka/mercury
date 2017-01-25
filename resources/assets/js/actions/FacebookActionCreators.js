@@ -35,11 +35,11 @@ const FacebookActionCreators = {
       });
     },
 
-    getFacebookData: function (){
-      window.FB.api("/me?fields=id,email,name", (response2) => {
+    getFacebookInfo: function (){
+      window.FB.api("/me?fields=id,email,name", (response) => {
         FacebookDispatcher.dispatch({
           actionType: Constants.FACEBOOK_RECEIVED_DATA,
-          data: response2
+          data: response
         });
       });
     },

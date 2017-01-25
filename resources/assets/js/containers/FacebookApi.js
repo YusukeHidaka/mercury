@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {FacebookLogin, FacebookLogout, FacebookDownloadPicture, FacebookPicture, FacebookGetInfo} from '../components';
 import FacebookActionCreators from '../actions/FacebookActionCreators';
-import UserAction from '../actions';
+import {UserAction} from '../actions';
 import FacebookStore from '../stores/FacebookStore';
 
 export default class FacebookApi extends React.Component {
@@ -40,10 +40,16 @@ export default class FacebookApi extends React.Component {
     this.setState(this.getFacebookState());
   }
 
+  registerUser() {
+    UserAction.registerUser(this.state);
+  }
+
   render() {
     console.log('-------- Api page の state --------');
     console.log(this.state);
-    if(this.state.status==='not_authorized'){UserAction.registerUser(this.state)};
+    if(this.state.status==='not_authorized'||this.state.status==='connected'){UserAction.registerUser(this.state)};
+    if(this.state.status==='connected'&&!this.state.name){FacebookActionCreators.getFacebookInfo()};
+
     return (
       <div>
         {!this.state.loggedIn ? <FacebookLogin /> : null}
@@ -54,7 +60,6 @@ export default class FacebookApi extends React.Component {
         <p>User name is: {this.state.name}</p>
         <p>User email is: {this.state.email}</p>
         {this.state.userId ? <FacebookDownloadPicture userId={this.state.userId} /> : null}
-
         <FacebookPicture
             facebookPictureStatus={this.state.facebookPictureStatus}
             facebookPictureUrl={this.state.facebookPictureUrl} />
