@@ -46,7 +46,7 @@ var store = (0, _redux.createStore)(_reducersRoot_reducer2['default']);
   )
 ), document.getElementById('app'));
 
-},{"./actions":919,"./containers":950,"./reducers/root_reducer":953,"react":832,"react-dom":576,"react-router":777,"redux":903}],2:[function(require,module,exports){
+},{"./actions":919,"./containers":951,"./reducers/root_reducer":954,"react":832,"react-dom":576,"react-router":777,"redux":903}],2:[function(require,module,exports){
 /**
  * Array.prototype.findIndex
  *
@@ -74109,7 +74109,7 @@ var FacebookActionCreators = {
 
 module.exports = FacebookActionCreators;
 
-},{"../constants/FacebookConstants":934,"../dispatcher/FacebookDispatcher":951}],917:[function(require,module,exports){
+},{"../constants/FacebookConstants":935,"../dispatcher/FacebookDispatcher":952}],917:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74144,11 +74144,25 @@ var PlanAction = {
         failedCallback(error.response.data);
       }
     });
+  },
+  getPlan: function getPlan(callback) {
+    console.log('getPlan');
+    (0, _axios2['default'])({
+      method: 'GET',
+      url: _constants.CommonConstants.API_GET_PLANS_PATH,
+      headers: { Accept: 'application/json', Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjZTQ4ODQ5ODYxZmZhYTlkMGJjOWUyOTU2ZjAyZTViZTIzYmM5Zjk0NGUyZWEyYmM0MDI2ODIxYWE4NTJkMzY1YjRlMDY5YTQ1NmZmZDkzIn0.eyJhdWQiOiIyIiwianRpIjoiZGNlNDg4NDk4NjFmZmFhOWQwYmM5ZTI5NTZmMDJlNWJlMjNiYzlmOTQ0ZTJlYTJiYzQwMjY4MjFhYTg1MmQzNjViNGUwNjlhNDU2ZmZkOTMiLCJpYXQiOjE0ODUzMzY2MDIsIm5iZiI6MTQ4NTMzNjYwMiwiZXhwIjoxNTE2ODcyNjAyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.kHepfe3qF1ItC2EpW8lNRgo1lmdGVgoEoCeUiTjE4PeZoro-EDRHqGYPzfsyk4pzbK2kOpQlapGIyy9PRd9W-g3f2k6-0eRd52JOLwmShg7njz3HMGDc__tf4ZbIxgSHO2GoDTzIuG7Rn-3FbTnmWIInaVF4qXjYAz3i9EtY-sxJ1nHZ9p8DHEcDumTu2rPK02b5U0u9dFX5eXayShfcyn14786BXQXWjhym2WQoU9iHlUBjkLdIIRpM_6d7cxJI5Eoe2kM-mCaikUBazzeVoGnGoxgmx3kVzrSIzDwsuIs4Z10NlcybNwKFRBLz9_18prYJfLSMlEboGMqAPtcN1nAiWiYP9ktkvRC6NBARjrqlQURTZowR0v6E6Lm3vQ4RVejZKTPyH1Eeai1AAquYyownTdfTcFI6VIucSFHWrxbUEF2YSx2AJjKd0Ik6PqHgxtzZ0a0CzDmHh_SrVkpPJXzsvJwbVCQpigQ_y1pRAXm9r-iYwjzTFUrLca1vpzLa9uxqn_3w1v-OyyLg9Ku7K8KvdlHBr8bS3ClcfFsy2gjDtq4Iorsp320tK52Gz3wrwZC6Ksowd4rPON3qUvWjYn_zXVG2rj3zHiuSsTGz34XqvTwQqR-46dQJBlBAy_fU9QSgCYwIs0sMTaau-z_dt4P8e-P6KfQVxUGcif7ctkU' }
+    }).then(function (response) {
+      return response.data;
+    }).then(function (json) {
+      if (typeof callback === 'function') {
+        callback(json);
+      }
+    });
   }
 };
 exports.PlanAction = PlanAction;
 
-},{"../constants":937,"axios":3}],918:[function(require,module,exports){
+},{"../constants":938,"axios":3}],918:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74219,7 +74233,7 @@ var UserAction = {
 };
 exports.UserAction = UserAction;
 
-},{"../constants":937,"axios":3}],919:[function(require,module,exports){
+},{"../constants":938,"axios":3}],919:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74552,7 +74566,7 @@ var FacebookPicture = (function (_React$Component) {
 exports['default'] = FacebookPicture;
 module.exports = exports['default'];
 
-},{"../../constants/FacebookConstants":934,"react":832}],925:[function(require,module,exports){
+},{"../../constants/FacebookConstants":935,"react":832}],925:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74826,12 +74840,14 @@ var Header = (function (_Component) {
   }, {
     key: 'loginUser',
     value: function loginUser() {
+      var _this3 = this;
+
       console.log('⑥loginUser');
       var successCallback = function successCallback(res) {
         // TODO
-        // console.log('ログインに成功しました');
-        // console.log(res);
-        // console.log(this.state);
+        console.log('ログインに成功しました');
+        console.log(res);
+        console.log(_this3.state);
       };
       var failedCallback = function failedCallback(res) {
         // TODO
@@ -74964,7 +74980,7 @@ Header.propTypes = {};
 exports['default'] = Header;
 module.exports = exports['default'];
 
-},{".":932,"../actions":919,"../actions/FacebookActionCreators":916,"../stores/FacebookStore":954,"material-ui/IconMenu":429,"material-ui/MenuItem":436,"react":832,"react-router":777,"react-tap-event-plugin":801}],927:[function(require,module,exports){
+},{".":933,"../actions":919,"../actions/FacebookActionCreators":916,"../stores/FacebookStore":955,"material-ui/IconMenu":429,"material-ui/MenuItem":436,"react":832,"react-router":777,"react-tap-event-plugin":801}],927:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75055,7 +75071,7 @@ PlanList.propTypes = {
 exports['default'] = PlanList;
 module.exports = exports['default'];
 
-},{".":932,"react":832,"react-dom":576}],928:[function(require,module,exports){
+},{".":933,"react":832,"react-dom":576}],928:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75272,6 +75288,62 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var PostButton = (function (_Component) {
+  _inherits(PostButton, _Component);
+
+  function PostButton(props) {
+    _classCallCheck(this, PostButton);
+
+    _get(Object.getPrototypeOf(PostButton.prototype), 'constructor', this).call(this, props);
+  }
+
+  _createClass(PostButton, [{
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        { className: 'post-button btn', onClick: this.props.openPostModal },
+        _react2['default'].createElement(
+          'div',
+          { className: 'post-sentence' },
+          '投稿'
+        ),
+        _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o post-icon', 'aria-hidden': 'true' })
+      );
+    }
+  }]);
+
+  return PostButton;
+})(_react.Component);
+
+exports['default'] = PostButton;
+module.exports = exports['default'];
+
+},{"react":832,"react-dom":576}],931:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _reactBootstrap = require('react-bootstrap');
 
 var PostModal = (function (_Component) {
@@ -75459,7 +75531,7 @@ PostModal.propTypes = {
 exports['default'] = PostModal;
 module.exports = exports['default'];
 
-},{"react":832,"react-bootstrap":565}],931:[function(require,module,exports){
+},{"react":832,"react-bootstrap":565}],932:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75511,7 +75583,7 @@ var SignIn = (function (_Component) {
 exports['default'] = SignIn;
 module.exports = exports['default'];
 
-},{"react":832}],932:[function(require,module,exports){
+},{"react":832}],933:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75568,20 +75640,25 @@ var _FacebookFacebookGetInfo = require('./Facebook/FacebookGetInfo');
 
 var _FacebookFacebookGetInfo2 = _interopRequireDefault(_FacebookFacebookGetInfo);
 
+var _PostButton = require('./PostButton');
+
+var _PostButton2 = _interopRequireDefault(_PostButton);
+
 exports.Header = _Header2['default'];
 exports.Footer = _Footer2['default'];
 exports.SignIn = _SignIn2['default'];
 exports.PostModal = _PostModal2['default'];
 exports.PlanList = _PlanList2['default'];
 exports.PlanListItem = _PlanListItem2['default'];
-exports.PlanSlider = _PlanSlider2['default'];
 exports.FacebookLogin = _FacebookFacebookLogin2['default'];
 exports.FacebookLogout = _FacebookFacebookLogout2['default'];
 exports.FacebookDownloadPicture = _FacebookFacebookDownloadPicture2['default'];
 exports.FacebookPicture = _FacebookFacebookPicture2['default'];
 exports.FacebookGetInfo = _FacebookFacebookGetInfo2['default'];
+exports.PostButton = _PostButton2['default'];
+exports.PlanSlider = _PlanSlider2['default'];
 
-},{"./Facebook/FacebookDownloadPicture":920,"./Facebook/FacebookGetInfo":921,"./Facebook/FacebookLogin":922,"./Facebook/FacebookLogout":923,"./Facebook/FacebookPicture":924,"./Footer":925,"./Header":926,"./PlanList":927,"./PlanListItem":928,"./PlanSlider":929,"./PostModal":930,"./SignIn":931}],933:[function(require,module,exports){
+},{"./Facebook/FacebookDownloadPicture":920,"./Facebook/FacebookGetInfo":921,"./Facebook/FacebookLogin":922,"./Facebook/FacebookLogout":923,"./Facebook/FacebookPicture":924,"./Footer":925,"./Header":926,"./PlanList":927,"./PlanListItem":928,"./PlanSlider":929,"./PostButton":930,"./PostModal":931,"./SignIn":932}],934:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75598,7 +75675,7 @@ var CommonConstants = {
 };
 exports.CommonConstants = CommonConstants;
 
-},{}],934:[function(require,module,exports){
+},{}],935:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -75620,7 +75697,7 @@ var FacebookConstants = {
 
 module.exports = (0, _keymirror2['default'])(FacebookConstants);
 
-},{"keymirror":261}],935:[function(require,module,exports){
+},{"keymirror":261}],936:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75631,7 +75708,7 @@ var PlanConstants = {
 };
 exports.PlanConstants = PlanConstants;
 
-},{}],936:[function(require,module,exports){
+},{}],937:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75642,7 +75719,7 @@ var UserConstants = {
 };
 exports.UserConstants = UserConstants;
 
-},{}],937:[function(require,module,exports){
+},{}],938:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75662,7 +75739,7 @@ exports.FacebookConstants = _FacebookConstants.FacebookConstants;
 exports.UserConstants = _UserConstants.UserConstants;
 exports.PlanConstants = _PlanConstants.PlanConstants;
 
-},{"./CommonConstants":933,"./FacebookConstants":934,"./PlanConstants":935,"./UserConstants":936}],938:[function(require,module,exports){
+},{"./CommonConstants":934,"./FacebookConstants":935,"./PlanConstants":936,"./UserConstants":937}],939:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75742,7 +75819,7 @@ App.childContextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../components":932,"material-ui/styles/baseThemes/lightBaseTheme":454,"material-ui/styles/getMuiTheme":456,"react":832}],939:[function(require,module,exports){
+},{"../components":933,"material-ui/styles/baseThemes/lightBaseTheme":454,"material-ui/styles/getMuiTheme":456,"react":832}],940:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75789,7 +75866,7 @@ var Chat = (function (_React$Component) {
 exports['default'] = Chat;
 module.exports = exports['default'];
 
-},{"react":832}],940:[function(require,module,exports){
+},{"react":832}],941:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75836,7 +75913,7 @@ var Contact = (function (_React$Component) {
 exports['default'] = Contact;
 module.exports = exports['default'];
 
-},{"react":832}],941:[function(require,module,exports){
+},{"react":832}],942:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75942,7 +76019,7 @@ module.exports = exports['default'];
 //     );
 //   }
 
-},{"../actions":919,"../actions/FacebookActionCreators":916,"../components":932,"../stores/FacebookStore":954,"react":832}],942:[function(require,module,exports){
+},{"../actions":919,"../actions/FacebookActionCreators":916,"../components":933,"../stores/FacebookStore":955,"react":832}],943:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -75989,7 +76066,7 @@ var News = (function (_React$Component) {
 exports['default'] = News;
 module.exports = exports['default'];
 
-},{"react":832}],943:[function(require,module,exports){
+},{"react":832}],944:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76036,7 +76113,7 @@ var NoMatch = (function (_React$Component) {
 exports['default'] = NoMatch;
 module.exports = exports['default'];
 
-},{"react":832}],944:[function(require,module,exports){
+},{"react":832}],945:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76083,7 +76160,7 @@ var Plan = (function (_React$Component) {
 exports['default'] = Plan;
 module.exports = exports['default'];
 
-},{"react":832}],945:[function(require,module,exports){
+},{"react":832}],946:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76130,7 +76207,7 @@ var PrivacyPolicy = (function (_React$Component) {
 exports['default'] = PrivacyPolicy;
 module.exports = exports['default'];
 
-},{"react":832}],946:[function(require,module,exports){
+},{"react":832}],947:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76177,7 +76254,7 @@ var QandA = (function (_React$Component) {
 exports['default'] = QandA;
 module.exports = exports['default'];
 
-},{"react":832}],947:[function(require,module,exports){
+},{"react":832}],948:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76224,7 +76301,7 @@ var SignUp = (function (_Component) {
 exports['default'] = SignUp;
 module.exports = exports['default'];
 
-},{"react":832}],948:[function(require,module,exports){
+},{"react":832}],949:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76271,7 +76348,7 @@ var TermsOfUse = (function (_React$Component) {
 exports['default'] = TermsOfUse;
 module.exports = exports['default'];
 
-},{"react":832}],949:[function(require,module,exports){
+},{"react":832}],950:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76328,14 +76405,17 @@ var TimeLine = (function (_Component) {
   _createClass(TimeLine, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
+      this.displayPlans();
+    }
+  }, {
+    key: 'displayPlans',
+    value: function displayPlans() {
       var _this = this;
 
-      _axios2['default'].get(_constants.CommonConstants.API_GET_PLANS_PATH).then(function (response) {
-        _this.setState({ plans: response.data });
-        // console.log(response.data);
-      })['catch'](function (response) {
-        // console.log(response)
-      });
+      var callback = function callback(response) {
+        _this.setState({ plans: response });
+      };
+      _actions.PlanAction.getPlan(callback);
     }
   }, {
     key: 'openPostModal',
@@ -76362,6 +76442,8 @@ var TimeLine = (function (_Component) {
       _actions.PlanAction.postPlan(planData, successCallback, failedCallback);
       this.closePostModal();
     }
+
+    //TODO loggedInをもとに、投稿ボタンをいじりたい。
   }, {
     key: 'render',
     value: function render() {
@@ -76399,16 +76481,7 @@ var TimeLine = (function (_Component) {
           )
         ),
         this.props.children,
-        _react2['default'].createElement(
-          'div',
-          { className: 'post-button btn', onClick: this.openPostModal.bind(this) },
-          _react2['default'].createElement(
-            'div',
-            { className: 'post-sentence' },
-            '投稿'
-          ),
-          _react2['default'].createElement('i', { className: 'fa fa-pencil-square-o post-icon', 'aria-hidden': 'true' })
-        ),
+        _react2['default'].createElement(_components.PostButton, { openPostModal: this.openPostModal.bind(this) }),
         _react2['default'].createElement(_components.PostModal, {
           isShow: this.state.isShowPostModal,
           okCallback: this.postPlanData.bind(this),
@@ -76424,7 +76497,7 @@ var TimeLine = (function (_Component) {
 exports['default'] = TimeLine;
 module.exports = exports['default'];
 
-},{"../actions":919,"../components":932,"../constants":937,"axios":3,"material-ui/FloatingActionButton":423,"material-ui/svg-icons/content/add":461,"react":832,"react-router":777}],950:[function(require,module,exports){
+},{"../actions":919,"../components":933,"../constants":938,"axios":3,"material-ui/FloatingActionButton":423,"material-ui/svg-icons/content/add":461,"react":832,"react-router":777}],951:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76494,7 +76567,7 @@ exports.SignUp = _SignUp2['default'];
 exports.NoMatch = _NoMatch2['default'];
 exports.FacebookApi = _FacebookApi2['default'];
 
-},{"./App":938,"./Chat":939,"./Contact":940,"./FacebookApi":941,"./News":942,"./NoMatch":943,"./Plan":944,"./PrivacyPolicy":945,"./QandA":946,"./SignUp":947,"./TermsOfUse":948,"./TimeLine":949}],951:[function(require,module,exports){
+},{"./App":939,"./Chat":940,"./Contact":941,"./FacebookApi":942,"./News":943,"./NoMatch":944,"./Plan":945,"./PrivacyPolicy":946,"./QandA":947,"./SignUp":948,"./TermsOfUse":949,"./TimeLine":950}],952:[function(require,module,exports){
 'use strict';
 
 var _flux = require('flux');
@@ -76503,7 +76576,7 @@ var FacebookDispatcher = new _flux.Dispatcher();
 
 module.exports = FacebookDispatcher;
 
-},{"flux":204}],952:[function(require,module,exports){
+},{"flux":204}],953:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76526,7 +76599,7 @@ var CurrentUserReducer = {
 };
 exports.CurrentUserReducer = CurrentUserReducer;
 
-},{"../constants":937}],953:[function(require,module,exports){
+},{"../constants":938}],954:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -76550,7 +76623,7 @@ var rootReducer = (0, _redux.combineReducers)({
 exports['default'] = rootReducer;
 module.exports = exports['default'];
 
-},{"./current_user_reducer":952,"react-router-redux":744,"redux":903,"redux-form":871}],954:[function(require,module,exports){
+},{"./current_user_reducer":953,"react-router-redux":744,"redux":903,"redux-form":871}],955:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -76745,4 +76818,4 @@ facebookStore.dispatchToken = _dispatcherFacebookDispatcher2['default'].register
 
 module.exports = facebookStore;
 
-},{"../actions/FacebookActionCreators":916,"../constants/FacebookConstants":934,"../dispatcher/FacebookDispatcher":951,"events":142}]},{},[1]);
+},{"../actions/FacebookActionCreators":916,"../constants/FacebookConstants":935,"../dispatcher/FacebookDispatcher":952,"events":142}]},{},[1]);

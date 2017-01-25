@@ -70,9 +70,9 @@ class Header extends Component {
     console.log('⑥loginUser');
     const successCallback = (res) => {
       // TODO
-      // console.log('ログインに成功しました');
-      // console.log(res);
-      // console.log(this.state);
+      console.log('ログインに成功しました');
+      console.log(res);
+      console.log(this.state);
     }
     const failedCallback = (res) => {
       // TODO

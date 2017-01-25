@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {CommonConstants} from '../constants';
-import {PostModal, PlanList, PlanSlider} from '../components';
+import {PostModal, PlanList, PlanSlider, PostButton} from '../components';
 import {PlanAction} from '../actions';
 
 class TimeLine extends Component{
@@ -17,12 +17,14 @@ class TimeLine extends Component{
   }
 
   componentWillMount() {
-    request.get(CommonConstants.API_GET_PLANS_PATH).then((response) => {
-      this.setState({plans: response.data})
-      // console.log(response.data);
-    }).catch((response) => {
-      // console.log(response)
-    })
+    this.displayPlans();
+  }
+
+  displayPlans() {
+    const callback = (response) => {
+      this.setState({plans: response})
+    }
+    PlanAction.getPlan(callback);
   }
 
   openPostModal() {
@@ -46,7 +48,7 @@ class TimeLine extends Component{
     PlanAction.postPlan(planData, successCallback, failedCallback);
     this.closePostModal();
   }
-
+  //TODO loggedInをもとに、投稿ボタンをいじりたい。
   render(){
     return (
       <div className='time-line'>
@@ -62,10 +64,7 @@ class TimeLine extends Component{
         </nav>
         {this.props.children}
 
-        <div className='post-button btn' onClick={this.openPostModal.bind(this)}>
-          <div className='post-sentence'>投稿</div>
-          <i className="fa fa-pencil-square-o post-icon" aria-hidden="true"></i>
-        </div>
+        <PostButton openPostModal={this.openPostModal.bind(this)}/>
         <PostModal
           isShow={this.state.isShowPostModal}
           okCallback={this.postPlanData.bind(this)}
