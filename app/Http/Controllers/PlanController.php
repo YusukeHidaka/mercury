@@ -209,19 +209,19 @@ class PlanController extends Controller
         try {
             $user_id = $request->user()->id;
             $plan = Plan::find($id);
-            if ($plan->users()->attach($user_id)) {
+            $plan->users()->attach($user_id);
 
-                return json_encode([
-                    'status' => 'true',
-                    'data' => ['message' => 'Successful']
-                ]);
-            }
-
+            return json_encode([
+                'status' => 'true',
+                'data' => ['message' => 'Successful']
+            ]);
         } catch (Exception $e) {
             \Log::info($e->getMessage());
         }
 
-        return 'Failed';
+        return response()->json([
+            'status' => 'false'
+        ], 404);
     }
 
     public function acceptApplicationForPlan(Request $request, $id)
