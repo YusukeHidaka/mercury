@@ -5,6 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {CommonConstants} from '../constants';
 import {PostModal, PlanList} from '../components';
+import {PlanAction} from '../actions'
 
 class TimeLine extends Component{
   constructor(props) {
@@ -18,9 +19,9 @@ class TimeLine extends Component{
   componentWillMount() {
     request.get(CommonConstants.API_GET_PLANS_PATH).then((response) => {
       this.setState({plans: response.data})
-      console.log(response.data);
+      // console.log(response.data);
     }).catch((response) => {
-      console.log(response)
+      // console.log(response)
     })
   }
 
@@ -32,8 +33,20 @@ class TimeLine extends Component{
     this.setState({isShowPostModal: false});
   }
 
-  postPlanData() {
+  postPlanData(planData) {
     //TODO post data to google api
+    const successCallback = (res) => {
+        // TODO
+        // console.log('会員登録に成功しました');
+        // console.log(res);
+        this.loginUser();
+      }
+      const failedCallback = () => {
+        // TODO
+        // console.log('すでに登録済みです');
+      }
+
+    PlanAction.postPlan(this.state, successCallback, failedCallback);
     this.closePostModal();
   }
 

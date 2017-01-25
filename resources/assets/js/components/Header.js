@@ -21,6 +21,7 @@ class Header extends Component {
   }
 
   getFacebookState() {
+    console.log('①getFacebookState');
     return {
       status: FacebookStore.status,
       accessToken: FacebookStore.accessToken,
@@ -34,48 +35,65 @@ class Header extends Component {
   }
 
   componentDidMount() {
+    console.log('②componentDidMount');
     FacebookActionCreators.initFacebook();
     FacebookStore.addChangeListener(() => this._onFacebookChange());
   }
 
   componentWillUnmount() {
+    console.log('③componentWillUnmount');
     FacebookStore.removeChangeListener(this._onFacebookChange);
     setState({currentUser: this.state});
   }
 
   _onFacebookChange() {
+    console.log('④_onFacebookChange');
     this.setState(this.getFacebookState());
   }
 
   registerUser() {
+    console.log('⑤registerUser');
     const successCallback = (res) => {
       // TODO
-      console.log('会員登録に成功しました');
-      console.log(res);
+      // console.log('会員登録に成功しました');
+      // console.log(res);
       this.loginUser();
     }
     const failedCallback = () => {
       // TODO
-      console.log('すでに登録済みです');
+      // console.log('すでに登録済みです');
     }
     UserAction.registerUser(this.state, successCallback, failedCallback);
   }
 
   loginUser(){
+    console.log('⑥loginUser');
     const successCallback = (res) => {
       // TODO
-      console.log('ログインに成功しました');
-      console.log(res);
+      // console.log('ログインに成功しました');
+      // console.log(res);
+      // console.log(this.state);
     }
     const failedCallback = (res) => {
       // TODO
-      console.log('ログインに失敗しました');
-      console.log(res);
+      // console.log('ログインに失敗しました');
+      // console.log(res);
     }
     UserAction.loginUser(this.state, successCallback, failedCallback);
   }
 
+  //タイミングで呼び出したい。
+  getUser() {
+    console.log('⑦getUser');
+    const callback = (res) => {
+      console.log('get しました');
+      console.log(res);
+    }
+    UserAction.getUser(callback);
+  }
+
   renderRightHeader() {
+    console.log('⑧renderRightHeader');
     if (this.state.loggedIn) {
       return this.renderUserHeader();
     } else {
@@ -84,6 +102,7 @@ class Header extends Component {
   }
 
   renderUserHeader() {
+    console.log('⑨renderUserHeader');
     return (
       <div>
         <ul>
@@ -112,17 +131,21 @@ class Header extends Component {
           </li>
         </ul>
         <FacebookLogout />
+        <button onClick={this.getUser.bind(this)}>getUser</button>
       </div>
     );
   }
 
   renderGuestHeader() {
+    console.log('⑩renderGuestHeader');
     return (
       <div><FacebookLogin /></div>
     );
   }
 
   render() {
+    console.log('①①render');
+    console.log('header のrenderです')
     console.log(this.state);
     //facebook連携。
     if(this.state.status==='connected'&&!this.state.name){FacebookActionCreators.getFacebookInfo()};

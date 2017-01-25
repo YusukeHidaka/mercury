@@ -1,5 +1,5 @@
 import FacebookDispatcher from '../dispatcher/FacebookDispatcher';
-import Constants from '../constants/Constants';
+import FacebookConstants from '../constants';
 
 const APP_ID = '1400175353350443';
 
@@ -21,24 +21,26 @@ const FacebookActionCreators = {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {return;}
         js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
+        js.src = "//connect.facebook.net/en_US/all.js";
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     },
 
     getLoginStatus: function() {
+      console.log('---- getLoginStatus');
       window.FB.getLoginStatus((response) => {
         FacebookDispatcher.dispatch({
-          actionType: Constants.FACEBOOK_INITIALIZED,
+          actionType: FacebookConstants.FACEBOOK_INITIALIZED,
           data: response
         })
       });
     },
 
     getFacebookInfo: function (){
+      console.log('---- getFacebookInfo。');
       window.FB.api("/me?fields=id,email,name", (response) => {
         FacebookDispatcher.dispatch({
-          actionType: Constants.FACEBOOK_RECEIVED_DATA,
+          actionType: FacebookConstants.FACEBOOK_RECEIVED_DATA,
           data: response
         });
       });
@@ -46,10 +48,11 @@ const FacebookActionCreators = {
 
 
     login: () => {
+      console.log('---- login。');
       window.FB.login((response) => {
         if (response.status === 'connected') {
           FacebookDispatcher.dispatch({
-            actionType: Constants.FACEBOOK_LOGGED_IN,
+            actionType: FacebookConstants.FACEBOOK_LOGGED_IN,
             data: response
           })
         }
@@ -59,7 +62,7 @@ const FacebookActionCreators = {
     logout: () => {
       window.FB.logout((response) => {
         FacebookDispatcher.dispatch({
-          actionType: Constants.FACEBOOK_LOGGED_OUT,
+          actionType: FacebookConstants.FACEBOOK_LOGGED_OUT,
           data: response
         })
       })
@@ -67,13 +70,13 @@ const FacebookActionCreators = {
 
     getFacebookProfilePicture: (userId) => {
       FacebookDispatcher.dispatch({
-        actionType: Constants.FACEBOOK_GETTING_PICTURE,
+        actionType: FacebookConstants.FACEBOOK_GETTING_PICTURE,
         data: null
       })
 
       window.FB.api(`/${userId}/picture?type=large`, (response) => {
         FacebookDispatcher.dispatch({
-          actionType: Constants.FACEBOOK_RECEIVED_PICTURE,
+          actionType: FacebookConstants.FACEBOOK_RECEIVED_PICTURE,
           data: response
         })
       })

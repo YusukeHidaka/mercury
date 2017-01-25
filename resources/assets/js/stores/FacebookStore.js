@@ -1,4 +1,4 @@
-import Constants from '../constants/Constants';
+import FacebookConstants from '../constants';
 import FacebookDispatcher from '../dispatcher/FacebookDispatcher';
 import {EventEmitter} from 'events';
 import FacebookActionCreators from '../actions/FacebookActionCreators'
@@ -15,8 +15,8 @@ class FacebookStore extends EventEmitter {
 
     setFacebookAuthData(data) {
       // !!!
-       console.log('----- facebook_store ------');
-       console.log(data);
+      //  console.log('----- facebook_store ------');
+      //  console.log(data);
       // TODO
       if(data.status==='not_authorized'){alert('登録させなきゃ！！！')};
       this.facebookAuthData = data;
@@ -48,8 +48,8 @@ class FacebookStore extends EventEmitter {
     }
 
     get status() {
-        console.log('statusのロジック部分');
-        console.log(this.facebookAuthData);
+        // console.log('statusのロジック部分');
+        // console.log(this.facebookAuthData);
         if (!this.facebookAuthData || !this.facebookAuthData.authResponse) {
             return;
         }
@@ -59,8 +59,8 @@ class FacebookStore extends EventEmitter {
 
     setFacebookUserData(data) {
       // !!!
-       console.log('----- ユーザーデータ ------');
-       console.log(data);
+      //  console.log('----- ユーザーデータ ------');
+      //  console.log(data);
       // TODO
       this.facebookUserData = data;
       this.emitChange();
@@ -117,29 +117,30 @@ class FacebookStore extends EventEmitter {
 const facebookStore = new FacebookStore();
 
 facebookStore.dispatchToken = FacebookDispatcher.register((action) => {
-  console.log('--------- Auth data ---------');
-  console.log(action.data);
-  if (action.actionType == Constants.FACEBOOK_INITIALIZED) {
+  // console.log('--------- Auth data ---------');
+  // console.log(action.data);
+  console.log('---- facebook dispatcher を通過したよ。')
+  if (action.actionType == FacebookConstants.FACEBOOK_INITIALIZED) {
     facebookStore.setFacebookAuthData(action.data);
   }
 
-  if (action.actionType == Constants.FACEBOOK_LOGGED_IN) {
+  if (action.actionType == FacebookConstants.FACEBOOK_LOGGED_IN) {
     facebookStore.setFacebookAuthData(action.data);
   }
 
-  if (action.actionType == Constants.FACEBOOK_RECEIVED_DATA) {
+  if (action.actionType == FacebookConstants.FACEBOOK_RECEIVED_DATA) {
     facebookStore.setFacebookUserData(action.data);
   }
 
-  if (action.actionType == Constants.FACEBOOK_LOGGED_OUT) {
+  if (action.actionType == FacebookConstants.FACEBOOK_LOGGED_OUT) {
     facebookStore.setFacebookAuthData(action.data);
   }
 
-  if (action.actionType == Constants.FACEBOOK_GETTING_PICTURE) {
+  if (action.actionType == FacebookConstants.FACEBOOK_GETTING_PICTURE) {
     facebookStore.setFacebookPictureData(action.actionType, action.data)
   }
 
-  if (action.actionType == Constants.FACEBOOK_RECEIVED_PICTURE) {
+  if (action.actionType == FacebookConstants.FACEBOOK_RECEIVED_PICTURE) {
     facebookStore.setFacebookPictureData(action.actionType, action.data)
   }
 })

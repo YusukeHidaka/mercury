@@ -44,7 +44,7 @@ var store = (0, _redux.createStore)(_reducersRoot_reducer2['default']);
   )
 ), document.getElementById('app'));
 
-},{"./actions":900,"./containers":930,"./reducers/root_reducer":933,"react":816,"react-dom":573,"react-router":773,"redux":887}],2:[function(require,module,exports){
+},{"./actions":902,"./containers":932,"./reducers/root_reducer":935,"react":816,"react-dom":573,"react-router":773,"redux":887}],2:[function(require,module,exports){
 /**
  * Array.prototype.findIndex
  *
@@ -71903,9 +71903,9 @@ var _dispatcherFacebookDispatcher = require('../dispatcher/FacebookDispatcher');
 
 var _dispatcherFacebookDispatcher2 = _interopRequireDefault(_dispatcherFacebookDispatcher);
 
-var _constantsConstants = require('../constants/Constants');
+var _constants = require('../constants');
 
-var _constantsConstants2 = _interopRequireDefault(_constantsConstants);
+var _constants2 = _interopRequireDefault(_constants);
 
 var APP_ID = '1400175353350443';
 
@@ -71928,34 +71928,37 @@ var FacebookActionCreators = {
         return;
       }
       js = d.createElement(s);js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
+      js.src = "//connect.facebook.net/en_US/all.js";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
   },
 
   getLoginStatus: function getLoginStatus() {
+    console.log('---- getLoginStatus');
     window.FB.getLoginStatus(function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constantsConstants2['default'].FACEBOOK_INITIALIZED,
+        actionType: _constants2['default'].FACEBOOK_INITIALIZED,
         data: response
       });
     });
   },
 
   getFacebookInfo: function getFacebookInfo() {
+    console.log('---- getFacebookInfo。');
     window.FB.api("/me?fields=id,email,name", function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constantsConstants2['default'].FACEBOOK_RECEIVED_DATA,
+        actionType: _constants2['default'].FACEBOOK_RECEIVED_DATA,
         data: response
       });
     });
   },
 
   login: function login() {
+    console.log('---- login。');
     window.FB.login(function (response) {
       if (response.status === 'connected') {
         _dispatcherFacebookDispatcher2['default'].dispatch({
-          actionType: _constantsConstants2['default'].FACEBOOK_LOGGED_IN,
+          actionType: _constants2['default'].FACEBOOK_LOGGED_IN,
           data: response
         });
       }
@@ -71965,7 +71968,7 @@ var FacebookActionCreators = {
   logout: function logout() {
     window.FB.logout(function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constantsConstants2['default'].FACEBOOK_LOGGED_OUT,
+        actionType: _constants2['default'].FACEBOOK_LOGGED_OUT,
         data: response
       });
     });
@@ -71973,13 +71976,13 @@ var FacebookActionCreators = {
 
   getFacebookProfilePicture: function getFacebookProfilePicture(userId) {
     _dispatcherFacebookDispatcher2['default'].dispatch({
-      actionType: _constantsConstants2['default'].FACEBOOK_GETTING_PICTURE,
+      actionType: _constants2['default'].FACEBOOK_GETTING_PICTURE,
       data: null
     });
 
     window.FB.api('/' + userId + '/picture?type=large', function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constantsConstants2['default'].FACEBOOK_RECEIVED_PICTURE,
+        actionType: _constants2['default'].FACEBOOK_RECEIVED_PICTURE,
         data: response
       });
     });
@@ -71988,21 +71991,56 @@ var FacebookActionCreators = {
 
 module.exports = FacebookActionCreators;
 
-},{"../constants/Constants":914,"../dispatcher/FacebookDispatcher":931}],900:[function(require,module,exports){
+},{"../constants":919,"../dispatcher/FacebookDispatcher":933}],900:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _user_action = require('./user_action');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _FacebookActionCreators = require('./FacebookActionCreators');
+var _constants = require('../constants');
 
-exports.UserAction = _user_action.UserAction;
-exports.FacebookActionCreators = _FacebookActionCreators.FacebookActionCreators;
+var _axios = require('axios');
 
-},{"./FacebookActionCreators":899,"./user_action":901}],901:[function(require,module,exports){
+var _axios2 = _interopRequireDefault(_axios);
+
+var PlanAction = {
+  postPlan: function postPlan(planData, successCallback, failedCallback) {
+    (0, _axios2['default'])({
+      method: 'POST',
+      url: _constants.CommonConstants.API_GET_PLANS_PATH,
+      headers: { Accept: 'application/json', Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjZTQ4ODQ5ODYxZmZhYTlkMGJjOWUyOTU2ZjAyZTViZTIzYmM5Zjk0NGUyZWEyYmM0MDI2ODIxYWE4NTJkMzY1YjRlMDY5YTQ1NmZmZDkzIn0.eyJhdWQiOiIyIiwianRpIjoiZGNlNDg4NDk4NjFmZmFhOWQwYmM5ZTI5NTZmMDJlNWJlMjNiYzlmOTQ0ZTJlYTJiYzQwMjY4MjFhYTg1MmQzNjViNGUwNjlhNDU2ZmZkOTMiLCJpYXQiOjE0ODUzMzY2MDIsIm5iZiI6MTQ4NTMzNjYwMiwiZXhwIjoxNTE2ODcyNjAyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.kHepfe3qF1ItC2EpW8lNRgo1lmdGVgoEoCeUiTjE4PeZoro-EDRHqGYPzfsyk4pzbK2kOpQlapGIyy9PRd9W-g3f2k6-0eRd52JOLwmShg7njz3HMGDc__tf4ZbIxgSHO2GoDTzIuG7Rn-3FbTnmWIInaVF4qXjYAz3i9EtY-sxJ1nHZ9p8DHEcDumTu2rPK02b5U0u9dFX5eXayShfcyn14786BXQXWjhym2WQoU9iHlUBjkLdIIRpM_6d7cxJI5Eoe2kM-mCaikUBazzeVoGnGoxgmx3kVzrSIzDwsuIs4Z10NlcybNwKFRBLz9_18prYJfLSMlEboGMqAPtcN1nAiWiYP9ktkvRC6NBARjrqlQURTZowR0v6E6Lm3vQ4RVejZKTPyH1Eeai1AAquYyownTdfTcFI6VIucSFHWrxbUEF2YSx2AJjKd0Ik6PqHgxtzZ0a0CzDmHh_SrVkpPJXzsvJwbVCQpigQ_y1pRAXm9r-iYwjzTFUrLca1vpzLa9uxqn_3w1v-OyyLg9Ku7K8KvdlHBr8bS3ClcfFsy2gjDtq4Iorsp320tK52Gz3wrwZC6Ksowd4rPON3qUvWjYn_zXVG2rj3zHiuSsTGz34XqvTwQqR-46dQJBlBAy_fU9QSgCYwIs0sMTaau-z_dt4P8e-P6KfQVxUGcif7ctkU' },
+      data: { give: planData, take: take, place: place, image_url: image_url }
+    }).then(function (response) {
+      return response.data;
+    }).then(function (json) {
+      if (typeof successCallback === 'function') {
+        successCallback(json);
+      }
+    })['catch'](function (error) {
+      if (typeof failedCallback === 'function') {
+        failedCallback(error.response.data);
+      }
+    });
+  },
+
+  getUser: function getUser(callback) {
+    (0, _axios2['default'])({
+      method: 'GET',
+      url: _constants.CommonConstants.API_USER_PATH,
+      headers: { Accept: 'application/json', Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjZTQ4ODQ5ODYxZmZhYTlkMGJjOWUyOTU2ZjAyZTViZTIzYmM5Zjk0NGUyZWEyYmM0MDI2ODIxYWE4NTJkMzY1YjRlMDY5YTQ1NmZmZDkzIn0.eyJhdWQiOiIyIiwianRpIjoiZGNlNDg4NDk4NjFmZmFhOWQwYmM5ZTI5NTZmMDJlNWJlMjNiYzlmOTQ0ZTJlYTJiYzQwMjY4MjFhYTg1MmQzNjViNGUwNjlhNDU2ZmZkOTMiLCJpYXQiOjE0ODUzMzY2MDIsIm5iZiI6MTQ4NTMzNjYwMiwiZXhwIjoxNTE2ODcyNjAyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.kHepfe3qF1ItC2EpW8lNRgo1lmdGVgoEoCeUiTjE4PeZoro-EDRHqGYPzfsyk4pzbK2kOpQlapGIyy9PRd9W-g3f2k6-0eRd52JOLwmShg7njz3HMGDc__tf4ZbIxgSHO2GoDTzIuG7Rn-3FbTnmWIInaVF4qXjYAz3i9EtY-sxJ1nHZ9p8DHEcDumTu2rPK02b5U0u9dFX5eXayShfcyn14786BXQXWjhym2WQoU9iHlUBjkLdIIRpM_6d7cxJI5Eoe2kM-mCaikUBazzeVoGnGoxgmx3kVzrSIzDwsuIs4Z10NlcybNwKFRBLz9_18prYJfLSMlEboGMqAPtcN1nAiWiYP9ktkvRC6NBARjrqlQURTZowR0v6E6Lm3vQ4RVejZKTPyH1Eeai1AAquYyownTdfTcFI6VIucSFHWrxbUEF2YSx2AJjKd0Ik6PqHgxtzZ0a0CzDmHh_SrVkpPJXzsvJwbVCQpigQ_y1pRAXm9r-iYwjzTFUrLca1vpzLa9uxqn_3w1v-OyyLg9Ku7K8KvdlHBr8bS3ClcfFsy2gjDtq4Iorsp320tK52Gz3wrwZC6Ksowd4rPON3qUvWjYn_zXVG2rj3zHiuSsTGz34XqvTwQqR-46dQJBlBAy_fU9QSgCYwIs0sMTaau-z_dt4P8e-P6KfQVxUGcif7ctkU' }
+    }).then(function (response) {
+      return response.data;
+    }).then(function (user) {
+      return callback(user);
+    });
+  }
+};
+exports.PlanAction = PlanAction;
+
+},{"../constants":919,"axios":3}],901:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72059,11 +72097,11 @@ var UserAction = {
     store.dispatch({ type: _constants.UserConstants.SET_CURRENT_USER, currentUser: currentUser });
   },
 
-  getUser: function getUser(callback, includes) {
+  getUser: function getUser(callback) {
     (0, _axios2['default'])({
       method: 'GET',
       url: _constants.CommonConstants.API_USER_PATH,
-      params: { includes: includes }
+      headers: { Accept: 'application/json', Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjZTQ4ODQ5ODYxZmZhYTlkMGJjOWUyOTU2ZjAyZTViZTIzYmM5Zjk0NGUyZWEyYmM0MDI2ODIxYWE4NTJkMzY1YjRlMDY5YTQ1NmZmZDkzIn0.eyJhdWQiOiIyIiwianRpIjoiZGNlNDg4NDk4NjFmZmFhOWQwYmM5ZTI5NTZmMDJlNWJlMjNiYzlmOTQ0ZTJlYTJiYzQwMjY4MjFhYTg1MmQzNjViNGUwNjlhNDU2ZmZkOTMiLCJpYXQiOjE0ODUzMzY2MDIsIm5iZiI6MTQ4NTMzNjYwMiwiZXhwIjoxNTE2ODcyNjAyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.kHepfe3qF1ItC2EpW8lNRgo1lmdGVgoEoCeUiTjE4PeZoro-EDRHqGYPzfsyk4pzbK2kOpQlapGIyy9PRd9W-g3f2k6-0eRd52JOLwmShg7njz3HMGDc__tf4ZbIxgSHO2GoDTzIuG7Rn-3FbTnmWIInaVF4qXjYAz3i9EtY-sxJ1nHZ9p8DHEcDumTu2rPK02b5U0u9dFX5eXayShfcyn14786BXQXWjhym2WQoU9iHlUBjkLdIIRpM_6d7cxJI5Eoe2kM-mCaikUBazzeVoGnGoxgmx3kVzrSIzDwsuIs4Z10NlcybNwKFRBLz9_18prYJfLSMlEboGMqAPtcN1nAiWiYP9ktkvRC6NBARjrqlQURTZowR0v6E6Lm3vQ4RVejZKTPyH1Eeai1AAquYyownTdfTcFI6VIucSFHWrxbUEF2YSx2AJjKd0Ik6PqHgxtzZ0a0CzDmHh_SrVkpPJXzsvJwbVCQpigQ_y1pRAXm9r-iYwjzTFUrLca1vpzLa9uxqn_3w1v-OyyLg9Ku7K8KvdlHBr8bS3ClcfFsy2gjDtq4Iorsp320tK52Gz3wrwZC6Ksowd4rPON3qUvWjYn_zXVG2rj3zHiuSsTGz34XqvTwQqR-46dQJBlBAy_fU9QSgCYwIs0sMTaau-z_dt4P8e-P6KfQVxUGcif7ctkU' }
     }).then(function (response) {
       return response.data;
     }).then(function (user) {
@@ -72073,7 +72111,24 @@ var UserAction = {
 };
 exports.UserAction = UserAction;
 
-},{"../constants":916,"axios":3}],902:[function(require,module,exports){
+},{"../constants":919,"axios":3}],902:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _UserAction = require('./UserAction');
+
+var _PlanAction = require('./PlanAction');
+
+var _FacebookActionCreators = require('./FacebookActionCreators');
+
+exports.UserAction = _UserAction.UserAction;
+exports.PlanAction = _PlanAction.PlanAction;
+exports.FacebookActionCreators = _FacebookActionCreators.FacebookActionCreators;
+
+},{"./FacebookActionCreators":899,"./PlanAction":900,"./UserAction":901}],903:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72142,7 +72197,7 @@ var FacebookDownloadPicture = (function (_React$Component) {
 exports['default'] = FacebookDownloadPicture;
 module.exports = exports['default'];
 
-},{"../../actions/FacebookActionCreators":899,"react":816}],903:[function(require,module,exports){
+},{"../../actions/FacebookActionCreators":899,"react":816}],904:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72198,7 +72253,7 @@ var FacebookGetInfo = (function (_React$Component) {
 exports['default'] = FacebookGetInfo;
 module.exports = exports['default'];
 
-},{"../../actions/FacebookActionCreators":899,"react":816}],904:[function(require,module,exports){
+},{"../../actions/FacebookActionCreators":899,"react":816}],905:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72244,6 +72299,7 @@ var FacebookLogin = (function (_React$Component) {
     }, {
         key: 'didClickFacebookLoginButton',
         value: function didClickFacebookLoginButton(e) {
+            console.log('---- login buttonを押したよ。');
             _actionsFacebookActionCreators2['default'].login();
         }
     }]);
@@ -72254,7 +72310,7 @@ var FacebookLogin = (function (_React$Component) {
 exports['default'] = FacebookLogin;
 module.exports = exports['default'];
 
-},{"../../actions/FacebookActionCreators":899,"react":816}],905:[function(require,module,exports){
+},{"../../actions/FacebookActionCreators":899,"react":816}],906:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72310,7 +72366,7 @@ var FacebookLogout = (function (_React$Component) {
 exports['default'] = FacebookLogout;
 module.exports = exports['default'];
 
-},{"../../actions/FacebookActionCreators":899,"react":816}],906:[function(require,module,exports){
+},{"../../actions/FacebookActionCreators":899,"react":816}],907:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72331,9 +72387,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _constantsConstants = require('../../constants/Constants');
+var _constants = require('../../constants');
 
-var _constantsConstants2 = _interopRequireDefault(_constantsConstants);
+var _constants2 = _interopRequireDefault(_constants);
 
 var FacebookPicture = (function (_React$Component) {
     _inherits(FacebookPicture, _React$Component);
@@ -72359,11 +72415,11 @@ var FacebookPicture = (function (_React$Component) {
         get: function get() {
             var msg = undefined;
 
-            if (this.props.facebookPictureStatus === _constantsConstants2['default'].FACEBOOK_GETTING_PICTURE) {
+            if (this.props.facebookPictureStatus === _constants2['default'].FACEBOOK_GETTING_PICTURE) {
                 msg = 'Downloading picture...';
             }
 
-            if (this.props.facebookPictureStatus === _constantsConstants2['default'].FACEBOOK_RECEIVED_PICTURE) {
+            if (this.props.facebookPictureStatus === _constants2['default'].FACEBOOK_RECEIVED_PICTURE) {
                 msg = 'Received picture!';
             }
 
@@ -72388,7 +72444,7 @@ var FacebookPicture = (function (_React$Component) {
 exports['default'] = FacebookPicture;
 module.exports = exports['default'];
 
-},{"../../constants/Constants":914,"react":816}],907:[function(require,module,exports){
+},{"../../constants":919,"react":816}],908:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72538,7 +72594,7 @@ var Footer = (function (_Component) {
 exports['default'] = Footer;
 module.exports = exports['default'];
 
-},{"react":816,"react-router":773}],908:[function(require,module,exports){
+},{"react":816,"react-router":773}],909:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72605,6 +72661,7 @@ var Header = (function (_Component) {
   _createClass(Header, [{
     key: 'getFacebookState',
     value: function getFacebookState() {
+      console.log('①getFacebookState');
       return {
         status: _storesFacebookStore2['default'].status,
         accessToken: _storesFacebookStore2['default'].accessToken,
@@ -72621,6 +72678,7 @@ var Header = (function (_Component) {
     value: function componentDidMount() {
       var _this = this;
 
+      console.log('②componentDidMount');
       _actionsFacebookActionCreators2['default'].initFacebook();
       _storesFacebookStore2['default'].addChangeListener(function () {
         return _this._onFacebookChange();
@@ -72629,12 +72687,14 @@ var Header = (function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      console.log('③componentWillUnmount');
       _storesFacebookStore2['default'].removeChangeListener(this._onFacebookChange);
       setState({ currentUser: this.state });
     }
   }, {
     key: '_onFacebookChange',
     value: function _onFacebookChange() {
+      console.log('④_onFacebookChange');
       this.setState(this.getFacebookState());
     }
   }, {
@@ -72642,36 +72702,52 @@ var Header = (function (_Component) {
     value: function registerUser() {
       var _this2 = this;
 
+      console.log('⑤registerUser');
       var successCallback = function successCallback(res) {
         // TODO
-        console.log('会員登録に成功しました');
-        console.log(res);
+        // console.log('会員登録に成功しました');
+        // console.log(res);
         _this2.loginUser();
       };
       var failedCallback = function failedCallback() {
         // TODO
-        console.log('すでに登録済みです');
+        // console.log('すでに登録済みです');
       };
       _actions.UserAction.registerUser(this.state, successCallback, failedCallback);
     }
   }, {
     key: 'loginUser',
     value: function loginUser() {
+      console.log('⑥loginUser');
       var successCallback = function successCallback(res) {
         // TODO
-        console.log('ログインに成功しました');
-        console.log(res);
+        // console.log('ログインに成功しました');
+        // console.log(res);
+        // console.log(this.state);
       };
       var failedCallback = function failedCallback(res) {
         // TODO
-        console.log('ログインに失敗しました');
-        console.log(res);
+        // console.log('ログインに失敗しました');
+        // console.log(res);
       };
       _actions.UserAction.loginUser(this.state, successCallback, failedCallback);
+    }
+
+    //タイミングで呼び出したい。
+  }, {
+    key: 'getUser',
+    value: function getUser() {
+      console.log('⑦getUser');
+      var callback = function callback(res) {
+        console.log('get しました');
+        console.log(res);
+      };
+      _actions.UserAction.getUser(callback);
     }
   }, {
     key: 'renderRightHeader',
     value: function renderRightHeader() {
+      console.log('⑧renderRightHeader');
       if (this.state.loggedIn) {
         return this.renderUserHeader();
       } else {
@@ -72681,6 +72757,7 @@ var Header = (function (_Component) {
   }, {
     key: 'renderUserHeader',
     value: function renderUserHeader() {
+      console.log('⑨renderUserHeader');
       return _react2['default'].createElement(
         'div',
         null,
@@ -72723,12 +72800,18 @@ var Header = (function (_Component) {
             )
           )
         ),
-        _react2['default'].createElement(_.FacebookLogout, null)
+        _react2['default'].createElement(_.FacebookLogout, null),
+        _react2['default'].createElement(
+          'button',
+          { onClick: this.getUser.bind(this) },
+          'getUser'
+        )
       );
     }
   }, {
     key: 'renderGuestHeader',
     value: function renderGuestHeader() {
+      console.log('⑩renderGuestHeader');
       return _react2['default'].createElement(
         'div',
         null,
@@ -72738,6 +72821,8 @@ var Header = (function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      console.log('①①render');
+      console.log('header のrenderです');
       console.log(this.state);
       //facebook連携。
       if (this.state.status === 'connected' && !this.state.name) {
@@ -72771,7 +72856,7 @@ Header.propTypes = {};
 exports['default'] = Header;
 module.exports = exports['default'];
 
-},{".":913,"../actions":900,"../actions/FacebookActionCreators":899,"../stores/FacebookStore":934,"material-ui/IconMenu":427,"material-ui/MenuItem":434,"react":816,"react-router":773,"react-tap-event-plugin":785}],909:[function(require,module,exports){
+},{".":914,"../actions":902,"../actions/FacebookActionCreators":899,"../stores/FacebookStore":936,"material-ui/IconMenu":427,"material-ui/MenuItem":434,"react":816,"react-router":773,"react-tap-event-plugin":785}],910:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72862,7 +72947,7 @@ PlanList.propTypes = {
 exports['default'] = PlanList;
 module.exports = exports['default'];
 
-},{".":913,"react":816,"react-dom":573}],910:[function(require,module,exports){
+},{".":914,"react":816,"react-dom":573}],911:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72942,7 +73027,7 @@ PlanListItem.propTypes = {
 exports['default'] = PlanListItem;
 module.exports = exports['default'];
 
-},{"react":816,"react-dom":573}],911:[function(require,module,exports){
+},{"react":816,"react-dom":573}],912:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73148,7 +73233,7 @@ PostModal.propTypes = {
 exports['default'] = PostModal;
 module.exports = exports['default'];
 
-},{"react":816,"react-bootstrap":562}],912:[function(require,module,exports){
+},{"react":816,"react-bootstrap":562}],913:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73200,7 +73285,7 @@ var SignIn = (function (_Component) {
 exports['default'] = SignIn;
 module.exports = exports['default'];
 
-},{"react":816}],913:[function(require,module,exports){
+},{"react":816}],914:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73265,29 +73350,7 @@ exports.FacebookDownloadPicture = _FacebookFacebookDownloadPicture2['default'];
 exports.FacebookPicture = _FacebookFacebookPicture2['default'];
 exports.FacebookGetInfo = _FacebookFacebookGetInfo2['default'];
 
-},{"./Facebook/FacebookDownloadPicture":902,"./Facebook/FacebookGetInfo":903,"./Facebook/FacebookLogin":904,"./Facebook/FacebookLogout":905,"./Facebook/FacebookPicture":906,"./Footer":907,"./Header":908,"./PlanList":909,"./PlanListItem":910,"./PostModal":911,"./SignIn":912}],914:[function(require,module,exports){
-'use strict';
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _keymirror = require('keymirror');
-
-var _keymirror2 = _interopRequireDefault(_keymirror);
-
-var Constants = {
-    FACEBOOK_INITIALIZED: null,
-    FACEBOOK_LOGIN_CHANGE: null,
-    FACEBOOK_GETTING_PICTURE: null,
-    FACEBOOK_RECEIVED_DATA: null,
-    FACEBOOK_RECEIVED_PICTURE: null,
-    FACEBOOK_LOGGED_IN: null,
-    FACEBOOK_LOGGED_OUT: null,
-    IMAGE_UPLOADED: null
-};
-
-module.exports = (0, _keymirror2['default'])(Constants);
-
-},{"keymirror":259}],915:[function(require,module,exports){
+},{"./Facebook/FacebookDownloadPicture":903,"./Facebook/FacebookGetInfo":904,"./Facebook/FacebookLogin":905,"./Facebook/FacebookLogout":906,"./Facebook/FacebookPicture":907,"./Footer":908,"./Header":909,"./PlanList":910,"./PlanListItem":911,"./PostModal":912,"./SignIn":913}],915:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73307,18 +73370,37 @@ exports.CommonConstants = CommonConstants;
 },{}],916:[function(require,module,exports){
 'use strict';
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _keymirror = require('keymirror');
+
+var _keymirror2 = _interopRequireDefault(_keymirror);
+
+var FacebookConstants = {
+    FACEBOOK_INITIALIZED: null,
+    FACEBOOK_LOGIN_CHANGE: null,
+    FACEBOOK_GETTING_PICTURE: null,
+    FACEBOOK_RECEIVED_DATA: null,
+    FACEBOOK_RECEIVED_PICTURE: null,
+    FACEBOOK_LOGGED_IN: null,
+    FACEBOOK_LOGGED_OUT: null,
+    IMAGE_UPLOADED: null
+};
+
+module.exports = (0, _keymirror2['default'])(FacebookConstants);
+
+},{"keymirror":259}],917:[function(require,module,exports){
+'use strict';
+
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+var PlanConstants = {
+  POST_PLAN: 'POST_PLAN'
+};
+exports.PlanConstants = PlanConstants;
 
-var _common_constants = require('./common_constants');
-
-var _user_constants = require('./user_constants');
-
-exports.CommonConstants = _common_constants.CommonConstants;
-exports.UserConstants = _user_constants.UserConstants;
-
-},{"./common_constants":915,"./user_constants":917}],917:[function(require,module,exports){
+},{}],918:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73329,7 +73411,27 @@ var UserConstants = {
 };
 exports.UserConstants = UserConstants;
 
-},{}],918:[function(require,module,exports){
+},{}],919:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _CommonConstants = require('./CommonConstants');
+
+var _FacebookConstants = require('./FacebookConstants');
+
+var _UserConstants = require('./UserConstants');
+
+var _PlanConstants = require('./PlanConstants');
+
+exports.CommonConstants = _CommonConstants.CommonConstants;
+exports.FacebookConstants = _FacebookConstants.FacebookConstants;
+exports.UserConstants = _UserConstants.UserConstants;
+exports.PlanConstants = _PlanConstants.PlanConstants;
+
+},{"./CommonConstants":915,"./FacebookConstants":916,"./PlanConstants":917,"./UserConstants":918}],920:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73409,7 +73511,7 @@ App.childContextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../components":913,"material-ui/styles/baseThemes/lightBaseTheme":452,"material-ui/styles/getMuiTheme":454,"react":816}],919:[function(require,module,exports){
+},{"../components":914,"material-ui/styles/baseThemes/lightBaseTheme":452,"material-ui/styles/getMuiTheme":454,"react":816}],921:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73456,7 +73558,7 @@ var Chat = (function (_React$Component) {
 exports['default'] = Chat;
 module.exports = exports['default'];
 
-},{"react":816}],920:[function(require,module,exports){
+},{"react":816}],922:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73503,7 +73605,7 @@ var Contact = (function (_React$Component) {
 exports['default'] = Contact;
 module.exports = exports['default'];
 
-},{"react":816}],921:[function(require,module,exports){
+},{"react":816}],923:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73609,7 +73711,7 @@ module.exports = exports['default'];
 //     );
 //   }
 
-},{"../actions":900,"../actions/FacebookActionCreators":899,"../components":913,"../stores/FacebookStore":934,"react":816}],922:[function(require,module,exports){
+},{"../actions":902,"../actions/FacebookActionCreators":899,"../components":914,"../stores/FacebookStore":936,"react":816}],924:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73656,7 +73758,7 @@ var News = (function (_React$Component) {
 exports['default'] = News;
 module.exports = exports['default'];
 
-},{"react":816}],923:[function(require,module,exports){
+},{"react":816}],925:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73703,7 +73805,7 @@ var NoMatch = (function (_React$Component) {
 exports['default'] = NoMatch;
 module.exports = exports['default'];
 
-},{"react":816}],924:[function(require,module,exports){
+},{"react":816}],926:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73750,7 +73852,7 @@ var Plan = (function (_React$Component) {
 exports['default'] = Plan;
 module.exports = exports['default'];
 
-},{"react":816}],925:[function(require,module,exports){
+},{"react":816}],927:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73797,7 +73899,7 @@ var PrivacyPolicy = (function (_React$Component) {
 exports['default'] = PrivacyPolicy;
 module.exports = exports['default'];
 
-},{"react":816}],926:[function(require,module,exports){
+},{"react":816}],928:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73844,7 +73946,7 @@ var QandA = (function (_React$Component) {
 exports['default'] = QandA;
 module.exports = exports['default'];
 
-},{"react":816}],927:[function(require,module,exports){
+},{"react":816}],929:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73891,7 +73993,7 @@ var SignUp = (function (_Component) {
 exports['default'] = SignUp;
 module.exports = exports['default'];
 
-},{"react":816}],928:[function(require,module,exports){
+},{"react":816}],930:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73938,7 +74040,7 @@ var TermsOfUse = (function (_React$Component) {
 exports['default'] = TermsOfUse;
 module.exports = exports['default'];
 
-},{"react":816}],929:[function(require,module,exports){
+},{"react":816}],931:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73977,6 +74079,8 @@ var _constants = require('../constants');
 
 var _components = require('../components');
 
+var _actions = require('../actions');
+
 var TimeLine = (function (_Component) {
   _inherits(TimeLine, _Component);
 
@@ -73997,9 +74101,9 @@ var TimeLine = (function (_Component) {
 
       _axios2['default'].get(_constants.CommonConstants.API_GET_PLANS_PATH).then(function (response) {
         _this.setState({ plans: response.data });
-        console.log(response.data);
+        // console.log(response.data);
       })['catch'](function (response) {
-        console.log(response);
+        // console.log(response)
       });
     }
   }, {
@@ -74014,8 +74118,22 @@ var TimeLine = (function (_Component) {
     }
   }, {
     key: 'postPlanData',
-    value: function postPlanData() {
+    value: function postPlanData(planData) {
+      var _this2 = this;
+
       //TODO post data to google api
+      var successCallback = function successCallback(res) {
+        // TODO
+        // console.log('会員登録に成功しました');
+        // console.log(res);
+        _this2.loginUser();
+      };
+      var failedCallback = function failedCallback() {
+        // TODO
+        // console.log('すでに登録済みです');
+      };
+
+      _actions.PlanAction.postPlan(this.state, successCallback, failedCallback);
       this.closePostModal();
     }
   }, {
@@ -74079,7 +74197,7 @@ var TimeLine = (function (_Component) {
 exports['default'] = TimeLine;
 module.exports = exports['default'];
 
-},{"../components":913,"../constants":916,"axios":3,"material-ui/FloatingActionButton":421,"material-ui/svg-icons/content/add":459,"react":816,"react-router":773}],930:[function(require,module,exports){
+},{"../actions":902,"../components":914,"../constants":919,"axios":3,"material-ui/FloatingActionButton":421,"material-ui/svg-icons/content/add":459,"react":816,"react-router":773}],932:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74149,7 +74267,7 @@ exports.SignUp = _SignUp2['default'];
 exports.NoMatch = _NoMatch2['default'];
 exports.FacebookApi = _FacebookApi2['default'];
 
-},{"./App":918,"./Chat":919,"./Contact":920,"./FacebookApi":921,"./News":922,"./NoMatch":923,"./Plan":924,"./PrivacyPolicy":925,"./QandA":926,"./SignUp":927,"./TermsOfUse":928,"./TimeLine":929}],931:[function(require,module,exports){
+},{"./App":920,"./Chat":921,"./Contact":922,"./FacebookApi":923,"./News":924,"./NoMatch":925,"./Plan":926,"./PrivacyPolicy":927,"./QandA":928,"./SignUp":929,"./TermsOfUse":930,"./TimeLine":931}],933:[function(require,module,exports){
 'use strict';
 
 var _flux = require('flux');
@@ -74158,7 +74276,7 @@ var FacebookDispatcher = new _flux.Dispatcher();
 
 module.exports = FacebookDispatcher;
 
-},{"flux":202}],932:[function(require,module,exports){
+},{"flux":202}],934:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74181,7 +74299,7 @@ var CurrentUserReducer = {
 };
 exports.CurrentUserReducer = CurrentUserReducer;
 
-},{"../constants":916}],933:[function(require,module,exports){
+},{"../constants":919}],935:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -74205,7 +74323,7 @@ var rootReducer = (0, _redux.combineReducers)({
 exports['default'] = rootReducer;
 module.exports = exports['default'];
 
-},{"./current_user_reducer":932,"react-router-redux":740,"redux":887,"redux-form":855}],934:[function(require,module,exports){
+},{"./current_user_reducer":934,"react-router-redux":740,"redux":887,"redux-form":855}],936:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -74218,9 +74336,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _constantsConstants = require('../constants/Constants');
+var _constants = require('../constants');
 
-var _constantsConstants2 = _interopRequireDefault(_constantsConstants);
+var _constants2 = _interopRequireDefault(_constants);
 
 var _dispatcherFacebookDispatcher = require('../dispatcher/FacebookDispatcher');
 
@@ -74252,8 +74370,8 @@ var FacebookStore = (function (_EventEmitter) {
         key: 'setFacebookAuthData',
         value: function setFacebookAuthData(data) {
             // !!!
-            console.log('----- facebook_store ------');
-            console.log(data);
+            //  console.log('----- facebook_store ------');
+            //  console.log(data);
             // TODO
             if (data.status === 'not_authorized') {
                 alert('登録させなきゃ！！！');
@@ -74265,8 +74383,8 @@ var FacebookStore = (function (_EventEmitter) {
         key: 'setFacebookUserData',
         value: function setFacebookUserData(data) {
             // !!!
-            console.log('----- ユーザーデータ ------');
-            console.log(data);
+            //  console.log('----- ユーザーデータ ------');
+            //  console.log(data);
             // TODO
             this.facebookUserData = data;
             this.emitChange();
@@ -74327,8 +74445,8 @@ var FacebookStore = (function (_EventEmitter) {
     }, {
         key: 'status',
         get: function get() {
-            console.log('statusのロジック部分');
-            console.log(this.facebookAuthData);
+            // console.log('statusのロジック部分');
+            // console.log(this.facebookAuthData);
             if (!this.facebookAuthData || !this.facebookAuthData.authResponse) {
                 return;
             }
@@ -74370,33 +74488,34 @@ var FacebookStore = (function (_EventEmitter) {
 var facebookStore = new FacebookStore();
 
 facebookStore.dispatchToken = _dispatcherFacebookDispatcher2['default'].register(function (action) {
-    console.log('--------- Auth data ---------');
-    console.log(action.data);
-    if (action.actionType == _constantsConstants2['default'].FACEBOOK_INITIALIZED) {
+    // console.log('--------- Auth data ---------');
+    // console.log(action.data);
+    console.log('---- facebook dispatcher を通過したよ。');
+    if (action.actionType == _constants2['default'].FACEBOOK_INITIALIZED) {
         facebookStore.setFacebookAuthData(action.data);
     }
 
-    if (action.actionType == _constantsConstants2['default'].FACEBOOK_LOGGED_IN) {
+    if (action.actionType == _constants2['default'].FACEBOOK_LOGGED_IN) {
         facebookStore.setFacebookAuthData(action.data);
     }
 
-    if (action.actionType == _constantsConstants2['default'].FACEBOOK_RECEIVED_DATA) {
+    if (action.actionType == _constants2['default'].FACEBOOK_RECEIVED_DATA) {
         facebookStore.setFacebookUserData(action.data);
     }
 
-    if (action.actionType == _constantsConstants2['default'].FACEBOOK_LOGGED_OUT) {
+    if (action.actionType == _constants2['default'].FACEBOOK_LOGGED_OUT) {
         facebookStore.setFacebookAuthData(action.data);
     }
 
-    if (action.actionType == _constantsConstants2['default'].FACEBOOK_GETTING_PICTURE) {
+    if (action.actionType == _constants2['default'].FACEBOOK_GETTING_PICTURE) {
         facebookStore.setFacebookPictureData(action.actionType, action.data);
     }
 
-    if (action.actionType == _constantsConstants2['default'].FACEBOOK_RECEIVED_PICTURE) {
+    if (action.actionType == _constants2['default'].FACEBOOK_RECEIVED_PICTURE) {
         facebookStore.setFacebookPictureData(action.actionType, action.data);
     }
 });
 
 module.exports = facebookStore;
 
-},{"../actions/FacebookActionCreators":899,"../constants/Constants":914,"../dispatcher/FacebookDispatcher":931,"events":142}]},{},[1]);
+},{"../actions/FacebookActionCreators":899,"../constants":919,"../dispatcher/FacebookDispatcher":933,"events":142}]},{},[1]);
