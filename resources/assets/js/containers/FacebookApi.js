@@ -1,7 +1,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {FacebookLogin, FacebookLogout, FacebookDownloadPicture, FacebookPicture} from '../components';
+import {FacebookLogin, FacebookLogout, FacebookDownloadPicture, FacebookPicture, FacebookGetInfo} from '../components';
 import FacebookActionCreators from '../actions/FacebookActionCreators';
 import UserAction from '../actions';
 import FacebookStore from '../stores/FacebookStore';
@@ -19,9 +19,10 @@ export default class FacebookApi extends React.Component {
       accessToken: FacebookStore.accessToken,
       loggedIn: FacebookStore.loggedIn,
       userId: FacebookStore.userId,
+      name: FacebookStore.name,
+      email: FacebookStore.email,
       facebookPictureStatus: FacebookStore.facebookPictureStatus,
-      facebookPictureUrl: FacebookStore.facebookPictureUrl,
-      currentUser: this.state
+      facebookPictureUrl: FacebookStore.facebookPictureUrl
     }
   }
 
@@ -49,6 +50,9 @@ export default class FacebookApi extends React.Component {
         {this.state.loggedIn ? <FacebookLogout /> : null}
         <p>Facebook logged in: {this.state.loggedIn ? 'true' : 'false'}</p>
         <p>User ID is: {this.state.userId}</p>
+        <FacebookGetInfo />
+        <p>User name is: {this.state.name}</p>
+        <p>User email is: {this.state.email}</p>
         {this.state.userId ? <FacebookDownloadPicture userId={this.state.userId} /> : null}
 
         <FacebookPicture

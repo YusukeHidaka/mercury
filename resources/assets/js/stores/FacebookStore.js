@@ -1,6 +1,7 @@
 import Constants from '../constants/Constants';
 import FacebookDispatcher from '../dispatcher/FacebookDispatcher';
 import {EventEmitter} from 'events';
+import FacebookActionCreators from '../actions/FacebookActionCreators'
 
 const FACEBOOK_CHANGE_EVENT = 'FACEBOOK_CHANGE_EVENT';
 
@@ -9,12 +10,13 @@ class FacebookStore extends EventEmitter {
         super()
         this.facebookAuthData = {};
         this.faebookPictureData = {};
+        this.faebookUserData = {};
     }
 
     setFacebookAuthData(data) {
       // !!!
-      console.log('----- facebook_store ------');
-      console.log(data);
+       console.log('----- facebook_store ------');
+       console.log(data);
       // TODO
       if(data.status==='not_authorized'){alert('登録させなきゃ！！！')};
       this.facebookAuthData = data;
@@ -53,6 +55,31 @@ class FacebookStore extends EventEmitter {
         }
 
         return this.facebookAuthData.status;
+    }
+
+    setFacebookUserData(data) {
+      // !!!
+       console.log('----- ユーザーデータ ------');
+       console.log(data);
+      // TODO
+      this.facebookUserData = data;
+      this.emitChange();
+    }
+
+    get name() {
+        if (!this.facebookUserData || !this.facebookUserData.name) {
+            return;
+        }
+
+        return this.facebookUserData.name;
+    }
+
+    get email() {
+        if (!this.facebookUserData || !this.facebookUserData.email) {
+            return;
+        }
+
+        return this.facebookUserData.email;
     }
 
     get facebookPictureUrl() {
@@ -98,6 +125,10 @@ facebookStore.dispatchToken = FacebookDispatcher.register((action) => {
 
   if (action.actionType == Constants.FACEBOOK_LOGGED_IN) {
     facebookStore.setFacebookAuthData(action.data);
+  }
+
+  if (action.actionType == Constants.FACEBOOK_RECEIVED_DATA) {
+    facebookStore.setFacebookUserData(action.data);
   }
 
   if (action.actionType == Constants.FACEBOOK_LOGGED_OUT) {
