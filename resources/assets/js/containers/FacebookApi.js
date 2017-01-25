@@ -7,7 +7,7 @@ import {UserAction} from '../actions';
 import FacebookStore from '../stores/FacebookStore';
 
 export default class FacebookApi extends React.Component {
-
+//いつか消すよ。
   constructor(props) {
     super();
     this.state = this.getFacebookState();

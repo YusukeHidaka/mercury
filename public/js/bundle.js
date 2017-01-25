@@ -72556,6 +72556,16 @@ var _materialUiMenuItem2 = _interopRequireDefault(_materialUiMenuItem);
 
 var _ = require('.');
 
+var _actionsFacebookActionCreators = require('../actions/FacebookActionCreators');
+
+var _actionsFacebookActionCreators2 = _interopRequireDefault(_actionsFacebookActionCreators);
+
+var _actions = require('../actions');
+
+var _storesFacebookStore = require('../stores/FacebookStore');
+
+var _storesFacebookStore2 = _interopRequireDefault(_storesFacebookStore);
+
 var mapStateToProps = function mapStateToProps(state) {
   return {
     currentUser: state.currentUser
@@ -72569,16 +72579,54 @@ var Header = (function (_Component) {
     _classCallCheck(this, Header);
 
     _get(Object.getPrototypeOf(Header.prototype), 'constructor', this).call(this, props);
-    this.state = {
-      isLoggedIn: false
-    };
+    this.state = this.getFacebookState();
     (0, _reactTapEventPlugin2['default'])();
   }
 
   _createClass(Header, [{
+    key: 'getFacebookState',
+    value: function getFacebookState() {
+      return {
+        status: _storesFacebookStore2['default'].status,
+        accessToken: _storesFacebookStore2['default'].accessToken,
+        loggedIn: _storesFacebookStore2['default'].loggedIn,
+        userId: _storesFacebookStore2['default'].userId,
+        name: _storesFacebookStore2['default'].name,
+        email: _storesFacebookStore2['default'].email,
+        facebookPictureStatus: _storesFacebookStore2['default'].facebookPictureStatus,
+        facebookPictureUrl: _storesFacebookStore2['default'].facebookPictureUrl
+      };
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this = this;
+
+      _actionsFacebookActionCreators2['default'].initFacebook();
+      _storesFacebookStore2['default'].addChangeListener(function () {
+        return _this._onFacebookChange();
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _storesFacebookStore2['default'].removeChangeListener(this._onFacebookChange);
+      setState({ currentUser: this.state });
+    }
+  }, {
+    key: '_onFacebookChange',
+    value: function _onFacebookChange() {
+      this.setState(this.getFacebookState());
+    }
+  }, {
+    key: 'registerUser',
+    value: function registerUser() {
+      _actions.UserAction.registerUser(this.state);
+    }
+  }, {
     key: 'renderRightHeader',
     value: function renderRightHeader() {
-      if (this.state.isLoggedIn) {
+      if (this.state.loggedIn) {
         return this.renderUserHeader();
       } else {
         return this.renderGuestHeader();
@@ -72588,61 +72636,70 @@ var Header = (function (_Component) {
     key: 'renderUserHeader',
     value: function renderUserHeader() {
       return _react2['default'].createElement(
-        'ul',
+        'div',
         null,
         _react2['default'].createElement(
-          'li',
+          'ul',
           null,
           _react2['default'].createElement(
-            _reactRouter.Link,
-            { to: '/user/profile', className: 'btn' },
-            _react2['default'].createElement('i', { className: 'fa fa-user-o', 'aria-hidden': 'true' })
+            'li',
+            null,
+            _react2['default'].createElement(
+              _reactRouter.Link,
+              { to: '/user/profile', className: 'btn' },
+              _react2['default'].createElement('i', { className: 'fa fa-user-o', 'aria-hidden': 'true' })
+            )
+          ),
+          _react2['default'].createElement(
+            'li',
+            null,
+            _react2['default'].createElement(
+              _reactRouter.Link,
+              { to: '/user/messages', className: 'btn' },
+              _react2['default'].createElement('i', { className: 'fa fa-commenting-o', 'aria-hidden': 'true' })
+            )
+          ),
+          _react2['default'].createElement(
+            'li',
+            null,
+            _react2['default'].createElement(
+              _materialUiIconMenu2['default'],
+              {
+                iconButtonElement: _react2['default'].createElement('i', { className: 'fa fa-bell-o', 'aria-hidden': 'true' }),
+                anchorOrigin: { horizontal: 'right', vertical: 'top' },
+                targetOrigin: { horizontal: 'right', vertical: 'top' }
+              },
+              _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知１' }),
+              _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知２' }),
+              _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知３' }),
+              _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知４' }),
+              _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知５' })
+            )
           )
         ),
-        _react2['default'].createElement(
-          'li',
-          null,
-          _react2['default'].createElement(
-            _reactRouter.Link,
-            { to: '/user/messages', className: 'btn' },
-            _react2['default'].createElement('i', { className: 'fa fa-commenting-o', 'aria-hidden': 'true' })
-          )
-        ),
-        _react2['default'].createElement(
-          'li',
-          null,
-          _react2['default'].createElement(
-            _materialUiIconMenu2['default'],
-            {
-              iconButtonElement: _react2['default'].createElement('i', { className: 'fa fa-bell-o', 'aria-hidden': 'true' }),
-              anchorOrigin: { horizontal: 'right', vertical: 'top' },
-              targetOrigin: { horizontal: 'right', vertical: 'top' }
-            },
-            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知１' }),
-            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知２' }),
-            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知３' }),
-            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知４' }),
-            _react2['default'].createElement(_materialUiMenuItem2['default'], { primaryText: '通知５' })
-          )
-        )
+        _react2['default'].createElement(_.FacebookLogout, null)
       );
-    }
-  }, {
-    key: 'changeLoggedIn',
-    value: function changeLoggedIn() {
-      this.setState({ isLoggedIn: true });
     }
   }, {
     key: 'renderGuestHeader',
     value: function renderGuestHeader() {
-      // return (
-      //   <div><SignIn isLoggedIn={this.changeLoggedIn.bind(this)}/></div>
-      // );
+      return _react2['default'].createElement(
+        'div',
+        null,
+        _react2['default'].createElement(_.FacebookLogin, null)
+      );
     }
   }, {
     key: 'render',
     value: function render() {
       console.log(this.state);
+      //facebook連携。
+      if (this.state.status === 'connected' && !this.state.name) {
+        _actionsFacebookActionCreators2['default'].getFacebookInfo();
+      };
+      if (this.state.status === 'not_authorized' || this.state.status === 'connected') {
+        _actions.UserAction.registerUser(this.state);
+      };
       return _react2['default'].createElement(
         'div',
         { className: 'header' },
@@ -72654,7 +72711,8 @@ var Header = (function (_Component) {
         _react2['default'].createElement(
           'div',
           { className: 'col-md-10' },
-          this.renderRightHeader()
+          this.renderRightHeader(),
+          this.state.loggedIn ? _react2['default'].createElement(_.FacebookLogout, null) : null
         )
       );
     }
@@ -72668,7 +72726,7 @@ Header.propTypes = {};
 exports['default'] = Header;
 module.exports = exports['default'];
 
-},{".":913,"material-ui/IconMenu":427,"material-ui/MenuItem":434,"react":816,"react-router":773,"react-tap-event-plugin":785}],909:[function(require,module,exports){
+},{".":913,"../actions":900,"../actions/FacebookActionCreators":899,"../stores/FacebookStore":934,"material-ui/IconMenu":427,"material-ui/MenuItem":434,"react":816,"react-router":773,"react-tap-event-plugin":785}],909:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73425,6 +73483,8 @@ var _storesFacebookStore2 = _interopRequireDefault(_storesFacebookStore);
 
 var FacebookApi = (function (_React$Component) {
   _inherits(FacebookApi, _React$Component);
+
+  //いつか消すよ。
 
   function FacebookApi(props) {
     _classCallCheck(this, FacebookApi);
