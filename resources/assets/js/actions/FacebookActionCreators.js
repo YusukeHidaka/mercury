@@ -21,12 +21,13 @@ const FacebookActionCreators = {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {return;}
         js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
+        js.src = "//connect.facebook.net/en_US/all.js";
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     },
 
     getLoginStatus: function() {
+      console.log('---- getLoginStatus');
       window.FB.getLoginStatus((response) => {
         FacebookDispatcher.dispatch({
           actionType: Constants.FACEBOOK_INITIALIZED,
@@ -36,6 +37,7 @@ const FacebookActionCreators = {
     },
 
     getFacebookInfo: function (){
+      console.log('---- getFacebookInfo。');
       window.FB.api("/me?fields=id,email,name", (response) => {
         FacebookDispatcher.dispatch({
           actionType: Constants.FACEBOOK_RECEIVED_DATA,
@@ -46,6 +48,7 @@ const FacebookActionCreators = {
 
 
     login: () => {
+      console.log('---- login。');
       window.FB.login((response) => {
         if (response.status === 'connected') {
           FacebookDispatcher.dispatch({

@@ -71928,12 +71928,13 @@ var FacebookActionCreators = {
         return;
       }
       js = d.createElement(s);js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js";
+      js.src = "//connect.facebook.net/en_US/all.js";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
   },
 
   getLoginStatus: function getLoginStatus() {
+    console.log('---- getLoginStatus');
     window.FB.getLoginStatus(function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
         actionType: _constantsConstants2['default'].FACEBOOK_INITIALIZED,
@@ -71943,6 +71944,7 @@ var FacebookActionCreators = {
   },
 
   getFacebookInfo: function getFacebookInfo() {
+    console.log('---- getFacebookInfo。');
     window.FB.api("/me?fields=id,email,name", function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
         actionType: _constantsConstants2['default'].FACEBOOK_RECEIVED_DATA,
@@ -71952,6 +71954,7 @@ var FacebookActionCreators = {
   },
 
   login: function login() {
+    console.log('---- login。');
     window.FB.login(function (response) {
       if (response.status === 'connected') {
         _dispatcherFacebookDispatcher2['default'].dispatch({
@@ -72059,11 +72062,11 @@ var UserAction = {
     store.dispatch({ type: _constants.UserConstants.SET_CURRENT_USER, currentUser: currentUser });
   },
 
-  getUser: function getUser(callback, includes) {
+  getUser: function getUser(callback) {
     (0, _axios2['default'])({
       method: 'GET',
       url: _constants.CommonConstants.API_USER_PATH,
-      params: { includes: includes }
+      headers: { Accept: 'application/json', Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjZTQ4ODQ5ODYxZmZhYTlkMGJjOWUyOTU2ZjAyZTViZTIzYmM5Zjk0NGUyZWEyYmM0MDI2ODIxYWE4NTJkMzY1YjRlMDY5YTQ1NmZmZDkzIn0.eyJhdWQiOiIyIiwianRpIjoiZGNlNDg4NDk4NjFmZmFhOWQwYmM5ZTI5NTZmMDJlNWJlMjNiYzlmOTQ0ZTJlYTJiYzQwMjY4MjFhYTg1MmQzNjViNGUwNjlhNDU2ZmZkOTMiLCJpYXQiOjE0ODUzMzY2MDIsIm5iZiI6MTQ4NTMzNjYwMiwiZXhwIjoxNTE2ODcyNjAyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.kHepfe3qF1ItC2EpW8lNRgo1lmdGVgoEoCeUiTjE4PeZoro-EDRHqGYPzfsyk4pzbK2kOpQlapGIyy9PRd9W-g3f2k6-0eRd52JOLwmShg7njz3HMGDc__tf4ZbIxgSHO2GoDTzIuG7Rn-3FbTnmWIInaVF4qXjYAz3i9EtY-sxJ1nHZ9p8DHEcDumTu2rPK02b5U0u9dFX5eXayShfcyn14786BXQXWjhym2WQoU9iHlUBjkLdIIRpM_6d7cxJI5Eoe2kM-mCaikUBazzeVoGnGoxgmx3kVzrSIzDwsuIs4Z10NlcybNwKFRBLz9_18prYJfLSMlEboGMqAPtcN1nAiWiYP9ktkvRC6NBARjrqlQURTZowR0v6E6Lm3vQ4RVejZKTPyH1Eeai1AAquYyownTdfTcFI6VIucSFHWrxbUEF2YSx2AJjKd0Ik6PqHgxtzZ0a0CzDmHh_SrVkpPJXzsvJwbVCQpigQ_y1pRAXm9r-iYwjzTFUrLca1vpzLa9uxqn_3w1v-OyyLg9Ku7K8KvdlHBr8bS3ClcfFsy2gjDtq4Iorsp320tK52Gz3wrwZC6Ksowd4rPON3qUvWjYn_zXVG2rj3zHiuSsTGz34XqvTwQqR-46dQJBlBAy_fU9QSgCYwIs0sMTaau-z_dt4P8e-P6KfQVxUGcif7ctkU' }
     }).then(function (response) {
       return response.data;
     }).then(function (user) {
@@ -72244,6 +72247,7 @@ var FacebookLogin = (function (_React$Component) {
     }, {
         key: 'didClickFacebookLoginButton',
         value: function didClickFacebookLoginButton(e) {
+            console.log('---- login buttonを押したよ。');
             _actionsFacebookActionCreators2['default'].login();
         }
     }]);
@@ -72605,6 +72609,7 @@ var Header = (function (_Component) {
   _createClass(Header, [{
     key: 'getFacebookState',
     value: function getFacebookState() {
+      console.log('①getFacebookState');
       return {
         status: _storesFacebookStore2['default'].status,
         accessToken: _storesFacebookStore2['default'].accessToken,
@@ -72621,6 +72626,7 @@ var Header = (function (_Component) {
     value: function componentDidMount() {
       var _this = this;
 
+      console.log('②componentDidMount');
       _actionsFacebookActionCreators2['default'].initFacebook();
       _storesFacebookStore2['default'].addChangeListener(function () {
         return _this._onFacebookChange();
@@ -72629,12 +72635,14 @@ var Header = (function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
+      console.log('③componentWillUnmount');
       _storesFacebookStore2['default'].removeChangeListener(this._onFacebookChange);
       setState({ currentUser: this.state });
     }
   }, {
     key: '_onFacebookChange',
     value: function _onFacebookChange() {
+      console.log('④_onFacebookChange');
       this.setState(this.getFacebookState());
     }
   }, {
@@ -72642,36 +72650,52 @@ var Header = (function (_Component) {
     value: function registerUser() {
       var _this2 = this;
 
+      console.log('⑤registerUser');
       var successCallback = function successCallback(res) {
         // TODO
-        console.log('会員登録に成功しました');
-        console.log(res);
+        // console.log('会員登録に成功しました');
+        // console.log(res);
         _this2.loginUser();
       };
       var failedCallback = function failedCallback() {
         // TODO
-        console.log('すでに登録済みです');
+        // console.log('すでに登録済みです');
       };
       _actions.UserAction.registerUser(this.state, successCallback, failedCallback);
     }
   }, {
     key: 'loginUser',
     value: function loginUser() {
+      console.log('⑥loginUser');
       var successCallback = function successCallback(res) {
         // TODO
-        console.log('ログインに成功しました');
-        console.log(res);
+        // console.log('ログインに成功しました');
+        // console.log(res);
+        // console.log(this.state);
       };
       var failedCallback = function failedCallback(res) {
         // TODO
-        console.log('ログインに失敗しました');
-        console.log(res);
+        // console.log('ログインに失敗しました');
+        // console.log(res);
       };
       _actions.UserAction.loginUser(this.state, successCallback, failedCallback);
+    }
+
+    //タイミングで呼び出したい。
+  }, {
+    key: 'getUser',
+    value: function getUser() {
+      console.log('⑦getUser');
+      var callback = function callback(res) {
+        console.log('get しました');
+        console.log(res);
+      };
+      _actions.UserAction.getUser(callback);
     }
   }, {
     key: 'renderRightHeader',
     value: function renderRightHeader() {
+      console.log('⑧renderRightHeader');
       if (this.state.loggedIn) {
         return this.renderUserHeader();
       } else {
@@ -72681,6 +72705,7 @@ var Header = (function (_Component) {
   }, {
     key: 'renderUserHeader',
     value: function renderUserHeader() {
+      console.log('⑨renderUserHeader');
       return _react2['default'].createElement(
         'div',
         null,
@@ -72723,12 +72748,18 @@ var Header = (function (_Component) {
             )
           )
         ),
-        _react2['default'].createElement(_.FacebookLogout, null)
+        _react2['default'].createElement(_.FacebookLogout, null),
+        _react2['default'].createElement(
+          'button',
+          { onClick: this.getUser.bind(this) },
+          'getUser'
+        )
       );
     }
   }, {
     key: 'renderGuestHeader',
     value: function renderGuestHeader() {
+      console.log('⑩renderGuestHeader');
       return _react2['default'].createElement(
         'div',
         null,
@@ -72738,6 +72769,8 @@ var Header = (function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      console.log('①①render');
+      console.log('header のrenderです');
       console.log(this.state);
       //facebook連携。
       if (this.state.status === 'connected' && !this.state.name) {
@@ -73997,9 +74030,9 @@ var TimeLine = (function (_Component) {
 
       _axios2['default'].get(_constants.CommonConstants.API_GET_PLANS_PATH).then(function (response) {
         _this.setState({ plans: response.data });
-        console.log(response.data);
+        // console.log(response.data);
       })['catch'](function (response) {
-        console.log(response);
+        // console.log(response)
       });
     }
   }, {
@@ -74252,8 +74285,8 @@ var FacebookStore = (function (_EventEmitter) {
         key: 'setFacebookAuthData',
         value: function setFacebookAuthData(data) {
             // !!!
-            console.log('----- facebook_store ------');
-            console.log(data);
+            //  console.log('----- facebook_store ------');
+            //  console.log(data);
             // TODO
             if (data.status === 'not_authorized') {
                 alert('登録させなきゃ！！！');
@@ -74265,8 +74298,8 @@ var FacebookStore = (function (_EventEmitter) {
         key: 'setFacebookUserData',
         value: function setFacebookUserData(data) {
             // !!!
-            console.log('----- ユーザーデータ ------');
-            console.log(data);
+            //  console.log('----- ユーザーデータ ------');
+            //  console.log(data);
             // TODO
             this.facebookUserData = data;
             this.emitChange();
@@ -74327,8 +74360,8 @@ var FacebookStore = (function (_EventEmitter) {
     }, {
         key: 'status',
         get: function get() {
-            console.log('statusのロジック部分');
-            console.log(this.facebookAuthData);
+            // console.log('statusのロジック部分');
+            // console.log(this.facebookAuthData);
             if (!this.facebookAuthData || !this.facebookAuthData.authResponse) {
                 return;
             }
@@ -74370,8 +74403,9 @@ var FacebookStore = (function (_EventEmitter) {
 var facebookStore = new FacebookStore();
 
 facebookStore.dispatchToken = _dispatcherFacebookDispatcher2['default'].register(function (action) {
-    console.log('--------- Auth data ---------');
-    console.log(action.data);
+    // console.log('--------- Auth data ---------');
+    // console.log(action.data);
+    console.log('---- facebook dispatcher を通過したよ。');
     if (action.actionType == _constantsConstants2['default'].FACEBOOK_INITIALIZED) {
         facebookStore.setFacebookAuthData(action.data);
     }
