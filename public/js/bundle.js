@@ -71942,11 +71942,11 @@ var FacebookActionCreators = {
     });
   },
 
-  getFacebookData: function getFacebookData() {
-    window.FB.api("/me?fields=id,email,name", function (response2) {
+  getFacebookInfo: function getFacebookInfo() {
+    window.FB.api("/me?fields=id,email,name", function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
         actionType: _constantsConstants2['default'].FACEBOOK_RECEIVED_DATA,
-        data: response2
+        data: response
       });
     });
   },
@@ -72022,7 +72022,7 @@ var UserAction = {
     (0, _axios2['default'])({
       method: 'POST',
       url: _constants.CommonConstants.API_REGISTER_USER_PATH,
-      data: { name: fbResponse.name, email: fbResponse.email, password: fbResponse.id }
+      data: { name: fbResponse.name, email: fbResponse.email, password: fbResponse.accessToken }
     }).then(function (response) {
       return response.data;
     }).then(function (json) {
@@ -72169,7 +72169,7 @@ var FacebookGetInfo = (function (_React$Component) {
     }, {
         key: 'didClickFacebookGetInfoButton',
         value: function didClickFacebookGetInfoButton(e) {
-            _actionsFacebookActionCreators2['default'].getFacebookData();
+            _actionsFacebookActionCreators2['default'].getFacebookInfo();
         }
     }]);
 
@@ -73419,8 +73419,6 @@ var _actionsFacebookActionCreators2 = _interopRequireDefault(_actionsFacebookAct
 
 var _actions = require('../actions');
 
-var _actions2 = _interopRequireDefault(_actions);
-
 var _storesFacebookStore = require('../stores/FacebookStore');
 
 var _storesFacebookStore2 = _interopRequireDefault(_storesFacebookStore);
@@ -73471,13 +73469,22 @@ var FacebookApi = (function (_React$Component) {
       this.setState(this.getFacebookState());
     }
   }, {
+    key: 'registerUser',
+    value: function registerUser() {
+      _actions.UserAction.registerUser(this.state);
+    }
+  }, {
     key: 'render',
     value: function render() {
       console.log('-------- Api page の state --------');
       console.log(this.state);
-      if (this.state.status === 'not_authorized') {
-        _actions2['default'].registerUser(this.state);
+      if (this.state.status === 'not_authorized' || this.state.status === 'connected') {
+        _actions.UserAction.registerUser(this.state);
       };
+      if (this.state.status === 'connected' && !this.state.name) {
+        _actionsFacebookActionCreators2['default'].getFacebookInfo();
+      };
+
       return _react2['default'].createElement(
         'div',
         null,

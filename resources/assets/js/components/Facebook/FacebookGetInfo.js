@@ -12,7 +12,7 @@ class FacebookGetInfo extends React.Component {
     }
 
     didClickFacebookGetInfoButton(e) {
-        FacebookActionCreators.getFacebookData();
+        FacebookActionCreators.getFacebookInfo();
     }
 }
 
