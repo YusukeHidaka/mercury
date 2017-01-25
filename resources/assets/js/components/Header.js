@@ -52,12 +52,27 @@ class Header extends Component {
       // TODO
       console.log('会員登録に成功しました');
       console.log(res);
+      this.loginUser();
     }
     const failedCallback = () => {
       // TODO
       console.log('すでに登録済みです');
     }
     UserAction.registerUser(this.state, successCallback, failedCallback);
+  }
+
+  loginUser(){
+    const successCallback = (res) => {
+      // TODO
+      console.log('ログインに成功しました');
+      console.log(res);
+    }
+    const failedCallback = (res) => {
+      // TODO
+      console.log('ログインに失敗しました');
+      console.log(res);
+    }
+    UserAction.loginUser(this.state, successCallback, failedCallback);
   }
 
   renderRightHeader() {
@@ -111,7 +126,7 @@ class Header extends Component {
     console.log(this.state);
     //facebook連携。
     if(this.state.status==='connected'&&!this.state.name){FacebookActionCreators.getFacebookInfo()};
-    if(this.state.status==='not_authorized'||this.state.status==='connected'){this.registerUser()};
+    if(!this.state.LoggedIn&&(this.state.status==='not_authorized'||this.state.status==='connected')){this.registerUser()};
     return (
       <div className='header'>
         <Link to='#' className='col-md-2'>icon</Link>
