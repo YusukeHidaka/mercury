@@ -119,7 +119,7 @@ class PlanController extends Controller
         );
     }
 
-    public function showApplicantForPlan($id)
+    public function showApplicantsForPlan($id)
     {
         $applicants = Plan::find($id)->users()->get();
 
