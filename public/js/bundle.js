@@ -71903,9 +71903,9 @@ var _dispatcherFacebookDispatcher = require('../dispatcher/FacebookDispatcher');
 
 var _dispatcherFacebookDispatcher2 = _interopRequireDefault(_dispatcherFacebookDispatcher);
 
-var _constants = require('../constants');
+var _constantsFacebookConstants = require('../constants/FacebookConstants');
 
-var _constants2 = _interopRequireDefault(_constants);
+var _constantsFacebookConstants2 = _interopRequireDefault(_constantsFacebookConstants);
 
 var APP_ID = '1400175353350443';
 
@@ -71937,7 +71937,7 @@ var FacebookActionCreators = {
     console.log('---- getLoginStatus');
     window.FB.getLoginStatus(function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constants2['default'].FACEBOOK_INITIALIZED,
+        actionType: _constantsFacebookConstants2['default'].FACEBOOK_INITIALIZED,
         data: response
       });
     });
@@ -71947,7 +71947,7 @@ var FacebookActionCreators = {
     console.log('---- getFacebookInfo。');
     window.FB.api("/me?fields=id,email,name", function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constants2['default'].FACEBOOK_RECEIVED_DATA,
+        actionType: _constantsFacebookConstants2['default'].FACEBOOK_RECEIVED_DATA,
         data: response
       });
     });
@@ -71958,7 +71958,7 @@ var FacebookActionCreators = {
     window.FB.login(function (response) {
       if (response.status === 'connected') {
         _dispatcherFacebookDispatcher2['default'].dispatch({
-          actionType: _constants2['default'].FACEBOOK_LOGGED_IN,
+          actionType: _constantsFacebookConstants2['default'].FACEBOOK_LOGGED_IN,
           data: response
         });
       }
@@ -71968,7 +71968,7 @@ var FacebookActionCreators = {
   logout: function logout() {
     window.FB.logout(function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constants2['default'].FACEBOOK_LOGGED_OUT,
+        actionType: _constantsFacebookConstants2['default'].FACEBOOK_LOGGED_OUT,
         data: response
       });
     });
@@ -71976,13 +71976,13 @@ var FacebookActionCreators = {
 
   getFacebookProfilePicture: function getFacebookProfilePicture(userId) {
     _dispatcherFacebookDispatcher2['default'].dispatch({
-      actionType: _constants2['default'].FACEBOOK_GETTING_PICTURE,
+      actionType: _constantsFacebookConstants2['default'].FACEBOOK_GETTING_PICTURE,
       data: null
     });
 
     window.FB.api('/' + userId + '/picture?type=large', function (response) {
       _dispatcherFacebookDispatcher2['default'].dispatch({
-        actionType: _constants2['default'].FACEBOOK_RECEIVED_PICTURE,
+        actionType: _constantsFacebookConstants2['default'].FACEBOOK_RECEIVED_PICTURE,
         data: response
       });
     });
@@ -71991,7 +71991,7 @@ var FacebookActionCreators = {
 
 module.exports = FacebookActionCreators;
 
-},{"../constants":919,"../dispatcher/FacebookDispatcher":933}],900:[function(require,module,exports){
+},{"../constants/FacebookConstants":916,"../dispatcher/FacebookDispatcher":933}],900:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -72008,11 +72008,13 @@ var _axios2 = _interopRequireDefault(_axios);
 
 var PlanAction = {
   postPlan: function postPlan(planData, successCallback, failedCallback) {
+    console.log('postPlan');
+    console.log(planData);
     (0, _axios2['default'])({
       method: 'POST',
       url: _constants.CommonConstants.API_GET_PLANS_PATH,
       headers: { Accept: 'application/json', Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjZTQ4ODQ5ODYxZmZhYTlkMGJjOWUyOTU2ZjAyZTViZTIzYmM5Zjk0NGUyZWEyYmM0MDI2ODIxYWE4NTJkMzY1YjRlMDY5YTQ1NmZmZDkzIn0.eyJhdWQiOiIyIiwianRpIjoiZGNlNDg4NDk4NjFmZmFhOWQwYmM5ZTI5NTZmMDJlNWJlMjNiYzlmOTQ0ZTJlYTJiYzQwMjY4MjFhYTg1MmQzNjViNGUwNjlhNDU2ZmZkOTMiLCJpYXQiOjE0ODUzMzY2MDIsIm5iZiI6MTQ4NTMzNjYwMiwiZXhwIjoxNTE2ODcyNjAyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.kHepfe3qF1ItC2EpW8lNRgo1lmdGVgoEoCeUiTjE4PeZoro-EDRHqGYPzfsyk4pzbK2kOpQlapGIyy9PRd9W-g3f2k6-0eRd52JOLwmShg7njz3HMGDc__tf4ZbIxgSHO2GoDTzIuG7Rn-3FbTnmWIInaVF4qXjYAz3i9EtY-sxJ1nHZ9p8DHEcDumTu2rPK02b5U0u9dFX5eXayShfcyn14786BXQXWjhym2WQoU9iHlUBjkLdIIRpM_6d7cxJI5Eoe2kM-mCaikUBazzeVoGnGoxgmx3kVzrSIzDwsuIs4Z10NlcybNwKFRBLz9_18prYJfLSMlEboGMqAPtcN1nAiWiYP9ktkvRC6NBARjrqlQURTZowR0v6E6Lm3vQ4RVejZKTPyH1Eeai1AAquYyownTdfTcFI6VIucSFHWrxbUEF2YSx2AJjKd0Ik6PqHgxtzZ0a0CzDmHh_SrVkpPJXzsvJwbVCQpigQ_y1pRAXm9r-iYwjzTFUrLca1vpzLa9uxqn_3w1v-OyyLg9Ku7K8KvdlHBr8bS3ClcfFsy2gjDtq4Iorsp320tK52Gz3wrwZC6Ksowd4rPON3qUvWjYn_zXVG2rj3zHiuSsTGz34XqvTwQqR-46dQJBlBAy_fU9QSgCYwIs0sMTaau-z_dt4P8e-P6KfQVxUGcif7ctkU' },
-      data: { give: planData, take: take, place: place, image_url: image_url }
+      data: { give: planData.give, take: planData.take, place: planData.place, image_url: planData.image_url }
     }).then(function (response) {
       return response.data;
     }).then(function (json) {
@@ -72023,18 +72025,6 @@ var PlanAction = {
       if (typeof failedCallback === 'function') {
         failedCallback(error.response.data);
       }
-    });
-  },
-
-  getUser: function getUser(callback) {
-    (0, _axios2['default'])({
-      method: 'GET',
-      url: _constants.CommonConstants.API_USER_PATH,
-      headers: { Accept: 'application/json', Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImRjZTQ4ODQ5ODYxZmZhYTlkMGJjOWUyOTU2ZjAyZTViZTIzYmM5Zjk0NGUyZWEyYmM0MDI2ODIxYWE4NTJkMzY1YjRlMDY5YTQ1NmZmZDkzIn0.eyJhdWQiOiIyIiwianRpIjoiZGNlNDg4NDk4NjFmZmFhOWQwYmM5ZTI5NTZmMDJlNWJlMjNiYzlmOTQ0ZTJlYTJiYzQwMjY4MjFhYTg1MmQzNjViNGUwNjlhNDU2ZmZkOTMiLCJpYXQiOjE0ODUzMzY2MDIsIm5iZiI6MTQ4NTMzNjYwMiwiZXhwIjoxNTE2ODcyNjAyLCJzdWIiOiI2Iiwic2NvcGVzIjpbXX0.kHepfe3qF1ItC2EpW8lNRgo1lmdGVgoEoCeUiTjE4PeZoro-EDRHqGYPzfsyk4pzbK2kOpQlapGIyy9PRd9W-g3f2k6-0eRd52JOLwmShg7njz3HMGDc__tf4ZbIxgSHO2GoDTzIuG7Rn-3FbTnmWIInaVF4qXjYAz3i9EtY-sxJ1nHZ9p8DHEcDumTu2rPK02b5U0u9dFX5eXayShfcyn14786BXQXWjhym2WQoU9iHlUBjkLdIIRpM_6d7cxJI5Eoe2kM-mCaikUBazzeVoGnGoxgmx3kVzrSIzDwsuIs4Z10NlcybNwKFRBLz9_18prYJfLSMlEboGMqAPtcN1nAiWiYP9ktkvRC6NBARjrqlQURTZowR0v6E6Lm3vQ4RVejZKTPyH1Eeai1AAquYyownTdfTcFI6VIucSFHWrxbUEF2YSx2AJjKd0Ik6PqHgxtzZ0a0CzDmHh_SrVkpPJXzsvJwbVCQpigQ_y1pRAXm9r-iYwjzTFUrLca1vpzLa9uxqn_3w1v-OyyLg9Ku7K8KvdlHBr8bS3ClcfFsy2gjDtq4Iorsp320tK52Gz3wrwZC6Ksowd4rPON3qUvWjYn_zXVG2rj3zHiuSsTGz34XqvTwQqR-46dQJBlBAy_fU9QSgCYwIs0sMTaau-z_dt4P8e-P6KfQVxUGcif7ctkU' }
-    }).then(function (response) {
-      return response.data;
-    }).then(function (user) {
-      return callback(user);
     });
   }
 };
@@ -72387,9 +72377,9 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _constants = require('../../constants');
+var _constantsFacebookConstants = require('../../constants/FacebookConstants');
 
-var _constants2 = _interopRequireDefault(_constants);
+var _constantsFacebookConstants2 = _interopRequireDefault(_constantsFacebookConstants);
 
 var FacebookPicture = (function (_React$Component) {
     _inherits(FacebookPicture, _React$Component);
@@ -72415,11 +72405,11 @@ var FacebookPicture = (function (_React$Component) {
         get: function get() {
             var msg = undefined;
 
-            if (this.props.facebookPictureStatus === _constants2['default'].FACEBOOK_GETTING_PICTURE) {
+            if (this.props.facebookPictureStatus === _constantsFacebookConstants2['default'].FACEBOOK_GETTING_PICTURE) {
                 msg = 'Downloading picture...';
             }
 
-            if (this.props.facebookPictureStatus === _constants2['default'].FACEBOOK_RECEIVED_PICTURE) {
+            if (this.props.facebookPictureStatus === _constantsFacebookConstants2['default'].FACEBOOK_RECEIVED_PICTURE) {
                 msg = 'Received picture!';
             }
 
@@ -72444,7 +72434,7 @@ var FacebookPicture = (function (_React$Component) {
 exports['default'] = FacebookPicture;
 module.exports = exports['default'];
 
-},{"../../constants":919,"react":816}],908:[function(require,module,exports){
+},{"../../constants/FacebookConstants":916,"react":816}],908:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -73063,7 +73053,9 @@ var PostModal = (function (_Component) {
     key: 'ok',
     value: function ok() {
       //this.props.okCallback(this.state.shippingAddress);
-      this.props.okCallback();
+      //TODO
+      var sample = { give: 'あげる', take: 'もらう', place: '地球上', image_url: 'hogehoge' };
+      this.props.okCallback(sample);
     }
   }, {
     key: 'cancel',
@@ -74119,21 +74111,16 @@ var TimeLine = (function (_Component) {
   }, {
     key: 'postPlanData',
     value: function postPlanData(planData) {
-      var _this2 = this;
-
       //TODO post data to google api
-      var successCallback = function successCallback(res) {
+      var successCallback = function successCallback() {
         // TODO
-        // console.log('会員登録に成功しました');
-        // console.log(res);
-        _this2.loginUser();
+        console.log('post成功しました');
       };
       var failedCallback = function failedCallback() {
         // TODO
-        // console.log('すでに登録済みです');
       };
 
-      _actions.PlanAction.postPlan(this.state, successCallback, failedCallback);
+      _actions.PlanAction.postPlan(planData, successCallback, failedCallback);
       this.closePostModal();
     }
   }, {
@@ -74336,9 +74323,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _constants = require('../constants');
+var _constantsFacebookConstants = require('../constants/FacebookConstants');
 
-var _constants2 = _interopRequireDefault(_constants);
+var _constantsFacebookConstants2 = _interopRequireDefault(_constantsFacebookConstants);
 
 var _dispatcherFacebookDispatcher = require('../dispatcher/FacebookDispatcher');
 
@@ -74491,31 +74478,31 @@ facebookStore.dispatchToken = _dispatcherFacebookDispatcher2['default'].register
     // console.log('--------- Auth data ---------');
     // console.log(action.data);
     console.log('---- facebook dispatcher を通過したよ。');
-    if (action.actionType == _constants2['default'].FACEBOOK_INITIALIZED) {
+    if (action.actionType == _constantsFacebookConstants2['default'].FACEBOOK_INITIALIZED) {
         facebookStore.setFacebookAuthData(action.data);
     }
 
-    if (action.actionType == _constants2['default'].FACEBOOK_LOGGED_IN) {
+    if (action.actionType == _constantsFacebookConstants2['default'].FACEBOOK_LOGGED_IN) {
         facebookStore.setFacebookAuthData(action.data);
     }
 
-    if (action.actionType == _constants2['default'].FACEBOOK_RECEIVED_DATA) {
+    if (action.actionType == _constantsFacebookConstants2['default'].FACEBOOK_RECEIVED_DATA) {
         facebookStore.setFacebookUserData(action.data);
     }
 
-    if (action.actionType == _constants2['default'].FACEBOOK_LOGGED_OUT) {
+    if (action.actionType == _constantsFacebookConstants2['default'].FACEBOOK_LOGGED_OUT) {
         facebookStore.setFacebookAuthData(action.data);
     }
 
-    if (action.actionType == _constants2['default'].FACEBOOK_GETTING_PICTURE) {
+    if (action.actionType == _constantsFacebookConstants2['default'].FACEBOOK_GETTING_PICTURE) {
         facebookStore.setFacebookPictureData(action.actionType, action.data);
     }
 
-    if (action.actionType == _constants2['default'].FACEBOOK_RECEIVED_PICTURE) {
+    if (action.actionType == _constantsFacebookConstants2['default'].FACEBOOK_RECEIVED_PICTURE) {
         facebookStore.setFacebookPictureData(action.actionType, action.data);
     }
 });
 
 module.exports = facebookStore;
 
-},{"../actions/FacebookActionCreators":899,"../constants":919,"../dispatcher/FacebookDispatcher":933,"events":142}]},{},[1]);
+},{"../actions/FacebookActionCreators":899,"../constants/FacebookConstants":916,"../dispatcher/FacebookDispatcher":933,"events":142}]},{},[1]);
