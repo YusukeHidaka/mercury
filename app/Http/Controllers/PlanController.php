@@ -108,10 +108,10 @@ class PlanController extends Controller
         );
     }
 
-    public function showForUser($id)
+    public function showForCreator($creator_id)
     {
-        $user_id = $request->user()->id;
-        $data = Plan::find($id)->users()->get();
+        $creator_id = $request->user()->id;
+        $data = Plan::where('creator_id', $creator_id)->get();
 
         return response()->json(
             $data,
