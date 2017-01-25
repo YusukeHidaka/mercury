@@ -17,13 +17,15 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::resource('/plans', 'PlanController');
-
 Route::post('/auth/register','Auth\RegisterController@createForApi');
 
 Route::post('/auth/isRegistered','Auth\RegisterController@isRegistered');
 
 Route::get('/user/{id}','UserController@show');
+
+Route::resource('/plans', 'PlanController');
+
+Route::get('/plans/firstIndex/number/{num}','PlanController@firstIndex');
 
 Route::get('/plans/creator_id/{creator_id}','PlanController@showForCreator');
 
