@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -15,7 +17,7 @@ class UserController extends Controller
     {
         $this->middleware('auth:api');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
