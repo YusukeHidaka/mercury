@@ -71959,7 +71959,7 @@ var FacebookActionCreators = {
           data: response
         });
       }
-    }, { scope: 'public_profile, email' });
+    });
   },
 
   logout: function logout() {
@@ -72032,6 +72032,25 @@ var UserAction = {
     })['catch'](function (error) {
       if (typeof failedCallback === 'function') {
         failedCallback(error.response.data);
+      }
+    });
+  },
+
+  loginUser: function loginUser(userInfo, successCallback, failedCallback) {
+    (0, _axios2['default'])({
+      method: 'POST',
+      url: _constants.CommonConstants.API_LOGIN_PATH,
+      data: { client_id: 2, client_secret: 'Nvyh8oSYCMLbWCZy6otRirN6Ppry1KGQ5fam14UU',
+        grant_type: 'password', username: userInfo.userId, password: userInfo.accessToken }
+    }).then(function (response) {
+      return response.data;
+    }).then(function (json) {
+      if (typeof successCallback === 'function') {
+        successCallback(json);
+      }
+    })['catch'](function (error) {
+      if (typeof failedCallback === 'function') {
+        failedCallback(error.response);
       }
     });
   },
@@ -72621,16 +72640,34 @@ var Header = (function (_Component) {
   }, {
     key: 'registerUser',
     value: function registerUser() {
+      var _this2 = this;
+
       var successCallback = function successCallback(res) {
         // TODO
         console.log('会員登録に成功しました');
         console.log(res);
+        _this2.loginUser();
       };
       var failedCallback = function failedCallback() {
         // TODO
         console.log('すでに登録済みです');
       };
       _actions.UserAction.registerUser(this.state, successCallback, failedCallback);
+    }
+  }, {
+    key: 'loginUser',
+    value: function loginUser() {
+      var successCallback = function successCallback(res) {
+        // TODO
+        console.log('ログインに成功しました');
+        console.log(res);
+      };
+      var failedCallback = function failedCallback(res) {
+        // TODO
+        console.log('ログインに失敗しました');
+        console.log(res);
+      };
+      _actions.UserAction.loginUser(this.state, successCallback, failedCallback);
     }
   }, {
     key: 'renderRightHeader',
@@ -72706,7 +72743,7 @@ var Header = (function (_Component) {
       if (this.state.status === 'connected' && !this.state.name) {
         _actionsFacebookActionCreators2['default'].getFacebookInfo();
       };
-      if (this.state.status === 'not_authorized' || this.state.status === 'connected') {
+      if (!this.state.LoggedIn && (this.state.status === 'not_authorized' || this.state.status === 'connected')) {
         this.registerUser();
       };
       return _react2['default'].createElement(
