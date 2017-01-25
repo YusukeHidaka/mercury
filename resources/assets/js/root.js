@@ -9,7 +9,10 @@ import {UserAction} from './actions';
 
 const store = createStore(rootReducer);
 
-render((<Router history={browserHistory}>
+// UserAction.setCurrentUser(store, this.props.current_user);
+
+render((
+  <Router history={browserHistory}>
     <Route path='/' component={App}>
       <IndexRoute component={TimeLine}/>
       <Route path='profile/:uid' component={Profile}/>
