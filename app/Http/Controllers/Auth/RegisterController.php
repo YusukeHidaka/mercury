@@ -72,27 +72,26 @@ class RegisterController extends Controller
 
     public function createForApi(Request $request)
     {
-        // $this->validate($request->toArray());
-        // $test = Validator::make($request->toArray(), [
-        //     'name' => 'required|max:255',
-        //     'email' => 'required|email|max:255|unique:users',
-        //     'password' => 'required|min:6|confirmed',
-        // ]);
-        // return json_encode([
-        //     'status' => 'true',
-        //     'data' => ['message' => 'Successful']
-        // ])
-
-        $data = $request->toArray();
-        $message = $this->validator($data)->errors();
-        if ($message == []) {
-            return response()->json([
-                'status' => 'false',
-                'message' => $message
-            ], 404);
-        }
-
         try {
+            $data = $request->toArray();
+            //すでにユーザーが存在している場合、パスワードをアップデートして終了
+            if ($this->isRegistered($data)){
+                User::where('email', $data['email'])->update(['password' => $data['password']]);
+
+                return response()->json([
+                    'status' => 'true',
+                ], 201);
+            }
+            $message = $this->validator($data)->errors();
+
+            if ($message == []) {
+
+                return response()->json([
+                    'status' => 'false',
+                    'message' => $message
+                ], 404);
+            }
+
             if ($this->create($data)) {
 
                 return response()->json([
@@ -106,18 +105,13 @@ class RegisterController extends Controller
         return 'Failed';
     }
 
-    public function isRegistered(Request $request){
-        $data = $request->toArray();
+    public function isRegistered(array $data){
         $messages = $this->validator($data, ['email' => 'unique:users'])->errors();
 
         if ($messages->has('email')) {
-            return response()->json([
-                'status' => true
-            ], 201);
+            return true;
         } else {
-            return response()->json([
-                'status' => false
-            ], 201);
+            return false;
         }
     }
 }
