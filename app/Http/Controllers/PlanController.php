@@ -36,11 +36,17 @@ class PlanController extends Controller
         );
     }
 
-    // public function showPlansUnderParam($id)
-    // {
-    //     $data = Plan::where('id', '<', $id)->take(16)->get();
-    //     dd($data);
-    // }
+    public function showPlansUnderParam($id, $num)
+    {
+        $data = Plan::where('id', '<', $id)->latest('id')->take($num)->get();
+
+        return response()->json(
+            $data,
+            200,
+            ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+    }
 
     /**
      * Show the form for creating a new resource.
