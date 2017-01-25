@@ -73074,7 +73074,7 @@ var PostButton = (function (_Component) {
     value: function render() {
       return _react2['default'].createElement(
         'div',
-        { className: 'post-button btn', onClick: this.openPostModal.bind(this) },
+        { className: 'post-button btn', onClick: this.props.openPostModal },
         _react2['default'].createElement(
           'div',
           { className: 'post-sentence' },
@@ -73087,10 +73087,6 @@ var PostButton = (function (_Component) {
 
   return PostButton;
 })(_react.Component);
-
-PlanListItem.propTypes = {
-  plan: _react.PropTypes.object.isRequired
-};
 
 exports['default'] = PostButton;
 module.exports = exports['default'];
@@ -74247,7 +74243,7 @@ var TimeLine = (function (_Component) {
           )
         ),
         this.props.children,
-        _react2['default'].createElement(_components.PostButton, null),
+        _react2['default'].createElement(_components.PostButton, { openPostModal: this.openPostModal.bind(this) }),
         _react2['default'].createElement(_components.PostModal, {
           isShow: this.state.isShowPostModal,
           okCallback: this.postPlanData.bind(this),
