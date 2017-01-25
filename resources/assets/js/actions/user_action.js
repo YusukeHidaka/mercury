@@ -6,7 +6,7 @@ export const UserAction = {
     request({
       method: 'POST',
       url: CommonConstants.API_REGISTER_USER_PATH,
-      data: {name: fbResponse.name, email: fbResponse.email, password: fbResponse.accessToken,}
+      data: {name: fbResponse.name, email: fbResponse.userId, password: fbResponse.accessToken,}
     }).then(response => response.data)
       .then(json => {
         if (typeof(successCallback) === 'function') {successCallback(json)}
