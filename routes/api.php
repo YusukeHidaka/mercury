@@ -27,8 +27,8 @@ Route::get('/plans/user_id/{user_id}','PlanController@showForUser');
 
 Route::get('/plans/participant_id/{participant_id}','PlanController@showForParticipant');
 
-Route::put('/plans/apply/{id}','PlanController@applyForPlan');
+Route::put('/plans/{id}/apply','PlanController@applyForPlan');
 
-Route::get('/plans/apply/{id}','PlanController@showApplicantsForPlan');
+Route::get('/plans/{id}/apply','PlanController@showApplicantsForPlan');
 
-Route::put('/plans/accept/{id}','PlanController@acceptApplicationForPlan');
+Route::put('/plans/{id}/accept','PlanController@acceptApplicationForPlan');
