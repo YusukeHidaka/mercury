@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import {CommonConstants} from '../constants';
-import {PostModal, PlanList} from '../components';
+import {PostModal, PlanList, PostButton} from '../components';
 import {PlanAction} from '../actions'
 
 class TimeLine extends Component{
@@ -48,7 +48,7 @@ class TimeLine extends Component{
     PlanAction.postPlan(planData, successCallback, failedCallback);
     this.closePostModal();
   }
-
+  //TODO loggedInをもとに、投稿ボタンをいじりたい。
   render(){
     return (
       <div className='time-line'>
@@ -63,10 +63,7 @@ class TimeLine extends Component{
         </nav>
         {this.props.children}
 
-        <div className='post-button btn' onClick={this.openPostModal.bind(this)}>
-          <div className='post-sentence'>投稿</div>
-          <i className="fa fa-pencil-square-o post-icon" aria-hidden="true"></i>
-        </div>
+        <PostButton />
         <PostModal
           isShow={this.state.isShowPostModal}
           okCallback={this.postPlanData.bind(this)}

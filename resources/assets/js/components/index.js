@@ -9,8 +9,10 @@ import FacebookLogout from './Facebook/FacebookLogout';
 import FacebookDownloadPicture from './Facebook/FacebookDownloadPicture';
 import FacebookPicture from './Facebook/FacebookPicture';
 import FacebookGetInfo from './Facebook/FacebookGetInfo';
+import PostButton from './PostButton';
 
 export {
   Header, Footer, SignIn, PostModal, PlanList, PlanListItem, FacebookLogin,
-  FacebookLogout, FacebookDownloadPicture, FacebookPicture, FacebookGetInfo
+  FacebookLogout, FacebookDownloadPicture, FacebookPicture, FacebookGetInfo,
+  PostButton
 };
