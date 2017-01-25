@@ -1,4 +1,4 @@
-import FacebookConstants from '../constants';
+import FacebookConstants from '../constants/FacebookConstants';
 import FacebookDispatcher from '../dispatcher/FacebookDispatcher';
 import {EventEmitter} from 'events';
 import FacebookActionCreators from '../actions/FacebookActionCreators'

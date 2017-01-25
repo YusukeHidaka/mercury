@@ -1,5 +1,5 @@
 import FacebookDispatcher from '../dispatcher/FacebookDispatcher';
-import FacebookConstants from '../constants';
+import FacebookConstants from '../constants/FacebookConstants';
 
 const APP_ID = '1400175353350443';
 
