@@ -21,7 +21,7 @@ Route::post('/auth/register','Auth\RegisterController@createForApi');
 
 Route::post('/auth/isRegistered','Auth\RegisterController@isRegistered');
 
-Route::get('/user/{id}','UserController@show');
+Route::get('/user/{id}','UserController@showOnUserId');
 
 Route::resource('/plans', 'PlanController');
 
