@@ -71,8 +71,14 @@ class Header extends Component {
     const successCallback = (res) => {
       // TODO
       console.log('ログインに成功しました');
-      console.log(res);
-      console.log(this.state);
+      console.log('cookieにしよう。');
+
+      const searchAccessToken = new RegExp('XSRF-TOKEN=(.*?)(?:;|$)');
+      if (document.cookie.match(searchAccessToken)) {
+        console.log(RegExp.$1);
+      }
+
+      //TODO これをstateにいれる。
     }
     const failedCallback = (res) => {
       // TODO

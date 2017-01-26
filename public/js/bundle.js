@@ -74840,14 +74840,18 @@ var Header = (function (_Component) {
   }, {
     key: 'loginUser',
     value: function loginUser() {
-      var _this3 = this;
-
       console.log('⑥loginUser');
       var successCallback = function successCallback(res) {
         // TODO
         console.log('ログインに成功しました');
-        console.log(res);
-        console.log(_this3.state);
+        console.log('cookieにしよう。');
+
+        var searchAccessToken = new RegExp('XSRF-TOKEN=(.*?)(?:;|$)');
+        if (document.cookie.match(searchAccessToken)) {
+          console.log(RegExp.$1);
+        }
+
+        //TODO これをstateにいれる。
       };
       var failedCallback = function failedCallback(res) {
         // TODO
