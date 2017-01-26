@@ -79,6 +79,25 @@ class Header extends Component {
       }
 
       //TODO これをstateにいれる。
+      let accessToken = RegExp.$1;
+
+      // データの保存
+      // localStorage.setItem('accessToken', accessToken);
+      window.localStorage.setItem('accessToken', accessToken);
+      // localStorage.accessToken = accessToken
+
+      // データの取得
+      // accessToken = localStorage.getItem('accessToken');
+      // accessToken = window.localStorage.getItem('accessToken');
+      // accessToken = localStorage.accessToken
+
+      // データの削除
+      // localStorage.removeItem('access_count');
+      // window.localStorage.removeItem('access_count');
+
+      // localStorageを初期化
+      // localStorage.clear();
+      // window.localStorage.clear();
     }
     const failedCallback = (res) => {
       // TODO
@@ -96,6 +115,11 @@ class Header extends Component {
       console.log(res);
     }
     UserAction.getUser(callback);
+  }
+
+  //TODO
+  deleteLocalStorage() {
+     window.localStorage.removeItem('accessToken');
   }
 
   renderRightHeader() {
@@ -138,6 +162,7 @@ class Header extends Component {
         </ul>
         <FacebookLogout />
         <button onClick={this.getUser.bind(this)}>getUser</button>
+        <button onClick={this.deleteLocalStorage}>deleteLocalStorage</button>
       </div>
     );
   }
@@ -145,7 +170,9 @@ class Header extends Component {
   renderGuestHeader() {
     console.log('⑩renderGuestHeader');
     return (
-      <div><FacebookLogin /></div>
+      <div><FacebookLogin />
+        <button onClick={this.deleteLocalStorage}>deleteLocalStorage</button>
+      </div>
     );
   }
 
