@@ -54,7 +54,7 @@ class PlanController extends Controller
         );
     }
 
-    public function showPlansUnderParam($id, $num)
+    public function showPlansUnderParam(Request $request, $id, $num)
     {
         $data = Plan::where('id', '<', $id)->latest('id')->take($num)->get();
         foreach ($data as $key => $value) {
@@ -107,7 +107,7 @@ class PlanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $data = Plan::where('id', $id)->get();
         $data['is_applied'] = $this->returnIsApplied($id, $request->user()->id);

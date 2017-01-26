@@ -25,13 +25,13 @@ Route::get('/user/{id}','UserController@showOnUserId');
 
 Route::resource('/plans', 'PlanController');
 
-Route::get('/plans/firstIndex/number/{num}','PlanController@firstIndex');
+Route::get('/plans/first_index/number/{num}','PlanController@firstIndex');
 
 Route::get('/plans/creator_id/{creator_id}','PlanController@showForCreator');
 
 Route::get('/plans/participant_id/{participant_id}','PlanController@showForParticipant');
 
-Route::get('/plans/under_id/{id}/number/{num}','PlanController@showPlansUnderParam');
+Route::get('/plans/last_plan_id/{id}/number/{num}','PlanController@showPlansUnderParam');
 
 Route::put('/plans/{id}/apply','PlanController@applyForPlan');
 
