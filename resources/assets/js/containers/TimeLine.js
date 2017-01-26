@@ -52,7 +52,10 @@ class TimeLine extends Component{
   render(){
     return (
       <div className='time-line'>
-        <PlanSlider />
+        <div>test</div>
+        <div className="plans-slider">
+          <PlanSlider />
+        </div>
         <div>
           <h2>プラン一覧</h2>
           <PlanList plans={this.state.plans}/>

@@ -8123,3 +8123,6 @@ button.close {
       margin-left: 8px; }
     .footer .sms img {
       width: 28px; }
+
+.plans-slider img {
+  height: 320px !important; }

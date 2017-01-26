@@ -75193,11 +75193,9 @@ var PlanSlider = (function (_Component) {
     key: 'render',
     value: function render() {
       var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
+        autoplay: true,
+        autoplaySpeed: 500,
+        slidesToShow: 3
       };
 
       return _react2['default'].createElement(
@@ -75206,56 +75204,22 @@ var PlanSlider = (function (_Component) {
         _react2['default'].createElement(
           'div',
           null,
-          _react2['default'].createElement(
-            'h3',
-            null,
-            '1'
-          )
+          _react2['default'].createElement('img', { src: '/images/plan/default.jpg' })
         ),
         _react2['default'].createElement(
           'div',
           null,
-          _react2['default'].createElement(
-            'h3',
-            null,
-            '2'
-          )
+          _react2['default'].createElement('img', { src: '/images/plan/default.jpg' })
         ),
         _react2['default'].createElement(
           'div',
           null,
-          _react2['default'].createElement(
-            'h3',
-            null,
-            '3'
-          )
+          _react2['default'].createElement('img', { src: '/images/plan/default.jpg' })
         ),
         _react2['default'].createElement(
           'div',
           null,
-          _react2['default'].createElement(
-            'h3',
-            null,
-            '4'
-          )
-        ),
-        _react2['default'].createElement(
-          'div',
-          null,
-          _react2['default'].createElement(
-            'h3',
-            null,
-            '5'
-          )
-        ),
-        _react2['default'].createElement(
-          'div',
-          null,
-          _react2['default'].createElement(
-            'h3',
-            null,
-            '6'
-          )
+          _react2['default'].createElement('img', { src: '/images/plan/default.jpg' })
         )
       );
     }
@@ -76450,7 +76414,16 @@ var TimeLine = (function (_Component) {
       return _react2['default'].createElement(
         'div',
         { className: 'time-line' },
-        _react2['default'].createElement(_components.PlanSlider, null),
+        _react2['default'].createElement(
+          'div',
+          null,
+          'test'
+        ),
+        _react2['default'].createElement(
+          'div',
+          { className: 'plans-slider' },
+          _react2['default'].createElement(_components.PlanSlider, null)
+        ),
         _react2['default'].createElement(
           'div',
           null,
