@@ -82,9 +82,7 @@ class PlanController extends Controller
         ]);
 
         $data = $request->toArray();
-        // IKEGAYA
-        // $data['creator_id'] = $request->user()->id;
-        $data['creator_id'] = 1;
+        $data['creator_id'] = $request->user()->id;
 
         try {
             if (Plan::create($data)) {
