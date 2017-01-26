@@ -260,7 +260,10 @@ class PlanController extends Controller
     {
         try {
             $data = $request->toArray();
-            if (Plan::where('id', $id)->update(['participant_id' => $data['participant_id']])) {
+            if (Plan::where('id', $id)->update([
+                'participant_id' => $data['participant_id'],
+                'is_closed' => true
+            ])) {
 
                 return response()->json([
                     'status' => 'true',
