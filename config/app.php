@@ -168,7 +168,8 @@ return [
          */
         Laravel\Passport\PassportServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-        React\ReactServiceProvider::class,
+        // React-laravel一旦中止。
+        // React\ReactServiceProvider::class,
 
         //
 
