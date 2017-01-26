@@ -16,7 +16,7 @@ class PlanController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth:api');
+        $this->middleware('auth:api');
     }
 
     /**
@@ -24,9 +24,12 @@ class PlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $data = Plan::latest('created_at')->get();
+        foreach ($data as $key => $value) {
+            $data[$key]['is_applied'] = $this->returnIsApplied($value['id'], $request->user()->id);
+        }
 
         return response()->json(
             $data,
@@ -36,9 +39,12 @@ class PlanController extends Controller
         );
     }
 
-    public function firstIndex($num)
+    public function firstIndex(Request $request, $num)
     {
         $data = Plan::latest('id')->take($num)->get();
+        foreach ($data as $key => $value) {
+            $data[$key]['is_applied'] = $this->returnIsApplied($value['id'], $request->user()->id);
+        }
 
         return response()->json(
             ['data' => $data, 'has_next_page' => 'false'],
@@ -51,6 +57,9 @@ class PlanController extends Controller
     public function showPlansUnderParam($id, $num)
     {
         $data = Plan::where('id', '<', $id)->latest('id')->take($num)->get();
+        foreach ($data as $key => $value) {
+            $data[$key]['is_applied'] = $this->returnIsApplied($value['id'], $request->user()->id);
+        }
 
         return response()->json(
             ['data' => $data, 'has_next_page' => 'false'],
@@ -58,16 +67,6 @@ class PlanController extends Controller
             ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
         );
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
     }
 
     /**
@@ -113,6 +112,7 @@ class PlanController extends Controller
     public function show($id)
     {
         $data = Plan::where('id', $id)->get();
+        $data['is_applied'] = $this->returnIsApplied($id, $request->user()->id);
 
         return response()->json(
             $data,
@@ -218,25 +218,25 @@ class PlanController extends Controller
         ], 404);
     }
 
-    public function updateForParticipant(Request $request)
-    {
-        try {
-            if (Plan::where('participant_id', $participant_id)->update($request->toArray())) {
-
-                return json_encode([
-                    'status' => 'true',
-                    'data' => ['message' => 'Successful']
-                ]);
-            }
-
-        } catch (Exception $e) {
-            \Log::info($e->getMessage());
-        }
-
-        return response()->json([
-            'status' => 'false'
-        ], 404);
-    }
+    // public function updateForParticipant(Request $request)
+    // {
+    //     try {
+    //         if (Plan::where('participant_id', $participant_id)->update($request->toArray())) {
+    //
+    //             return json_encode([
+    //                 'status' => 'true',
+    //                 'data' => ['message' => 'Successful']
+    //             ]);
+    //         }
+    //
+    //     } catch (Exception $e) {
+    //         \Log::info($e->getMessage());
+    //     }
+    //
+    //     return response()->json([
+    //         'status' => 'false'
+    //     ], 404);
+    // }
 
     public function applyForPlan(Request $request, $id)
     {
@@ -303,5 +303,17 @@ class PlanController extends Controller
         return response()->json([
             'status' => 'false'
         ], 404);
+    }
+
+    public function returnIsApplied($id, $userId) {
+        $applicants = Plan::find($id)->users()->get();
+
+        foreach ($applicants as $applicant) {
+            if ($applicant['id'] == $userId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
