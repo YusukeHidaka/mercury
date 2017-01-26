@@ -13,7 +13,7 @@ class Plan extends Model
         'take',
         'place',
         'image_url',
-        'has_next_page',
+        'is_closed',
     ];
 
     // public function user(){
