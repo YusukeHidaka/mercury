@@ -47,7 +47,7 @@ class PlanController extends Controller
         }
 
         return response()->json(
-            ['data' => $data, 'has_next_page' => 'false'],
+            $data,
             200,
             ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -62,7 +62,7 @@ class PlanController extends Controller
         }
 
         return response()->json(
-            ['data' => $data, 'has_next_page' => 'false'],
+            $data,
             200,
             ['Content-Type' => 'application/json; charset=UTF-8', 'charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
