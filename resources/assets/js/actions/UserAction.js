@@ -1,4 +1,4 @@
-import {UserConstants, CommonConstants} from '../constants';
+import {UserConstants, CommonConstants, EnvConstants} from '../constants';
 import request from 'axios';
 
 export const UserAction = {
@@ -20,7 +20,7 @@ export const UserAction = {
     request({
       method: 'POST',
       url: CommonConstants.API_LOGIN_PATH,
-      data: {client_id: 2, client_secret: 'Nvyh8oSYCMLbWCZy6otRirN6Ppry1KGQ5fam14UU',
+      data: {client_id: EnvConstants.CLIENT_ID, client_secret: EnvConstants.CLIENT_SECRET,
         grant_type: 'password', username: userInfo.userId, password: userInfo.accessToken}
     }).then(response => response.data)
       .then(json => {

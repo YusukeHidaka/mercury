@@ -6,3 +6,4 @@ Homestead.yaml
 .env
 /storage/oauth-private.key
 /storage/oauth-public.key
+/resources/assets/js/constants/EnvConstants.js
