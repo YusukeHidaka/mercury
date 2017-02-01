@@ -6,6 +6,10 @@ use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
+use FCM;
 
 class PlanController extends Controller
 {
@@ -264,6 +268,7 @@ class PlanController extends Controller
                 'participant_id' => $data['participant_id'],
                 'is_closed' => true
             ])) {
+                $this->sendFcm();
 
                 return response()->json([
                     'status' => 'true',
@@ -316,5 +321,40 @@ class PlanController extends Controller
         }
 
         return false;
+    }
+
+    public function sendFcm() {
+        $optionBuiler = new OptionsBuilder();
+        $optionBuiler->setTimeToLive(60*20);
+
+        $notificationBuilder = new PayloadNotificationBuilder('my title');
+        $notificationBuilder->setBody('Hello world')
+                          ->setSound('default');
+
+        $dataBuilder = new PayloadDataBuilder();
+        $dataBuilder->addData(['a_data' => 'my_data']);
+
+        $option = $optionBuiler->build();
+        $notification = $notificationBuilder->build();
+        $data = $dataBuilder->build();
+
+        $token = "cF3nwZCx2uo:APA91bHnZzLJMsc6pcI6rKwAu3zCEO6xEAr4VQsMqMSrZZoAmsgjL4rHESzknWKz2FBeX4_K8RzOjEs0nXOlJwm4LxDsjf1xyHcF-aRXsmolHOIHITdv9pgUiWGalSZXDwpyw4NK33hT";
+
+        $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
+
+        $downstreamResponse->numberSuccess();
+        $downstreamResponse->numberFailure();
+        $downstreamResponse->numberModification();
+
+        //return Array - you must remove all this tokens in your database
+        $downstreamResponse->tokensToDelete();
+
+        //return Array (key : oldToken, value : new token - you must change the token in your database )
+        $downstreamResponse->tokensToModify();
+
+        //return Array - you should try to resend the message to the tokens in the array
+        $downstreamResponse->tokensToRetry();
+
+        // return Array (key:token, value:errror) - in production you should remove from your database the tokens
     }
 }
