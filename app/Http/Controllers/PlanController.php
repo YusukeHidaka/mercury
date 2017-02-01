@@ -338,7 +338,7 @@ class PlanController extends Controller
         $notification = $notificationBuilder->build();
         $data = $dataBuilder->build();
 
-        $token = "cF3nwZCx2uo:APA91bHnZzLJMsc6pcI6rKwAu3zCEO6xEAr4VQsMqMSrZZoAmsgjL4rHESzknWKz2FBeX4_K8RzOjEs0nXOlJwm4LxDsjf1xyHcF-aRXsmolHOIHITdv9pgUiWGalSZXDwpyw4NK33hT";
+        $token = "eSIEz1mHBvA:APA91bG56_cpBWvD9DqSLbi7OkqTORka55WEajY9vkehwHUOe7ZosYII81gAe26GKiEFDvUTDu1V65GdjYyDYRAwzLa1ag-Xupyb-NkQQPEHhhqdyVXI9UpALcm92WYYyvZwcrfdn4h8";
 
         $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
 
