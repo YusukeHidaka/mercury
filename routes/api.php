@@ -21,7 +21,13 @@ Route::post('/auth/register','Auth\RegisterController@createForApi');
 
 Route::post('/auth/isRegistered','Auth\RegisterController@isRegistered');
 
-Route::get('/user/{id}','UserController@showOnUserId');
+Route::get('/auth/user/{id}','Auth\ProfileController@show');
+
+Route::put('/auth/user/update', 'Auth\ProfileController@update');
+
+Route::put('/auth/user/update_fcm_token', 'Auth\ProfileController@updateFcmToken');
+
+Route::get('/user/{id}','UserController@show');
 
 Route::resource('/plans', 'PlanController');
 

@@ -55,7 +55,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showOnUserId($id)
+    public function show($id)
     {
         $data = User::where('id', $id)->get();
 
@@ -85,10 +85,24 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    //  public function update(Request $request, $id) {
+    //      try {
+    //          if (User::where('id', $id)->update($request->toArray())) {
+     //
+    //              return response()->json([
+    //                  'status' => 'true',
+    //                  'data' => ['message' => 'Successful']
+    //              ], 200);
+    //          }
+     //
+    //      } catch (Exception $e) {
+    //          \Log::info($e->getMessage());
+    //      }
+     //
+    //      return response()->json([
+    //          'status' => 'false'
+    //      ], 404);
+    //  }
 
     /**
      * Remove the specified resource from storage.

@@ -12,7 +12,7 @@ class Plan extends Model
         'give',
         'take',
         'place',
-        'image_url',
+        'image_data',
         'is_closed',
     ];
 
