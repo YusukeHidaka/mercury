@@ -21,7 +21,7 @@ Route::post('/auth/register','Auth\RegisterController@createForApi');
 
 Route::post('/auth/isRegistered','Auth\RegisterController@isRegistered');
 
-Route::get('/auth/user/{id}','Auth\ProfileController@show');
+Route::get('/auth/user/','Auth\ProfileController@show');
 
 Route::put('/auth/user/update', 'Auth\ProfileController@update');
 
