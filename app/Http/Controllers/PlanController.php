@@ -268,7 +268,8 @@ class PlanController extends Controller
                 'participant_id' => $data['participant_id'],
                 'is_closed' => true
             ])) {
-                $this->sendFcm();
+                $fcmToken = User::where('id', $data['participant_id'])->fcm_token;
+                $this->sendFcm($fcmToken);
 
                 return response()->json([
                     'status' => 'true',
@@ -323,7 +324,7 @@ class PlanController extends Controller
         return false;
     }
 
-    public function sendFcm() {
+    public function sendFcm($fcmToken) {
         $optionBuiler = new OptionsBuilder();
         $optionBuiler->setTimeToLive(60*20);
 
@@ -338,9 +339,7 @@ class PlanController extends Controller
         $notification = $notificationBuilder->build();
         $data = $dataBuilder->build();
 
-        $token = "eSIEz1mHBvA:APA91bG56_cpBWvD9DqSLbi7OkqTORka55WEajY9vkehwHUOe7ZosYII81gAe26GKiEFDvUTDu1V65GdjYyDYRAwzLa1ag-Xupyb-NkQQPEHhhqdyVXI9UpALcm92WYYyvZwcrfdn4h8";
-
-        $downstreamResponse = FCM::sendTo($token, $option, $notification, $data);
+        $downstreamResponse = FCM::sendTo($fcmToken, $option, $notification, $data);
 
         $downstreamResponse->numberSuccess();
         $downstreamResponse->numberFailure();
