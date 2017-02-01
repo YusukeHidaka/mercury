@@ -33,6 +33,7 @@ class PlanController extends Controller
         $data = Plan::latest('created_at')->get();
         foreach ($data as $key => $value) {
             $data[$key]['is_applied'] = $this->returnIsApplied($value['id'], $request->user()->id);
+            // $data[$key]['creator_image'] = User::where('id', $data['user_id'])->image;
         }
 
         return response()->json(
@@ -268,7 +269,7 @@ class PlanController extends Controller
                 'participant_id' => $data['participant_id'],
                 'is_closed' => true
             ])) {
-                $fcmToken = User::where('id', $data['participant_id'])->fcm_token;
+                $fcmToken = User::where('id', $data['participant_id'])->first()->fcm_token;
                 $this->sendFcm($fcmToken);
 
                 return response()->json([
