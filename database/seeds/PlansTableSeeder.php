@@ -18,7 +18,7 @@ class PlansTableSeeder extends Seeder
 
         for ($i=1; $i < 6; $i++) {
             Plan::create([
-              'creator_id' => User::find(rand(31, 35))->id,
+              'creator_id' => User::inRandomOrder()->first()->id,
               'give' => $faker->numerify('やってあげます！ ###'),
               'take' => $faker->numerify('やってください！ ###'),
               'place' => $faker->address,
