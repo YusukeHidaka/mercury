@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Plan;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class PlansTableSeeder extends Seeder
@@ -13,12 +14,11 @@ class PlansTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('plans')->delete();
         $faker = Faker\Factory::create();
 
         for ($i=1; $i < 6; $i++) {
             Plan::create([
-              'creator_id' => $i,
+              'creator_id' => User::find(rand(31, 30 + User::count()))->id,
               'give' => $faker->numerify('やってあげます！ ###'),
               'take' => $faker->numerify('やってください！ ###'),
               'place' => $faker->address,

@@ -33,8 +33,9 @@ class PlanController extends Controller
         $data = Plan::latest('created_at')->get();
         foreach ($data as $key => $value) {
             $data[$key]['is_applied'] = $this->returnIsApplied($value['id'], $request->user()->id);
-            // $data[$key]['creator_image'] = User::where('id', $data['user_id'])->image;
+            $data[$key]['creator_image'] = User::find($data[$key]['creator_id'])->image_data;
         }
+
 
         return response()->json(
             $data,
@@ -49,6 +50,7 @@ class PlanController extends Controller
         $data = Plan::latest('id')->take($num)->get();
         foreach ($data as $key => $value) {
             $data[$key]['is_applied'] = $this->returnIsApplied($value['id'], $request->user()->id);
+            $data[$key]['creator_image'] = User::find($data[$key]['creator_id'])->image_data;
         }
 
         return response()->json(
@@ -64,6 +66,7 @@ class PlanController extends Controller
         $data = Plan::where('id', '<', $id)->latest('id')->take($num)->get();
         foreach ($data as $key => $value) {
             $data[$key]['is_applied'] = $this->returnIsApplied($value['id'], $request->user()->id);
+            $data[$key]['creator_image'] = User::find($data[$key]['creator_id'])->image_data;
         }
 
         return response()->json(
@@ -114,8 +117,9 @@ class PlanController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $data = Plan::where('id', $id)->get();
+        $data = Plan::find($id);
         $data['is_applied'] = $this->returnIsApplied($id, $request->user()->id);
+        $data['creator_image'] = User::find($data['creator_id'])->image_data;
 
         return response()->json(
             $data,
@@ -269,7 +273,7 @@ class PlanController extends Controller
                 'participant_id' => $data['participant_id'],
                 'is_closed' => true
             ])) {
-                $fcmToken = User::where('id', $data['participant_id'])->first()->fcm_token;
+                $fcmToken = User::find($data['participant_id'])->fcm_token;
                 $this->sendFcm($fcmToken);
 
                 return response()->json([
